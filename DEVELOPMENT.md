@@ -245,6 +245,14 @@ docker compose up --build -d
 - 验证 Pages 静态构建、完整 standalone 构建、静态产物、TypeScript 和 14 项测试
 - 真实 Actions 联网同步尚待仓库 Secret 配置后验证；GitHub 调度不保证精确时间
 
+### 2026-11-05：用户向 README 与自定义域名确认
+
+- README 顶部增加实际可访问的网站、原神档案、问题反馈和部署状态入口
+- 按用户视角重组功能、数据来源、路线图、参与方式和本地运行说明，技术细节保留在本文档
+- 根据 GitHub 官方文档确认：Actions 发布模式不要求 `CNAME` 文件， apex 域名需要仓库设置与 DNS A/ALIAS/ANAME 记录
+- `acg-collab-radar.com` 当前未查到 DNS A、NS 或 www CNAME 记录，但这不能证明域名可注册
+- 域名所有权和 DNS 尚未确认，因此不切换 base path，不影响现有 Pages 站点
+
 ## 变更记录维护规则
 
 每次修改追加：日期、背景、修改内容、验证结果、遗留问题。涉及数据结构、同步算法、环境变量或部署方式时，必须同步更新对应章节。
