@@ -21,8 +21,7 @@ export async function saveImportedCollaboration(raw: RawAnnouncement, draft: Col
   if (draft.isCollab === false) throw new Error("该公告不属于餐饮联动，未写入联动档案");
   const ip = getIp(draft.ipId);
   if (!ip) throw new Error("请选择已收录的 IP");
-  if (!draft.startDate) throw new Error("请补充活动开始日期后再入库");
-  if (draft.endDate && draft.endDate < draft.startDate) throw new Error("结束日期不能早于开始日期");
+  if (draft.startDate && draft.endDate && draft.endDate < draft.startDate) throw new Error("结束日期不能早于开始日期");
 
   const id = `imported-${createHash("sha1").update(raw.url).digest("hex").slice(0, 12)}`;
   const collaboration: Collaboration = {
@@ -46,7 +45,7 @@ export async function saveImportedCollaboration(raw: RawAnnouncement, draft: Col
       url: raw.url,
       publishedAt: raw.publishedAt || draft.announcedAt,
       tier: raw.sourceTier,
-    }],
+    }, ...(raw.relatedSources ?? [])],
   };
 
   const existing = await getImportedCollaborations();

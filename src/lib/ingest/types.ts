@@ -1,4 +1,4 @@
-import type { CollabCategory, SourceTier } from "@/lib/types";
+import type { CollabCategory, Evidence, SourceTier } from "@/lib/types";
 
 export interface RawAnnouncement {
   url: string;
@@ -9,6 +9,7 @@ export interface RawAnnouncement {
   fetcher: "mihoyo-api" | "mihoyo-content-v2" | "official-html" | "firecrawl" | "direct-http";
   text: string;
   images: string[];
+  relatedSources?: Evidence[];
 }
 
 export interface CollabDraft {

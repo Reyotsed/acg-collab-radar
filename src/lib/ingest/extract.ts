@@ -8,13 +8,13 @@ const draftSchema = z.object({
   ipId: z.string().default(""),
   ipName: z.string().min(1),
   title: z.string().min(1),
-  brand: z.string().min(1),
-  category: z.enum(["tea", "coffee", "fastfood", "cafe", "food"]),
+  brand: z.string().min(1).nullable().default(null),
+  category: z.enum(["tea", "coffee", "fastfood", "cafe", "food"]).nullable().default(null),
   region: z.enum(["中国大陆", "日本"]),
-  location: z.string().min(1),
+  location: z.string().min(1).nullable().default(null),
   startDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).nullable(),
   endDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).nullable(),
-  announcedAt: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+  announcedAt: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).nullable().default(null),
   summary: z.string().min(1),
   tags: z.array(z.string()).max(8).default([]),
   confidence: z.number().min(0).max(1),
@@ -44,29 +44,82 @@ export async function extractCollab(raw: RawAnnouncement, imageContent: unknown[
 公告正文：${raw.text || "（正文为空，主要信息在图片中）"}
 请按顺序阅读随后的 ${imageContent.length} 张图片或图片切片，再输出 JSON。`;
 
-  const response = await fetchPublic(`${baseUrl}/chat/completions`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", Authorization: `Bearer ${apiKey}` },
-    body: JSON.stringify({
-      model,
-      temperature: 0.1,
-      max_tokens: 4000,
-      response_format: { type: "json_object" },
-      messages: [
-        { role: "system", content: systemPrompt },
-        { role: "user", content: [{ type: "text", text: instruction }, ...imageContent] },
-      ],
-    }),
-  }, 180_000);
-  if (!response.ok) {
-    const message = await response.text();
-    throw new Error(`DeepSeek 返回 ${response.status}：${message.slice(0, 300)}`);
+  const messages: Array<{ role: string; content: unknown }> = [
+    { role: "system", content: systemPrompt },
+    { role: "user", content: [{ type: "text", text: instruction }, ...imageContent] },
+  ];
+  let output: Record<string, unknown> | null = null;
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    const response = await fetchPublic(`${baseUrl}/chat/completions`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${apiKey}` },
+      body: JSON.stringify({
+        model,
+        temperature: 0.1,
+        max_tokens: 4000,
+        response_format: { type: "json_object" },
+        messages,
+      }),
+    }, 180_000);
+    if (!response.ok) {
+      const message = await response.text();
+      throw new Error(`DeepSeek 返回 ${response.status}：${message.slice(0, 300)}`);
+    }
+    const payload = await response.json() as { choices?: Array<{ message?: { content?: string } }> };
+    const content = payload.choices?.[0]?.message?.content;
+    if (!content) {
+      if (attempt === 1) throw new Error("DeepSeek 连续两次未返回解析内容");
+      console.warn("模型返回空内容，正在重试");
+      continue;
+    }
+    const normalized = content.trim().replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/, "");
+    try {
+      const parsed = JSON.parse(normalized) as unknown;
+      if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) throw new Error("输出不是 JSON 对象");
+      output = parsed as Record<string, unknown>;
+      break;
+    } catch (error) {
+      if (attempt === 1) throw new Error(`模型连续两次未输出有效 JSON：${error instanceof Error ? error.message : "未知格式错误"}`);
+      console.warn("模型 JSON 格式无效，正在纠错重试");
+      messages.push(
+        { role: "assistant", content },
+        { role: "user", content: "上述响应不是有效 JSON。请根据原公告重新输出一个完整、严格的 JSON 对象，不要 Markdown，不要解释。" },
+      );
+    }
   }
-  const payload = await response.json() as { choices?: Array<{ message?: { content?: string } }> };
-  const content = payload.choices?.[0]?.message?.content;
-  if (!content) throw new Error("DeepSeek 未返回解析内容");
-  const normalized = content.trim().replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/, "");
-  const result = draftSchema.safeParse(JSON.parse(normalized));
-  if (!result.success) throw new Error(`模型输出字段不完整：${result.error.issues[0]?.message ?? "未知校验错误"}`);
-  return result.data;
+  if (!output) throw new Error("DeepSeek 未返回有效 JSON 对象");
+  const candidate = output.isCollab === false ? {
+    isCollab: false,
+    ipId: "",
+    ipName: raw.sourceName,
+    title: raw.title,
+    brand: "非餐饮",
+    category: "food",
+    region: "中国大陆",
+    location: "未公布",
+    startDate: null,
+    endDate: null,
+    announcedAt: raw.publishedAt,
+    summary: typeof output.summary === "string" ? output.summary : "非餐饮联动",
+    tags: [],
+    confidence: typeof output.confidence === "number" ? output.confidence : 0,
+    evidenceQuotes: [],
+    warnings: [],
+  } : output;
+  const result = draftSchema.safeParse(candidate);
+  if (!result.success) {
+    const issues = result.error.issues.map((issue) => `${issue.path.join(".") || "root"}: ${issue.message}`).join("；");
+    throw new Error(`模型输出字段不完整：${issues}`);
+  }
+  if (result.data.isCollab && !result.data.brand) throw new Error("餐饮联动缺少合作品牌");
+  if (result.data.isCollab && !result.data.category) throw new Error("餐饮联动缺少类型");
+  const announcedAt = result.data.announcedAt ?? raw.publishedAt;
+  if (!announcedAt) throw new Error("公告发布日期缺失，且官方元数据没有可用日期");
+  return {
+    ...result.data,
+    brand: result.data.brand ?? "",
+    category: result.data.category ?? "food",
+    announcedAt,
+    location: result.data.location ?? "未公布",
+  };
 }

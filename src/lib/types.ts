@@ -1,5 +1,5 @@
 export type CollabCategory = "tea" | "coffee" | "fastfood" | "cafe" | "food";
-export type CollabStatus = "ongoing" | "upcoming" | "ended" | "cancelled";
+export type CollabStatus = "ongoing" | "upcoming" | "announced" | "ended" | "cancelled";
 export type Timeline = "current" | "history" | "all";
 export type SourceTier = "official" | "media";
 
@@ -31,7 +31,7 @@ export interface Collaboration {
   category: CollabCategory;
   region: "中国大陆" | "日本";
   location: string;
-  startDate: string;
+  startDate: string | null;
   endDate: string | null;
   announcedAt: string;
   updatedAt: string;
@@ -79,6 +79,7 @@ export const CATEGORY_LABELS: Record<CollabCategory, string> = {
 export const STATUS_LABELS: Record<CollabStatus, string> = {
   ongoing: "正在进行",
   upcoming: "即将开始",
+  announced: "日期待定",
   ended: "历史联动",
   cancelled: "已取消",
 };

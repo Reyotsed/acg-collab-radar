@@ -90,6 +90,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .timeline-group__heading > p { margin: 0; color: #8a8c9b; font-size: 11px; }
 .timeline-group__marker { width: 9px; height: 9px; border: 3px solid rgba(22, 134, 101, 0.14); border-radius: 50%; background: var(--ongoing); box-sizing: content-box; }
 .timeline-group--upcoming .timeline-group__marker { border-color: rgba(166, 107, 19, 0.13); background: var(--upcoming); }
+.timeline-group--announced .timeline-group__marker { border-color: rgba(108, 92, 231, 0.14); background: var(--violet); }
 .timeline-group--ended .timeline-group__marker { border-color: rgba(122, 125, 140, 0.13); background: var(--ended); }
 .timeline-group__count { min-width: 24px; padding: 3px 7px; text-align: center; color: #77798a; border-radius: 99px; background: #e9eaf1; font-size: 10px; font-weight: 700; }
 .simple-timeline { display: grid; gap: 16px; }
@@ -101,17 +102,22 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .simple-event__rail > i { position: absolute; z-index: 1; top: 72px; left: calc(50% - 5px); width: 10px; height: 10px; border: 3px solid var(--bg); border-radius: 50%; background: var(--ended); box-shadow: 0 0 0 1px var(--ended); box-sizing: content-box; }
 .simple-event--ongoing .simple-event__rail > i { background: var(--ongoing); box-shadow: 0 0 0 1px var(--ongoing); }
 .simple-event--upcoming .simple-event__rail > i { background: var(--upcoming); box-shadow: 0 0 0 1px var(--upcoming); }
+.simple-event--announced .simple-event__rail > i { background: var(--violet); box-shadow: 0 0 0 1px var(--violet); }
 .simple-event__rail::after { content: ""; position: absolute; top: 92px; bottom: -30px; left: 50%; width: 1px; background: #dcdde7; }
 .simple-event:last-child .simple-event__rail::after { display: none; }
 .simple-event__card { min-width: 0; padding: 23px 25px 19px; border: 1px solid var(--line); border-radius: 19px; background: rgba(255, 255, 255, 0.92); box-shadow: 0 4px 16px rgba(38, 38, 70, 0.025); transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s; }
 .simple-event__card:hover { transform: translateY(-2px); border-color: #d2cfec; box-shadow: var(--shadow); }
 .simple-event__meta { display: flex; align-items: center; justify-content: space-between; gap: 12px; color: #9294a3; font-size: 10px; }
+.simple-event__badges { display: inline-flex; align-items: center; flex-wrap: wrap; gap: 7px; }
+.demo-record { padding: 4px 7px; color: #7a6a3d; border: 1px solid #e8dfc2; border-radius: 6px; background: #faf5e7; font-size: 9px; font-weight: 650; }
 .simple-status { display: inline-flex; align-items: center; gap: 6px; padding: 5px 9px; border-radius: 7px; font-size: 10px; font-weight: 750; }
 .simple-status i { width: 6px; height: 6px; border-radius: 50%; }
 .simple-status--ongoing { color: #0d7254; background: #e2f5ed; }
 .simple-status--ongoing i { background: #1b9d75; }
 .simple-status--upcoming { color: #87570e; background: #fff1da; }
 .simple-status--upcoming i { background: #c18327; }
+.simple-status--announced { color: #5846b8; background: #ebe7ff; }
+.simple-status--announced i { background: var(--violet); }
 .simple-status--ended { color: #6c6f7e; background: #eff0f4; }
 .simple-status--ended i { background: #9396a2; }
 .simple-status--cancelled { color: #a34d59; background: #fdebee; }
@@ -122,6 +128,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .simple-event__time svg { color: var(--violet); }
 .simple-event__time strong { color: #484b5e; font-size: 12px; font-weight: 650; }
 .simple-event__footer { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-top: 16px; padding-top: 14px; border-top: 1px solid #ededf3; }
+.simple-event__sources { display: flex; flex-wrap: wrap; gap: 8px 14px; min-width: 0; }
 .simple-source-link { display: inline-flex; align-items: center; gap: 7px; min-width: 0; color: #737687; font-size: 11px; }
 .simple-source-link > span:nth-child(2) { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .simple-source-link:hover { color: var(--violet); }

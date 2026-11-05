@@ -13,16 +13,16 @@ const clamp01 = (value: number) => Math.max(0, Math.min(1, value));
 
 export function getCollabStatus(collab: Collaboration, now = REFERENCE_NOW): CollabStatus {
   if (collab.statusOverride) return collab.statusOverride;
-  const start = atDay(collab.startDate);
   const end = collab.endDate ? atDay(collab.endDate) : null;
-  if (start > now) return "upcoming";
   if (end && daysBetween(end, now) > 0) return "ended";
+  if (!collab.startDate) return "announced";
+  if (atDay(collab.startDate) > now) return "upcoming";
   return "ongoing";
 }
 
 function meaningfulDate(collab: Collaboration, now = REFERENCE_NOW) {
   const candidates = [collab.announcedAt, collab.updatedAt];
-  if (atDay(collab.startDate) <= now) candidates.push(collab.startDate);
+  if (collab.startDate && atDay(collab.startDate) <= now) candidates.push(collab.startDate);
   if (collab.endDate && atDay(collab.endDate) <= now) candidates.push(collab.endDate);
   return candidates.sort().at(-1) ?? collab.updatedAt;
 }
@@ -99,7 +99,7 @@ export function getIpTimeline(ipId: string, timeline: Timeline = "all", imported
   const all = [...collaborations, ...imported].filter((collab) => collab.ipIds.includes(ipId));
   const filtered = all.filter((collab) => {
     const status = getCollabStatus(collab);
-    if (timeline === "current") return status === "ongoing" || status === "upcoming";
+    if (timeline === "current") return status === "ongoing" || status === "upcoming" || status === "announced";
     if (timeline === "history") return status === "ended" || status === "cancelled";
     return true;
   });
@@ -111,8 +111,8 @@ export function getIpTimeline(ipId: string, timeline: Timeline = "all", imported
       if (statusA === "ongoing") return -1;
       if (statusB === "ongoing") return 1;
     }
-    if (statusA === "upcoming" && statusB === "upcoming") return a.startDate.localeCompare(b.startDate);
-    return b.startDate.localeCompare(a.startDate) || b.updatedAt.localeCompare(a.updatedAt);
+    if (statusA === "upcoming" && statusB === "upcoming") return (a.startDate ?? "").localeCompare(b.startDate ?? "");
+    return (b.startDate ?? "").localeCompare(a.startDate ?? "") || b.updatedAt.localeCompare(a.updatedAt);
   });
 }
 
@@ -122,7 +122,7 @@ export function getIpDetail(ipId: string, imported: Collaboration[] = []) {
   const current = getIpTimeline(ipId, "current", imported);
   const history = getIpTimeline(ipId, "history", imported);
   const all = getIpTimeline(ipId, "all", imported);
-  const years = [...new Set(all.map((collab) => collab.startDate.slice(0, 4)))].sort((a, b) => b.localeCompare(a));
+  const years = [...new Set(all.map((collab) => collab.startDate?.slice(0, 4)).filter((year): year is string => Boolean(year)))].sort((a, b) => b.localeCompare(a));
   const brands = [...new Set(all.map((collab) => collab.brand))];
   const sourceCount = new Set(all.flatMap((collab) => collab.sources.map((source) => source.source))).size;
   return { ip, current, history, all, years, brands, sourceCount };
@@ -130,7 +130,7 @@ export function getIpDetail(ipId: string, imported: Collaboration[] = []) {
 
 export function getRadarStats(imported: Collaboration[] = []) {
   const allCollaborations = [...collaborations, ...imported];
-  const activeIps = new Set(allCollaborations.filter((collab) => ["ongoing", "upcoming"].includes(getCollabStatus(collab))).flatMap((collab) => collab.ipIds));
+  const activeIps = new Set(allCollaborations.filter((collab) => ["ongoing", "upcoming", "announced"].includes(getCollabStatus(collab))).flatMap((collab) => collab.ipIds));
   return {
     trackedIps: activeIps.size,
     ongoing: allCollaborations.filter((collab) => getCollabStatus(collab) === "ongoing").length,
@@ -149,6 +149,7 @@ export function formatShortDate(date: string) {
 }
 
 export function formatDateRange(collab: Collaboration) {
+  if (!collab.startDate) return collab.endDate ? `开始时间未官宣 — ${formatDate(collab.endDate)}` : "活动时间未官宣";
   return `${formatDate(collab.startDate)} — ${collab.endDate ? formatDate(collab.endDate) : "结束时间未官宣"}`;
 }
 

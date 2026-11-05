@@ -17,6 +17,13 @@ import { collaborations } from "@/lib/data";
     expect(getCollabStatus(collab)).toBe("ongoing");
     expect(formatDateRange(collab)).toContain("结束时间未官宣");
   });
+
+  it("keeps undated official announcements without inventing dates", () => {
+    const collab = { ...collaborations[0], id: "imported-undated", startDate: null, endDate: null };
+    expect(getCollabStatus(collab)).toBe("announced");
+    expect(formatDateRange(collab)).toBe("活动时间未官宣");
+    expect(getIpTimeline("honor-of-kings", "current", [collab]).map((item) => item.id)).toContain("imported-undated");
+  });
 });
 
 describe("IP radar queries", () => {

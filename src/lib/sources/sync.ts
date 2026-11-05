@@ -31,15 +31,15 @@ export async function syncOfficialSource(source: OfficialSourceDefinition): Prom
     const state = await loadSourceState(source.id);
     for (let page = 1; page <= MAX_PAGES; page += 1) {
       const list = await source.list(page);
+      console.info(`[${source.id}] 第 ${page} 页：${list.length} 条公告`);
       report.pagesScanned = page;
       if (!list.length) break;
-      let unchangedCount = 0;
 
       for (const item of list) {
         const contentHash = createHash("sha1").update(item.signature).digest("hex");
         const previous = state.processed[item.id];
-        if (previous && (previous.contentHash === contentHash || previous.contentHash === "previously-imported")) {
-          unchangedCount += 1;
+        const retryUndatedAnnouncement = previous?.reason === "缺少活动开始日期";
+        if (previous && !retryUndatedAnnouncement && (previous.contentHash === contentHash || previous.contentHash === "previously-imported")) {
           continue;
         }
 
@@ -52,6 +52,7 @@ export async function syncOfficialSource(source: OfficialSourceDefinition): Prom
           continue;
         }
 
+        console.info(`[${source.id}] 解析候选 ${item.id}：${item.title}`);
         const raw = await fetchAnnouncement(source.detailUrl(item.id));
         if (!raw.publishedAt && item.publishedAt) raw.publishedAt = item.publishedAt;
         const images = raw.images.length ? await prepareModelImages(raw.images) : { content: [], tileCount: 0, totalBytes: 0, warnings: [] };
@@ -62,11 +63,9 @@ export async function syncOfficialSource(source: OfficialSourceDefinition): Prom
 
         const rejectionReason = !draft.isCollab
           ? "非餐饮联动"
-          : !draft.startDate
-            ? "缺少活动开始日期"
-            : draft.endDate && draft.endDate < draft.startDate
-              ? "活动日期范围无效"
-              : "";
+          : draft.startDate && draft.endDate && draft.endDate < draft.startDate
+            ? "活动日期范围无效"
+            : "";
         if (rejectionReason) {
           state.processed[item.id] = { status: "ignored", contentHash, processedAt: new Date().toISOString(), reason: rejectionReason };
           report.candidates.push({ id: item.id, title: item.title, page, status: "rejected", reason: rejectionReason });
@@ -94,8 +93,6 @@ export async function syncOfficialSource(source: OfficialSourceDefinition): Prom
         report.stoppedAt = { page, id: item.id, title: item.title };
         return report;
       }
-
-      if (unchangedCount === list.length) break;
     }
   } catch (error) {
     report.error = error instanceof Error ? error.message : "未知同步错误";

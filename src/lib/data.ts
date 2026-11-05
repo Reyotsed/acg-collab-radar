@@ -91,12 +91,6 @@ export const collaborations: Collaboration[] = [
     sources: [media("文豪野犬 × Animate Cafe 巡回店", "Collabo Cafe", "https://collabo-cafe.com/zh-hans/events/collabo/bungo-stray-dogs-animate-cafe-tokorozawa-sakura-town-2026/", "2026-10-31")],
   },
   {
-    id: "hsr-chapanda-2026", ipIds: ["hsr"], title: "崩坏：星穹铁道 × 茶百道", brand: "茶百道", brandShort: "茶", category: "tea", region: "中国大陆", location: "全国参与门店",
-    startDate: "2026-04-25", endDate: "2026-05-25", announcedAt: "2026-04-17", updatedAt: "2026-04-25", statusOverride: "ended",
-    summary: "「将军请喝茶」主题联动，包含角色杯、纸袋、镭射票、徽章和亚克力立牌。结束日期仅作 Demo 归档展示。", tags: ["将军请喝茶", "主题门店", "双城快闪"],
-    sources: [official("崩坏星穹铁道 × 茶百道官宣", "崩坏星穹铁道官方微博", "https://m.weibo.cn/status/5288751162199286", "2026-04-17"), media("茶百道崩铁联动活动攻略", "17173", "https://news.17173.com/content/04192026/204517136.shtml", "2026-04-19")],
-  },
-  {
     id: "miku-bullpulu-2026", ipIds: ["hatsune-miku"], title: "初音未来 × Bull Pulu 珍珠奶茶", brand: "Bull Pulu", brandShort: "B", category: "tea", region: "日本", location: "日本参与门店",
     startDate: "2026-05-01", endDate: "2026-05-20", announcedAt: "2026-04-10", updatedAt: "2026-05-01",
     summary: "六款 Vocaloid 角色主题饮品，附赠限定杯垫并推出原创周边。", tags: ["六款饮品", "限定杯垫", "原创周边"],
