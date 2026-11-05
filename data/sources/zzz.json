@@ -1286,10 +1286,10 @@
       "reason": "非餐饮联动"
     },
     "165191": {
-      "status": "ignored",
+      "status": "done",
       "contentHash": "3a21e15cf24edad0ebbecc157de3e5ad815dddf2",
-      "processedAt": "2026-11-05T11:33:15.819Z",
-      "reason": "缺少活动开始日期"
+      "collaborationId": "imported-985c0e9dcbb0",
+      "processedAt": "2026-11-05T20:41:48.250Z"
     },
     "165199": {
       "status": "ignored",

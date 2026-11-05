@@ -211,5 +211,38 @@
         "tier": "media"
       }
     ]
+  },
+  {
+    "id": "imported-985c0e9dcbb0",
+    "ipIds": [
+      "zzz"
+    ],
+    "title": "KFC I 绝区零联动：「天使」降临  美味On Air！",
+    "brand": "KFC",
+    "brandShort": "K",
+    "category": "fastfood",
+    "region": "中国大陆",
+    "location": "未公布",
+    "startDate": null,
+    "endDate": null,
+    "announcedAt": "2026-07-10",
+    "updatedAt": "2026-07-10",
+    "summary": "KFC与《绝区零》开展商业联动，主题为「天使」降临 美味On Air，海报展示妄想天使角色舞台演出及KFC元素；正文提及妄想天使美味舞台首演。公告未明确公布活动起止日期、具体门店或菜单信息。",
+    "tags": [
+      "KFC",
+      "绝区零",
+      "餐饮联动",
+      "快餐",
+      "妄想天使"
+    ],
+    "sources": [
+      {
+        "title": "KFC I 绝区零联动：「天使」降临  美味On Air！",
+        "source": "绝区零官网",
+        "url": "https://zzz.mihoyo.com/news/165191",
+        "publishedAt": "2026-07-10",
+        "tier": "official"
+      }
+    ]
   }
 ]
