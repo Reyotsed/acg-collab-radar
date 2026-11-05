@@ -1,0 +1,13 @@
+node_modules/
+.next*/
+.pages-local-only-*/
+out/
+.venv/
+.venv-ocr/
+.env
+.env.local
+.env.*.local
+*.log
+*.tsbuildinfo
+.DS_Store
+coverage/

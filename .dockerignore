@@ -1,0 +1,12 @@
+node_modules
+.next
+.next-demo-artifacts
+.git
+.env
+.env.*
+!.env.example
+.venv
+.venv-ocr
+npm-debug.log
+.DS_Store
+coverage

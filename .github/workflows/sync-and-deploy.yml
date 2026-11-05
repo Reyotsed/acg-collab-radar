@@ -1,0 +1,82 @@
+name: Sync and deploy GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    # 北京时间每天 09:17、21:17；GitHub 定时任务可能略有延迟。
+    - cron: "17 1,13 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: radar-main-deployment
+  cancel-in-progress: false
+
+jobs:
+  sync-build-deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Check out main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
+
+      - name: Sync Genshin collaboration data
+        if: github.event_name != 'push'
+        run: npm run sync:genshin
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          DEEPSEEK_MODEL: deepseek-flash
+          FIRECRAWL_API_KEY: ${{ secrets.FIRECRAWL_API_KEY }}
+          TZ: Asia/Shanghai
+
+      - name: Build static site
+        run: npm run build:pages
+        env:
+          PAGES_BASE_PATH: /acg-collab-radar
+
+      - name: Commit data updates to main
+        if: github.event_name != 'push'
+        run: |
+          git add data/imported-collabs.json data/genshin-source.json
+          if git diff --cached --quiet; then
+            echo "No data changes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore(data): sync Genshin collaborations"
+          git push origin HEAD:main
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload static site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: out
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
