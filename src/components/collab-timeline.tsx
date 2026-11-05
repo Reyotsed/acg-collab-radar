@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowUpRight, ExternalLink } from "lucide-react";
+import { ArrowUpRight, CalendarRange, ExternalLink } from "lucide-react";
 import { formatDate, formatDateRange, getCollabStatus } from "@/lib/collabs";
 import { getIp } from "@/lib/data";
 import { STATUS_LABELS, type CollabStatus, type Collaboration } from "@/lib/types";
@@ -8,36 +8,59 @@ function newestFirst(a: Collaboration, b: Collaboration) {
   return b.updatedAt.localeCompare(a.updatedAt) || b.startDate.localeCompare(a.startDate);
 }
 
-function TimelineGroup({ title, status, items, showIp }: { title: string; status: CollabStatus; items: Collaboration[]; showIp: boolean }) {
+const groupCaptions: Record<string, string> = {
+  ongoing: "现在就能参与",
+  upcoming: "提前收藏时间",
+  ended: "往期联动存档",
+};
+
+interface TimelineGroupProps {
+  title: string;
+  status: CollabStatus;
+  items: Collaboration[];
+  showIp: boolean;
+}
+
+function TimelineGroup({ title, status, items, showIp }: TimelineGroupProps) {
   if (!items.length) return null;
   return (
-    <section className="timeline-group">
-      <div className="timeline-group__heading"><h2>{title}</h2><span>{items.length} 条</span></div>
+    <section className={`timeline-group timeline-group--${status}`} id={`timeline-${status}`}>
+      <div className="timeline-group__heading">
+        <div><span className="timeline-group__marker" /><h2>{title}</h2><span className="timeline-group__count">{items.length}</span></div>
+        <p>{groupCaptions[status]}</p>
+      </div>
       <div className="simple-timeline">
         {items.map((collab) => {
+          const actualStatus = getCollabStatus(collab);
           const ipNames = collab.ipIds.map((id) => getIp(id)?.name).filter(Boolean).join("、");
           const primarySource = collab.sources[0];
+          const [year, month, day] = collab.updatedAt.split("-");
           return (
-            <div className={`simple-event simple-event--${status}`} key={collab.id}>
-              <div className="simple-event__rail"><span /></div>
-              <article className="simple-event__card">
+            <article className={`simple-event simple-event--${actualStatus}`} key={collab.id}>
+              <div className="simple-event__rail" aria-hidden="true">
+                <div><strong>{month}.{day}</strong><span>{year}</span></div><i />
+              </div>
+              <div className="simple-event__card">
                 <div className="simple-event__meta">
-                  <span className={`simple-status simple-status--${status}`}><i />{STATUS_LABELS[status]}</span>
-                  <span>{formatDate(collab.updatedAt)} 更新</span>
+                  <span className={`simple-status simple-status--${actualStatus}`}><i />{STATUS_LABELS[actualStatus]}</span>
+                  <span>更新于 <time dateTime={collab.updatedAt}>{formatDate(collab.updatedAt)}</time></span>
                 </div>
                 <h3>{showIp ? `${ipNames} × ${collab.brand}` : collab.title}</h3>
-                <p className="simple-event__time"><span>联动时间</span>{formatDateRange(collab)}</p>
+                <p className="simple-event__summary">{collab.summary}</p>
+                <div className="simple-event__time">
+                  <CalendarRange size={16} /><span>联动时间</span><strong>{formatDateRange(collab)}</strong>
+                </div>
                 <div className="simple-event__footer">
                   {primarySource && (
                     <a href={primarySource.url} target="_blank" rel="noreferrer" className="simple-source-link">
                       <span className={`evidence-tier evidence-tier--${primarySource.tier}`}>{primarySource.tier === "official" ? "官方" : "媒体"}</span>
-                      {primarySource.source}<ExternalLink size={13} />
+                      <span>{primarySource.source}</span><ExternalLink size={13} />
                     </a>
                   )}
-                  {showIp && collab.ipIds[0] && <Link href={`/ip/${collab.ipIds[0]}`} className="simple-ip-link">查看 IP 档案<ArrowUpRight size={13} /></Link>}
+                  {showIp && collab.ipIds[0] && <Link href={`/ip/${collab.ipIds[0]}`} className="simple-ip-link">查看 IP 档案<ArrowUpRight size={14} /></Link>}
                 </div>
-              </article>
-            </div>
+              </div>
+            </article>
           );
         })}
       </div>

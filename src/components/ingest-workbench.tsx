@@ -24,7 +24,7 @@ import {
 import { ips } from "@/lib/data";
 import { CATEGORY_LABELS } from "@/lib/types";
 import type { CollabDraft, IngestResult } from "@/lib/ingest/types";
-import { GenshinSyncCard } from "./genshin-sync-card";
+import { SourceSyncCard } from "./source-sync-card";
 
 const exampleUrl = "https://ys.mihoyo.com/main/news/detail/124755";
 
@@ -118,7 +118,7 @@ export function IngestWorkbench() {
         </details>
       </section>
 
-      <GenshinSyncCard adminToken={adminToken} />
+      <SourceSyncCard adminToken={adminToken} />
 
       {error && <div className="ingest-alert ingest-alert--error"><TriangleAlert size={18} /><div><strong>这次没有解析成功</strong><p>{error}</p></div></div>}
       {loading && (

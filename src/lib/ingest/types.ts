@@ -6,7 +6,7 @@ export interface RawAnnouncement {
   publishedAt: string;
   sourceName: string;
   sourceTier: SourceTier;
-  fetcher: "mihoyo-api" | "firecrawl" | "direct-http";
+  fetcher: "mihoyo-api" | "mihoyo-content-v2" | "official-html" | "firecrawl" | "direct-http";
   text: string;
   images: string[];
 }

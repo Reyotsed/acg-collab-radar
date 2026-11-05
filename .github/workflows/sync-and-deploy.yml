@@ -42,9 +42,9 @@ jobs:
       - name: Run tests
         run: npm test
 
-      - name: Sync Genshin collaboration data
+      - name: Sync official game collaboration data
         if: github.event_name != 'push'
-        run: npm run sync:genshin
+        run: npm run sync:sources
         env:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
           DEEPSEEK_MODEL: deepseek-flash
@@ -59,14 +59,14 @@ jobs:
       - name: Commit data updates to main
         if: github.event_name != 'push'
         run: |
-          git add data/imported-collabs.json data/genshin-source.json
+          git add data/
           if git diff --cached --quiet; then
             echo "No data changes to commit."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "chore(data): sync Genshin collaborations"
+          git commit -m "chore(data): sync official game collaborations"
           git push origin HEAD:main
 
       - name: Configure GitHub Pages

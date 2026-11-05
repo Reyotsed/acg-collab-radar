@@ -1,4 +1,4 @@
-import { syncLatestGenshinCollab } from "../lib/sources/genshin";
+import { syncLatestGenshinCollab } from "../src/lib/sources/genshin";
 
 async function main() {
   if (process.argv.includes("--help")) {

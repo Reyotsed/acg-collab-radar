@@ -7,7 +7,7 @@ export default function NotFound() {
       <span><Radar size={28} /></span>
       <h3>没有找到这个 IP 或页面</h3>
       <p>它可能尚未被收录到当前演示快照中。</p>
-      <Link href="/" style={{ display: "inline-block", marginTop: 20, color: "#6c55d9", fontSize: 13 }}>返回联动榜单</Link>
+      <Link href="/" style={{ display: "inline-block", marginTop: 20, color: "var(--violet)", fontSize: 13 }}>返回联动时间线</Link>
     </div>
   );
 }

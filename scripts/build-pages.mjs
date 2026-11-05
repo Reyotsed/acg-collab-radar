@@ -4,7 +4,7 @@ import path from "node:path";
 
 const root = process.cwd();
 const staging = path.join(root, `.pages-local-only-${process.pid}`);
-const localOnlyPaths = ["app/api", "app/ingest"];
+const localOnlyPaths = ["src/app/api", "src/app/ingest"];
 const moved = [];
 
 try {

@@ -8,6 +8,7 @@
     "build:pages": "node scripts/build-pages.mjs",
     "start": "next start",
     "sync:genshin": "node --env-file-if-exists=.env --import tsx scripts/sync-genshin.ts",
+    "sync:sources": "node --env-file-if-exists=.env --import tsx scripts/sync-sources.ts",
     "test": "vitest run"
   },
   "dependencies": {
