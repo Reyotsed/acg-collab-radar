@@ -57,7 +57,7 @@ describe("IP radar queries", () => {
 
   it("separates current collaborations from history", () => {
     expect(getIpTimeline("genshin", "current").map((item) => item.id)).toContain("genshin-baskin-2026");
-    expect(getIpTimeline("genshin", "history").map((item) => item.id)).toContain("genshin-heytea-2023");
-    expect(getIpTimeline("genshin", "current").map((item) => item.id)).not.toContain("genshin-heytea-2023");
+    expect(getIpTimeline("hatsune-miku", "history").map((item) => item.id)).toContain("miku-bullpulu-2026");
+    expect(getIpTimeline("hatsune-miku", "current").map((item) => item.id)).not.toContain("miku-bullpulu-2026");
   });
 });

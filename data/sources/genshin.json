@@ -2,10 +2,10 @@
   "source": "genshin",
   "processed": {
     "124755": {
-      "status": "done",
+      "status": "ignored",
       "contentHash": "previously-imported",
-      "collaborationId": "imported-fb95eb4febc1",
-      "processedAt": "2026-11-05T00:00:00.000Z"
+      "processedAt": "2026-11-06T00:00:00.000Z",
+      "reason": "超出最近一年范围"
     },
     "163704": {
       "status": "ignored",

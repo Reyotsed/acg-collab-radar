@@ -36,12 +36,7 @@ export async function loadSourceState(source: SourceId): Promise<SourceState> {
     }
   }
 
-  return {
-    source,
-    processed: source === "genshin" ? {
-      "124755": { status: "done", contentHash: "previously-imported", collaborationId: "imported-fb95eb4febc1", processedAt: "2026-11-05T00:00:00.000Z" },
-    } : {},
-  };
+  return { source, processed: {} };
 }
 
 export async function saveSourceState(state: SourceState) {

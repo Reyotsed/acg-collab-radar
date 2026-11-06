@@ -120,18 +120,6 @@ export const collaborations: Collaboration[] = [
     summary: "联名饮品与周边，并设置主题商场、城市大屏及主题公交等线下打卡点。", tags: ["线下打卡", "主题商场", "角色周边"],
     sources: [media("茶百道未定事件簿联名活动", "233 乐园", "https://www.233leyuan.com/post-detail/2059144057662578688", "2025-11-27")],
   },
-  {
-    id: "tgcf-guming-2023", ipIds: ["tgcf"], title: "天官赐福 × 古茗", brand: "古茗", brandShort: "古", category: "tea", region: "中国大陆", location: "全国门店及十二城主题店",
-    startDate: "2023-10-13", endDate: "2023-12-31", announcedAt: "2023-10-12", updatedAt: "2023-10-13",
-    summary: "轻乳茶系列限定饮品，搭配联名纸杯、贴纸、透卡、徽章等周边。", tags: ["轻乳茶", "十二城主题店", "国风联动"],
-    sources: [media("古茗合作天官赐福动画", "Foodaily", "https://www.foodaily.com/index.php/newsflashes/8428", "2023-10-12")],
-  },
-  {
-    id: "genshin-heytea-2023", ipIds: ["genshin"], title: "原神 × 喜茶 秋日约定", brand: "喜茶", brandShort: "喜", category: "tea", region: "中国大陆", location: "全国参与门店",
-    startDate: "2023-09-06", endDate: "2023-10-06", announcedAt: "2023-09-05", updatedAt: "2023-09-06",
-    summary: "神里兄妹主题饮品、定制包装、瓶装果汁茶与角色周边。", tags: ["神里兄妹", "定制饮品", "主题包装"],
-    sources: [media("喜茶原神联动开启", "格新游戏站", "https://www.gexinlaw.com/news/26882.html", "2023-09-05")],
-  },
 ];
 
 export const getIp = (id: string) => ips.find((ip) => ip.id === id);

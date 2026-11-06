@@ -8,13 +8,22 @@ import { loadSourceState, saveSourceState } from "./state";
 import type { OfficialSourceDefinition, SourceId, SourceSyncReport } from "./types";
 
 const MAX_PAGES = 20;
+const DAY_MS = 86_400_000;
+export const SYNC_LOOKBACK_DAYS = 365;
 const candidatePattern = /联动|联名|合作|KFC|肯德基|麦当劳|瑞幸|喜茶|奈雪|茶百道|古茗|蜜雪|星巴克|必胜客|汉堡王|德克士|美团|大众点评|乐乐茶|霸王茶姬/i;
 
 export function isCollabCandidate(title: string) {
   return candidatePattern.test(title);
 }
 
-export async function syncOfficialSource(source: OfficialSourceDefinition): Promise<SourceSyncReport> {
+export function isWithinSyncWindow(date: string | null, now: Date) {
+  if (!date) return true;
+  const timestamp = Date.parse(`${date}T00:00:00+08:00`);
+  if (!Number.isFinite(timestamp)) return false;
+  return now.getTime() - timestamp <= SYNC_LOOKBACK_DAYS * DAY_MS;
+}
+
+export async function syncOfficialSource(source: OfficialSourceDefinition, now = new Date()): Promise<SourceSyncReport> {
   const report: SourceSyncReport = {
     source: source.id,
     ipName: source.ipName,
@@ -36,12 +45,22 @@ export async function syncOfficialSource(source: OfficialSourceDefinition): Prom
       if (!list.length) break;
 
       for (const item of list) {
+        if (!isWithinSyncWindow(item.publishedAt, now)) {
+          report.stoppedAt = { page, id: item.id, title: item.title };
+          report.stopReason = "lookback-limit";
+          return report;
+        }
+
         const contentHash = createHash("sha1").update(item.signature).digest("hex");
         const previous = state.processed[item.id];
         const retryUndatedAnnouncement = previous?.reason === "缺少活动开始日期";
-        if (previous && !retryUndatedAnnouncement && (previous.contentHash === contentHash || previous.contentHash === "previously-imported")) {
-          continue;
+        const unchanged = previous && (previous.contentHash === contentHash || previous.contentHash === "previously-imported");
+        if (previous?.status === "done" && unchanged && !retryUndatedAnnouncement) {
+          report.stoppedAt = { page, id: item.id, title: item.title };
+          report.stopReason = "latest-already-synced";
+          return report;
         }
+        if (previous && unchanged && !retryUndatedAnnouncement) continue;
 
         report.itemsScanned += 1;
         report.newIdCount += 1;
@@ -63,9 +82,11 @@ export async function syncOfficialSource(source: OfficialSourceDefinition): Prom
 
         const rejectionReason = !draft.isCollab
           ? "非餐饮联动"
-          : draft.startDate && draft.endDate && draft.endDate < draft.startDate
-            ? "活动日期范围无效"
-            : "";
+          : !isWithinSyncWindow(draft.startDate, now)
+            ? "超出最近一年范围"
+            : draft.startDate && draft.endDate && draft.endDate < draft.startDate
+              ? "活动日期范围无效"
+              : "";
         if (rejectionReason) {
           state.processed[item.id] = { status: "ignored", contentHash, processedAt: new Date().toISOString(), reason: rejectionReason };
           report.candidates.push({ id: item.id, title: item.title, page, status: "rejected", reason: rejectionReason });
@@ -74,7 +95,7 @@ export async function syncOfficialSource(source: OfficialSourceDefinition): Prom
           continue;
         }
 
-        const saved = await saveImportedCollaboration(raw, draft);
+        const saved = await saveImportedCollaboration(raw, draft, { latestForIp: source.ipId });
         state.processed[item.id] = {
           status: "done",
           contentHash,
@@ -91,6 +112,7 @@ export async function syncOfficialSource(source: OfficialSourceDefinition): Prom
           endDate: saved.collaboration.endDate,
         };
         report.stoppedAt = { page, id: item.id, title: item.title };
+        report.stopReason = "latest-collab-saved";
         return report;
       }
     }

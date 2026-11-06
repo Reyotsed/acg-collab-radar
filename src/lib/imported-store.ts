@@ -17,7 +17,18 @@ export async function getImportedCollaborations(): Promise<Collaboration[]> {
   }
 }
 
-export async function saveImportedCollaboration(raw: RawAnnouncement, draft: CollabDraft) {
+async function writeImportedCollaborations(collaborations: Collaboration[]) {
+  await mkdir(/* turbopackIgnore: true */ path.dirname(dataFile), { recursive: true });
+  const temporary = `${dataFile}.tmp`;
+  await writeFile(/* turbopackIgnore: true */ temporary, `${JSON.stringify(collaborations, null, 2)}\n`, "utf8");
+  await rename(/* turbopackIgnore: true */ temporary, dataFile);
+}
+
+export function keepOnlyLatestForIp(items: Collaboration[], keepId: string, ipId: string) {
+  return items.filter((item) => item.id === keepId || !item.ipIds.includes(ipId));
+}
+
+export async function saveImportedCollaboration(raw: RawAnnouncement, draft: CollabDraft, options: { latestForIp?: string } = {}) {
   if (draft.isCollab === false) throw new Error("该公告不属于餐饮联动，未写入联动档案");
   const ip = getIp(draft.ipId);
   if (!ip) throw new Error("请选择已收录的 IP");
@@ -50,12 +61,17 @@ export async function saveImportedCollaboration(raw: RawAnnouncement, draft: Col
   };
 
   const existing = await getImportedCollaborations();
-  const duplicate = existing.find((item) => item.id === id);
-  if (duplicate) return { collaboration: duplicate, duplicate: true };
-  const next = [...existing, collaboration];
-  await mkdir(/* turbopackIgnore: true */ path.dirname(dataFile), { recursive: true });
-  const temporary = `${dataFile}.tmp`;
-  await writeFile(/* turbopackIgnore: true */ temporary, `${JSON.stringify(next, null, 2)}\n`, "utf8");
-  await rename(/* turbopackIgnore: true */ temporary, dataFile);
+  const duplicate = existing.find((item) => item.id === id || item.sources.some((source) => source.url === raw.url));
+  if (duplicate) {
+    if (options.latestForIp) {
+      const next = keepOnlyLatestForIp(existing, duplicate.id, options.latestForIp);
+      if (next.length !== existing.length) await writeImportedCollaborations(next);
+    }
+    return { collaboration: duplicate, duplicate: true };
+  }
+  const retained = options.latestForIp
+    ? keepOnlyLatestForIp(existing, id, options.latestForIp)
+    : existing;
+  await writeImportedCollaborations([...retained, collaboration]);
   return { collaboration, duplicate: false };
 }

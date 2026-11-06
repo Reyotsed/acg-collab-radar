@@ -36,5 +36,6 @@ export interface SourceSyncReport {
   candidates: Array<{ id: string; title: string; page: number; status: "imported" | "rejected"; reason?: string }>;
   result: null | { id: string; title: string; duplicate: boolean; startDate: string | null; endDate: string | null };
   stoppedAt: null | { page: number; id: string; title: string };
+  stopReason?: "latest-collab-saved" | "latest-already-synced" | "lookback-limit";
   error?: string;
 }
