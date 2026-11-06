@@ -110,24 +110,40 @@
     "ipIds": [
       "zzz"
     ],
-    "title": "绝区零 x KFC联动PV：美味与灵感一同降临",
-    "brand": "KFC",
-    "brandShort": "K",
+    "title": "绝区零 × 肯德基「天使降临」联动",
+    "brand": "肯德基",
+    "brandShort": "肯",
     "category": "fastfood",
     "region": "中国大陆",
-    "location": "未公布",
-    "startDate": null,
+    "location": "全国参与门店及指定主题店（具体以餐厅公示为准）",
+    "startDate": "2026-07-24",
     "endDate": null,
-    "announcedAt": "2026-07-19",
-    "updatedAt": "2026-07-19",
-    "summary": "《绝区零》与KFC联动PV公开，主题为“天使降临 美味ON AIR!”，画面展示三名角色及KFC元素；公告未明确活动起止时间、门店、菜单或周边信息。",
+    "endRule": "while_supplies_last",
+    "announcedAt": "2026-07-18",
+    "updatedAt": "2026-11-06",
+    "summary": "肯德基官方公布多款《绝区零》联动套餐：首批于7月24日上市并开放预约，另有套餐于7月31日开放。套餐与周边限量，随餐发完即止，相应套餐结束售卖；当前是否仍可购买以餐厅和点餐渠道实际库存为准。",
     "tags": [
-      "游戏联动",
-      "餐饮联动",
+      "肯德基",
       "KFC",
-      "PV"
+      "天使降临",
+      "限量套餐",
+      "售完即止"
     ],
     "sources": [
+      {
+        "title": "肯德基 × 绝区零联动情报大公开",
+        "source": "肯德基官方微博",
+        "url": "https://weibo.com/1687422352/R9ekgDoIy",
+        "publishedAt": "2026-07-18",
+        "tier": "official"
+      },
+      {
+        "title": "KFC × 绝区零联动套餐攻略",
+        "source": "肯德基官方公众号",
+        "url": "http://mp.weixin.qq.com/s?__biz=MjM5MzYxMjI0NQ==&mid=2659316038&idx=3&sn=3b12b410ba883142705e460ee933fb7e&chksm=bcf1f24c324020f294f4597ca7f8eb9ef1cd4923a3f1c1e13ebe6a3eaad0c3682f0fdcc8414a#rd",
+        "publishedAt": "",
+        "tier": "official"
+      },
       {
         "title": "绝区零 x KFC联动PV：美味与灵感一同降临",
         "source": "绝区零官网",
@@ -185,15 +201,17 @@
     "location": "全国门店（部分门店因特殊原因无法参加）",
     "startDate": "2026-04-25",
     "endDate": null,
+    "endRule": "while_supplies_last",
     "announcedAt": "2026-04-17",
-    "updatedAt": "2026-04-17",
-    "summary": "《崩坏：星穹铁道》与茶百道联名将于4月25日10:00正式上线；活动全国门店参与，部分门店因特殊原因无法参加。公告还说明联名亚克力立牌文件袋套组仅限茶百道饮品点单小程序换购、单笔限购2份且角色不可重复，并设置转发抽奖。",
+    "updatedAt": "2026-11-06",
+    "summary": "《崩坏：星穹铁道》与茶百道联名于4月25日10:00上线，全国门店参与，部分门店因特殊原因无法参加。联名包装、周边及部分门店赠礼为限量供应，售完或领完即止；当前库存和参与状态以茶百道门店及点餐小程序为准。",
     "tags": [
       "游戏联动",
       "茶饮",
       "崩坏：星穹铁道",
       "茶百道",
-      "联名"
+      "联名",
+      "售完即止"
     ],
     "sources": [
       {

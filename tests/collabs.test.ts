@@ -24,6 +24,20 @@ import { collaborations } from "@/lib/data";
     expect(formatDateRange(collab)).toBe("活动时间未官宣");
     expect(getIpTimeline("honor-of-kings", "current", [collab]).map((item) => item.id)).toContain("imported-undated");
   });
+
+  it("moves while-supplies-last campaigns to history after a default month", () => {
+    const collab = { ...collaborations[0], id: "imported-stock", startDate: "2026-01-01", endDate: null, endRule: "while_supplies_last" as const };
+    expect(getCollabStatus(collab)).toBe("ended");
+    expect(formatDateRange(collab)).toBe("2026.01.01 — 2026.02.01（默认截止）");
+    expect(getIpTimeline("honor-of-kings", "history", [collab]).map((item) => item.id)).toContain("imported-stock");
+    expect(getIpTimeline("honor-of-kings", "current", [collab]).map((item) => item.id)).not.toContain("imported-stock");
+  });
+
+  it("keeps while-supplies-last campaigns current during the default month", () => {
+    const collab = { ...collaborations[0], id: "imported-stock-current", startDate: "2026-10-15", endDate: null, endRule: "while_supplies_last" as const };
+    expect(getCollabStatus(collab)).toBe("ongoing");
+    expect(formatDateRange(collab)).toContain("2026.11.15（默认截止）");
+  });
 });
 
 describe("IP radar queries", () => {

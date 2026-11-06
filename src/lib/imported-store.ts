@@ -35,6 +35,7 @@ export async function saveImportedCollaboration(raw: RawAnnouncement, draft: Col
     location: draft.location.trim(),
     startDate: draft.startDate,
     endDate: draft.endDate,
+    endRule: draft.endRule ?? undefined,
     announcedAt: draft.announcedAt || raw.publishedAt,
     updatedAt: draft.announcedAt || raw.publishedAt,
     summary: draft.summary.trim(),

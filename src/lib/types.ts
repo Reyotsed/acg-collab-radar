@@ -33,6 +33,7 @@ export interface Collaboration {
   location: string;
   startDate: string | null;
   endDate: string | null;
+  endRule?: "while_supplies_last";
   announcedAt: string;
   updatedAt: string;
   summary: string;

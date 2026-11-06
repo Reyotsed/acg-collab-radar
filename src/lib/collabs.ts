@@ -11,9 +11,18 @@ const atDay = (date: string) => new Date(`${date}T00:00:00+08:00`);
 const daysBetween = (from: Date, to: Date) => Math.floor((to.getTime() - from.getTime()) / DAY_MS);
 const clamp01 = (value: number) => Math.max(0, Math.min(1, value));
 
+export function getCollabEndDate(collab: Collaboration) {
+  if (collab.endDate) return collab.endDate;
+  if (collab.endRule !== "while_supplies_last" || !collab.startDate) return null;
+  const [year, month, day] = collab.startDate.split("-").map(Number);
+  const nextMonthDays = new Date(Date.UTC(year, month + 1, 0)).getUTCDate();
+  return new Date(Date.UTC(year, month, Math.min(day, nextMonthDays))).toISOString().slice(0, 10);
+}
+
 export function getCollabStatus(collab: Collaboration, now = REFERENCE_NOW): CollabStatus {
   if (collab.statusOverride) return collab.statusOverride;
-  const end = collab.endDate ? atDay(collab.endDate) : null;
+  const endDate = getCollabEndDate(collab);
+  const end = endDate ? atDay(endDate) : null;
   if (end && daysBetween(end, now) > 0) return "ended";
   if (!collab.startDate) return "announced";
   if (atDay(collab.startDate) > now) return "upcoming";
@@ -23,7 +32,8 @@ export function getCollabStatus(collab: Collaboration, now = REFERENCE_NOW): Col
 function meaningfulDate(collab: Collaboration, now = REFERENCE_NOW) {
   const candidates = [collab.announcedAt, collab.updatedAt];
   if (collab.startDate && atDay(collab.startDate) <= now) candidates.push(collab.startDate);
-  if (collab.endDate && atDay(collab.endDate) <= now) candidates.push(collab.endDate);
+  const endDate = getCollabEndDate(collab);
+  if (endDate && atDay(endDate) <= now) candidates.push(endDate);
   return candidates.sort().at(-1) ?? collab.updatedAt;
 }
 
@@ -45,7 +55,7 @@ function calculateHeat(recent: Collaboration[], now = REFERENCE_NOW): { heat: nu
     const status = getCollabStatus(collab, now);
     if (status === "ongoing") return 1;
     if (status === "upcoming") return 0.8;
-    return daysBetween(atDay(collab.endDate ?? meaningfulDate(collab, now)), now) <= 30 ? 0.3 : 0;
+    return daysBetween(atDay(getCollabEndDate(collab) ?? meaningfulDate(collab, now)), now) <= 30 ? 0.3 : 0;
   }));
   const sourceCount = new Set(recent.flatMap((collab) => collab.sources.map((source) => source.source))).size;
   const sources = clamp01(Math.log1p(sourceCount) / Math.log1p(5));
@@ -99,7 +109,7 @@ export function getIpTimeline(ipId: string, timeline: Timeline = "all", imported
   const all = [...collaborations, ...imported].filter((collab) => collab.ipIds.includes(ipId));
   const filtered = all.filter((collab) => {
     const status = getCollabStatus(collab);
-    if (timeline === "current") return status === "ongoing" || status === "upcoming" || status === "announced";
+    if (timeline === "current") return ["ongoing", "upcoming", "announced"].includes(status);
     if (timeline === "history") return status === "ended" || status === "cancelled";
     return true;
   });
@@ -149,8 +159,10 @@ export function formatShortDate(date: string) {
 }
 
 export function formatDateRange(collab: Collaboration) {
-  if (!collab.startDate) return collab.endDate ? `开始时间未官宣 — ${formatDate(collab.endDate)}` : "活动时间未官宣";
-  return `${formatDate(collab.startDate)} — ${collab.endDate ? formatDate(collab.endDate) : "结束时间未官宣"}`;
+  const endDate = getCollabEndDate(collab);
+  if (!collab.startDate) return endDate ? `开始时间未官宣 — ${formatDate(endDate)}` : "活动时间未官宣";
+  const isDefaultEnd = !collab.endDate && collab.endRule === "while_supplies_last";
+  return `${formatDate(collab.startDate)} — ${endDate ? `${formatDate(endDate)}${isDefaultEnd ? "（默认截止）" : ""}` : "结束时间未官宣"}`;
 }
 
 export function getRelativeLabel(date: string) {

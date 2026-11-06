@@ -23,6 +23,7 @@ export interface CollabDraft {
   location: string;
   startDate: string | null;
   endDate: string | null;
+  endRule: "while_supplies_last" | null;
   announcedAt: string;
   summary: string;
   tags: string[];
