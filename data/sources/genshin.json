@@ -2241,6 +2241,12 @@
       "status": "ignored",
       "contentHash": "71026173e31a632df2061c2ee7184a60f37553e8",
       "processedAt": "2026-11-05T04:04:00.826Z"
+    },
+    "167267": {
+      "status": "ignored",
+      "contentHash": "dce12d310537cdbbcd30f9b5efb6adf7d05ebf13",
+      "processedAt": "2026-11-06T07:55:51.559Z",
+      "reason": "标题未命中候选词"
     }
   }
 }
