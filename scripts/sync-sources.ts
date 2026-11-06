@@ -1,18 +1,17 @@
-import { officialSources } from "../src/lib/sources/registry";
-import { syncOfficialSources } from "../src/lib/sources/sync";
-import type { SourceId } from "../src/lib/sources/types";
+import { monitoredSourceIds, syncMonitoredSources, type MonitoredSourceId } from "../src/lib/sources/run";
 
 async function main() {
   if (process.argv.includes("--help")) {
-    console.log("用法：npm run sync:sources [-- --source=zzz]\n增量同步原神、崩铁、崩三、绝区零和明日方舟官方公告。");
+    console.log(`用法：npm run sync:sources [-- --source=zzz]\n增量同步五个游戏官方源及 ChineseFoodWiki 饮品页面。可选：${monitoredSourceIds.join(", ")}`);
     return;
   }
 
   const requested = process.argv.find((argument) => argument.startsWith("--source="))?.split("=")[1];
-  const sourceIds = officialSources.map((source) => source.id);
-  if (requested && !sourceIds.includes(requested as SourceId)) throw new Error(`未知来源 ${requested}，可选：${sourceIds.join(", ")}`);
-  const reports = await syncOfficialSources(requested ? [requested as SourceId] : undefined);
-  console.log(JSON.stringify({ syncedAt: new Date().toISOString(), reports }, null, 2));
+  if (requested && !monitoredSourceIds.includes(requested as MonitoredSourceId)) {
+    throw new Error(`未知来源 ${requested}，可选：${monitoredSourceIds.join(", ")}`);
+  }
+  const result = await syncMonitoredSources(requested as MonitoredSourceId | undefined);
+  console.log(JSON.stringify({ syncedAt: new Date().toISOString(), ...result }, null, 2));
 }
 
 void main().catch((error) => {

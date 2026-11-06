@@ -1,6 +1,8 @@
 # CollabRadar 开发文档
 
 > 本文档用于持续记录架构、数据规则、开发决策、验证结果和变更历史。后续每次相关修改都应追加变更记录，不只在聊天中说明。
+>
+> 可视化架构图位于 [`architecture.html`](./architecture.html)，可直接用浏览器打开，包含实时 Actions / 最近提交徽章。任何信息源、同步规则、数据结构、API、环境变量或部署流程变化，都必须在同一提交中同步更新该 HTML 对应章节，不得只修改日期。
 
 ## 1. 当前产品范围
 
@@ -41,6 +43,8 @@ JSON 去重入库，各来源独立保存处理状态
         ↓
 国内联动时间线 / IP 时间线
 ```
+
+ChineseFoodWiki 使用独立的 MediaWiki 修订链路：最新 `revid` → 本地修订比较 → 新版 wikitext → 六列表格行哈希 → 仅变更行进入 DeepSeek。首次只建立基线，不导入历史；该链路不经过 Firecrawl。
 
 ### 技术栈
 
@@ -99,25 +103,27 @@ DEEPSEEK_MODEL=deepseek-flash
 INGEST_ADMIN_TOKEN=
 ```
 
-- 原神、崩铁、崩三、绝区零使用米哈游公开内容接口，明日方舟使用官网公开新闻接口，均不消耗 Firecrawl credits。
-- 普通网页优先 Firecrawl，失败后回退普通 HTTP。
+- 五个游戏官方源及 ChineseFoodWiki MediaWiki API 均不消耗 Firecrawl credits。
+- 只有本地工作台解析未接入的普通网页时才优先 Firecrawl，失败后回退普通 HTTP；已配置 Key 不等于定时任务会调用。
 - 生产环境必须配置 `INGEST_ADMIN_TOKEN`，否则解析和同步写入接口会禁用。
 - `DATA_FILE` 可覆盖联动记录位置，`SOURCE_STATE_DIR` 可覆盖各来源状态目录。
 - `GENSHIN_STATE_FILE` 仅用于兼容读取旧原神状态；新状态统一写入 `data/sources/{source}.json`。
+- `WIKI_STATE_FILE` 可单独覆盖 Wiki 修订与行哈希状态位置，默认是 `data/sources/chinesefoodwiki.json`。
 
-## 5. 官方来源同步规则
+## 5. 信息源同步规则
 
 ### 已验证来源
 
-| 来源 | 官方数据入口 | 频道或分类 | 详情方式 |
+| 来源 | 公开数据入口 | 频道或修订 | 详情方式 |
 |---|---|---|---|
 | 原神 | `content_v2_user/app/16471662a82d418a` | `iChanId=719` | `getContent` |
 | 崩铁 | `content_v2_user/app/1963de8dc19e461c` | `iChanId=255` | `getContent` |
 | 崩三 | `content_v2_user/app/b9d5f96cd69047eb` | `iChanId=693` | `getContent` |
 | 绝区零 | `content_v2_user/app/706fd13a87294881` | `iChanId=273` | `getContent` |
 | 明日方舟 | `ak.hypergryph.com/api/news` | `ANNOUNCEMENT / ACTIVITY / NEWS` | 官方 HTML |
+| ChineseFoodWiki | `www.chinesefoodwiki.org/api.php` | `Drink_IP_Collab_Timeline` 的 `revid` | MediaWiki wikitext 六列表格 |
 
-以上参数来自 2026-11-05 对官网新闻页真实网络请求和直接 API 响应的验证。旧米游社 `getNewsList` 当前返回 404，不作为来源。
+五个游戏参数来自 2026-11-05 对官网新闻页真实网络请求和直接 API 响应的验证。旧米游社 `getNewsList` 当前返回 404，不作为来源。Wiki 于 2026-11-06 验证 `pageid=852`、`revid=3147`，34 行均可稳定拆成 Date / Brand / IP / Circle / Notes / Sources 六列。
 
 ### 新公告判定
 
@@ -139,6 +145,18 @@ INGEST_ADMIN_TOKEN=
 - 各来源状态分别保存在 `data/sources/{source}.json`
 - 同一公告 URL 不会重复创建联动记录
 - 米哈游正文同时提取 `<img>` 与 `<video poster>`，支持只有 PV 封面的公告
+
+### ChineseFoodWiki 修订增量
+
+- 首次读取当前修订和 wikitext，保存 `revisionId / revisionTimestamp / rows[key]=hash`，不导入历史、不调用模型
+- 后续先只读修订元数据；revid 不变时直接结束，不读取 wikitext，不调用 DeepSeek 或 Firecrawl
+- revid 变化时解析六列表格，以“日期 + 品牌 + IP”生成稳定行键，以整行内容生成哈希，仅处理新增或修改行
+- 表格结束符不参与单元格哈希，避免同一行移动位置造成伪变更
+- Wiki 原始 URL 使用修订 permalink 和行锚点，存储则以 `chinesefoodwiki:{rowKey}` 生成稳定活动 ID；同一行修订会更新原记录并合并证据
+- 非中国大陆、未收录 IP、非餐饮、缺少开始日期、日期无效或不晚于当前最新记录的行会跳过并记录原因
+- 多行按活动日期从旧到新处理，只有严格更新的 Wiki 活动才能替换该 IP 当前记录；同一稳定行 ID 的修订除外
+- 某行解析失败时保留旧 revision 游标和该行旧哈希，其他成功行可推进，失败行下一轮重试
+- 报告包含 `baseline / previousRevisionId / revisionId / stateAdvanced / changedRows / imported / skipped / errors / firecrawlUsed=false`
 
 ### 已验证样例
 
@@ -186,9 +204,9 @@ npm audit
 
 当前验证结果：
 
-- 33 项测试通过，包含日期待定、默认截止、已同步停止、一年边界和最新记录保留测试
+- 40 项测试通过，新增 Wiki 表格解析、基线、无变化、单行变更、旧记录/非大陆跳过和失败游标测试
 - Next.js standalone 生产构建与 Pages 静态导出通过，生成 20 个 IP 详情
-- 五个来源均执行过真实同步，非餐饮候选可稳定过滤，来源错误会写入独立报告
+- 五个游戏官方源均执行过真实同步；Wiki 已真实建立 revid 3147 基线并验证第二次 changedRows=0，两次均 firecrawlUsed=false
 - 当前真实入库为原神、崩铁、绝区零各一条 2026 年最新联动；2024 原神、2019 明日方舟和 2018 崩三旧记录已移除
 - 绝区零 KFC 已用肯德基官方套餐规则修正为 2026-07-24 上市和售完即止，不再只展示 PV 标题
 - 崩铁茶百道与绝区零 KFC 分别默认于 2026-05-25、2026-08-24 截止，页面标注“默认截止”并自动进入历史联动
@@ -325,6 +343,25 @@ docker compose up --build -d
 - 来源 URL 任一匹配即视为重复，避免同一公告在人工修正记录与自动记录之间重复出现
 - 删除 2024 原神、2019 明日方舟、2018 崩三记录及旧原神悬空状态，仅保留原神、崩铁、绝区零三条 2026 年真实记录；同时删除两条 2023 年静态演示卡片
 - 新增 5 项同步与保留规则测试，共 33 项；验证完整构建、Pages 构建和静态数据边界
+
+### 2026-11-06：可视化架构与流程文档
+
+- 新增 `docs/architecture.html`，以 11 个章节展示系统总览、两种运行形态、五源连接、同步边界、模型解析、数据状态、Actions 发布、本地 API、测试、演进边界和更新协议
+- 文档为无构建依赖的自包含 HTML，支持桌面、移动端、内部导航与打印；Actions 和 main 最近提交徽章通过外部图片实时刷新
+- 架构内容不宣称自动实时生成，要求信息源、同步、数据、API 或部署变化时与代码同提交更新对应章节
+- README 增加可视化文档入口，本文档顶部增加持续维护约束
+- 验证 HTML 解析、11 个章节、内部锚点、桌面与 390px 移动端无横向溢出及导航跳转
+
+### 2026-11-06：Wiki 修订增量与流程图简化
+
+- 用户反馈原架构 HTML 过于正式，改为网页访问、静态发布、官方源、Wiki 增量、Firecrawl 边界和数据存储六张流程图；官方源图下提供五个游戏的官网入口、真实列表 API、已验证详情示例，Wiki 图提供原页面与修订 API 链接
+- 验证 ChineseFoodWiki 是 MediaWiki，`Drink_IP_Collab_Timeline` 当前 `pageid=852`、`revid=3147`，可直接读取 wikitext，不需要 Firecrawl
+- 新增 Wiki 修订与行哈希同步、首次基线不导入、变更行 DeepSeek 解析、稳定行 ID 更新、原始来源保留和失败游标重试
+- Wiki 仅作饮品补充源；非大陆、未收录 IP、缺日期和不晚于当前记录的行会跳过，不替代五个游戏官方源
+- 统一 CLI 和本地 API 调度，工作台展示 Wiki 修订、变更行、入库、跳过与失败结果
+- 核清 Firecrawl：五个官方源和 Wiki 均不使用；只有本地工作台解析未接入的普通网页且配置 Key 时才优先调用。代码无法判断账单中历史消耗来自哪个具体项目或请求
+- 真实建立 revid 3147、34 行哈希基线，第二次 changedRows=0，两次 firecrawlUsed=false；未改变三条现有活动
+- 修复表格结束符导致同一行位置变化时哈希不稳定的问题；新增 7 项测试，共 40 项
 
 ## 变更记录维护规则
 

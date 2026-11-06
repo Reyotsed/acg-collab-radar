@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="用几张流程图看懂 CollabRadar 的网页访问、网站发布、官方公告同步、Wiki 增量检测和 Firecrawl 调用路径。">
+  <title>CollabRadar · 这个网站怎么运作</title>
+  <style>
+    :root {
+      --bg: #f5f7f4;
+      --paper: #ffffff;
+      --ink: #18312c;
+      --muted: #63756f;
+      --line: #dce5df;
+      --green: #177c64;
+      --green-soft: #e5f5ef;
+      --blue: #3567c8;
+      --blue-soft: #ebf1fd;
+      --violet: #7556b8;
+      --violet-soft: #f1edfa;
+      --amber: #9a6318;
+      --amber-soft: #fff4df;
+      --red: #a34b4b;
+      --red-soft: #fff0ed;
+      --mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      --sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+    body { margin: 0; color: var(--ink); background: var(--bg); font-family: var(--sans); line-height: 1.75; }
+    a { color: var(--green); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    code { padding: 2px 6px; color: #2c5a4e; background: #eef4f0; border-radius: 5px; font: .86em var(--mono); overflow-wrap: anywhere; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1, h2, h3 { line-height: 1.3; }
+    h1 { margin-bottom: 16px; font-size: clamp(34px, 5vw, 54px); letter-spacing: -1.8px; }
+    h2 { margin-bottom: 8px; font-size: clamp(23px, 3vw, 30px); letter-spacing: -.6px; }
+    h3 { margin-bottom: 6px; font-size: 15px; }
+    p { color: var(--muted); }
+    .page { width: min(1120px, calc(100% - 40px)); margin: 0 auto; }
+    .hero { padding: 56px 0 32px; }
+    .eyebrow { margin-bottom: 14px; color: var(--green); font: 11px/1.4 var(--mono); letter-spacing: 1.6px; }
+    .hero > p { max-width: 790px; font-size: 16px; }
+    .links { display: flex; flex-wrap: wrap; gap: 10px; margin: 22px 0; }
+    .button { padding: 9px 14px; color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: 9px; font-size: 12px; font-weight: 650; }
+    .button.primary { color: white; background: var(--green); border-color: var(--green); }
+    .button:hover { text-decoration: none; }
+    .badges { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    .badges img { height: 21px; max-width: 100%; }
+    .quick-nav { display: flex; gap: 7px; padding: 12px 0 25px; overflow-x: auto; }
+    .quick-nav a { flex: none; padding: 5px 10px; color: var(--muted); background: rgba(255,255,255,.65); border: 1px solid var(--line); border-radius: 999px; font-size: 11px; }
+    .quick-nav a:hover { color: var(--green); text-decoration: none; }
+    .diagram { margin-bottom: 24px; padding: 28px; background: var(--paper); border: 1px solid var(--line); border-radius: 20px; box-shadow: 0 8px 25px rgba(32,64,50,.035); }
+    .diagram-head { display: grid; grid-template-columns: 42px 1fr; gap: 13px; margin-bottom: 23px; }
+    .number { display: grid; place-items: center; width: 38px; height: 38px; color: var(--green); background: var(--green-soft); border-radius: 50%; font: 12px var(--mono); }
+    .diagram-head p { margin-bottom: 0; font-size: 13px; }
+    .flow { display: flex; align-items: stretch; gap: 8px; }
+    .node { flex: 1; min-width: 0; padding: 15px; background: #fafcfb; border: 1px solid var(--line); border-radius: 12px; }
+    .node small { display: block; margin-bottom: 8px; color: var(--muted); font: 9px/1.3 var(--mono); letter-spacing: .8px; }
+    .node p { margin: 0; font-size: 11px; line-height: 1.65; }
+    .node.green { background: var(--green-soft); border-color: #c6e7da; }
+    .node.blue { background: var(--blue-soft); border-color: #d6e1f7; }
+    .node.violet { background: var(--violet-soft); border-color: #e1d9f2; }
+    .node.amber { background: var(--amber-soft); border-color: #f0dfbc; }
+    .node.red { background: var(--red-soft); border-color: #efd5cf; }
+    .arrow { display: grid; place-items: center; flex: none; color: #8ca098; font: 19px var(--mono); }
+    .answer { margin-top: 18px; padding: 12px 15px; color: #3f6258; background: #f0f7f3; border-left: 3px solid var(--green); border-radius: 7px; font-size: 12px; }
+    .answer strong { color: var(--ink); }
+    .branch-start { max-width: 360px; margin: 0 auto 10px; text-align: center; }
+    .down { height: 24px; display: grid; place-items: center; color: #8ca098; font: 18px var(--mono); }
+    .branches { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .branch { padding: 16px; border: 1px solid var(--line); border-radius: 13px; }
+    .branch > .tag { margin-bottom: 12px; }
+    .branch .flow { flex-direction: column; }
+    .branch .arrow { height: 19px; transform: rotate(90deg); }
+    .tag { display: inline-block; padding: 3px 8px; color: var(--green); background: var(--green-soft); border-radius: 999px; font: 10px var(--mono); }
+    .tag.blue { color: var(--blue); background: var(--blue-soft); }
+    .tag.violet { color: var(--violet); background: var(--violet-soft); }
+    .tag.amber { color: var(--amber); background: var(--amber-soft); }
+    .tag.red { color: var(--red); background: var(--red-soft); }
+    .source-directory { margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--line); }
+    .source-directory > h3 { margin-bottom: 4px; }
+    .source-directory > p { margin-bottom: 13px; font-size: 11px; }
+    .source-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .source-card { padding: 12px 14px; background: #fafcfb; border: 1px solid var(--line); border-radius: 10px; }
+    .source-card h4 { margin: 0 0 5px; font-size: 13px; }
+    .source-card a { display: inline-flex; margin: 3px 10px 0 0; font-size: 11px; }
+    .notes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px; }
+    .note { padding: 12px 14px; background: #fafcfb; border: 1px solid var(--line); border-radius: 10px; color: var(--muted); font-size: 11px; }
+    .note strong { display: block; margin-bottom: 3px; color: var(--ink); }
+    .simple-list { margin: 12px 0 0; padding-left: 19px; color: var(--muted); font-size: 12px; }
+    .simple-list li + li { margin-top: 5px; }
+    .footer { padding: 22px 0 42px; color: var(--muted); font-size: 11px; }
+    .footer p { margin-bottom: 5px; }
+    @media (max-width: 850px) {
+      .flow { flex-direction: column; }
+      .arrow { height: 20px; transform: rotate(90deg); }
+      .notes { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 620px) {
+      .page { width: calc(100% - 26px); }
+      .hero { padding-top: 36px; }
+      .diagram { padding: 20px 16px; border-radius: 15px; }
+      .diagram-head { grid-template-columns: 34px 1fr; gap: 9px; }
+      .number { width: 32px; height: 32px; }
+      .branches, .source-grid { grid-template-columns: 1fr; }
+      h1 { letter-spacing: -1px; }
+    }
+    @media print {
+      body { background: white; }
+      .page { width: 100%; }
+      .badges, .links, .quick-nav { display: none; }
+      .diagram { break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <div class="eyebrow">COLLABRADAR / 几张图看懂整个网站</div>
+      <h1>这个网站怎么运作？</h1>
+      <p>一句话：电脑不在一直开着服务器。GitHub 定时去拿公告、解析并保存成 JSON，再把 JSON 做成静态网页。你打开网站时，只是在看最新发布的那一份。</p>
+      <div class="links">
+        <a class="button primary" href="https://reyotsed.github.io/acg-collab-radar/" target="_blank" rel="noreferrer">打开网站 ↗</a>
+        <a class="button" href="https://github.com/Reyotsed/acg-collab-radar" target="_blank" rel="noreferrer">源代码 ↗</a>
+        <a class="button" href="./DEVELOPMENT.md">详细规则</a>
+      </div>
+      <div class="badges">
+        <img src="https://github.com/Reyotsed/acg-collab-radar/actions/workflows/sync-and-deploy.yml/badge.svg" alt="最新部署状态">
+        <img src="https://img.shields.io/github/last-commit/Reyotsed/acg-collab-radar?label=main%20last%20commit" alt="main 最近提交">
+      </div>
+    </header>
+
+    <nav class="quick-nav" aria-label="流程图导航">
+      <a href="#visit">① 你打开网页</a>
+      <a href="#publish">② 网页怎么发布</a>
+      <a href="#official">③ 官方公告怎么来</a>
+      <a href="#wiki">④ Wiki 怎么做增量</a>
+      <a href="#firecrawl">⑤ Firecrawl 在哪里用</a>
+      <a href="#storage">⑥ 数据存在哪里</a>
+    </nav>
+
+    <section class="diagram" id="visit">
+      <div class="diagram-head"><span class="number">01</span><div><h2>你打开网站时</h2><p>这条链路最短，没有数据库、后端 API 或 DeepSeek。</p></div></div>
+      <div class="flow">
+        <article class="node blue"><small>VISITOR</small><h3>你的浏览器</h3><p>输入网址或刷新页面</p></article>
+        <span class="arrow">→</span>
+        <article class="node green"><small>STATIC HOSTING</small><h3>GitHub Pages</h3><p>取出已经生成好的网页</p></article>
+        <span class="arrow">→</span>
+        <article class="node amber"><small>STATIC FILES</small><h3>HTML + CSS + JS</h3><p>联动内容已经写在 HTML 里</p></article>
+        <span class="arrow">→</span>
+        <article class="node blue"><small>SCREEN</small><h3>看到同一份时间线</h3><p>每个人看到的都是当前发布版本</p></article>
+      </div>
+      <div class="answer"><strong>所以：</strong>访客打开网页不会消耗 DeepSeek 或 Firecrawl，也不会分别去五个游戏官网查询。</div>
+    </section>
+
+    <section class="diagram" id="publish">
+      <div class="diagram-head"><span class="number">02</span><div><h2>网页是怎么搭建并发布的</h2><p>Next.js 在 GitHub Actions 里把页面提前生成，然后交给 Pages 托管。</p></div></div>
+      <div class="flow">
+        <article class="node amber"><small>INPUT</small><h3>代码 + JSON 数据</h3><p><code>src/</code><br><code>data/</code></p></article>
+        <span class="arrow">→</span>
+        <article class="node violet"><small>COMPUTE</small><h3>GitHub Actions</h3><p>Node 24<br>先跑测试</p></article>
+        <span class="arrow">→</span>
+        <article class="node violet"><small>BUILD</small><h3>Next.js 静态构建</h3><p>生成首页和 IP 详情<br>排除工作台与 API</p></article>
+        <span class="arrow">→</span>
+        <article class="node amber"><small>OUTPUT</small><h3><code>out/</code></h3><p>一整包静态文件</p></article>
+        <span class="arrow">→</span>
+        <article class="node green"><small>DEPLOY</small><h3>GitHub Pages</h3><p>上传并发布</p></article>
+      </div>
+      <div class="notes">
+        <div class="note"><strong>代码 push 到 main</strong>不同步公告，直接用仓库当前 JSON 构建并发布。</div>
+        <div class="note"><strong>每天约 09:17 / 21:17</strong>先同步信息源，再构建、提交数据变化并发布。</div>
+        <div class="note"><strong>手动 Run workflow</strong>和定时任务一样，先同步再发布；GitHub 调度可能延迟。</div>
+      </div>
+    </section>
+
+    <section class="diagram" id="official">
+      <div class="diagram-head"><span class="number">03</span><div><h2>游戏官方公告怎么进入网站</h2><p>五个游戏共用一个同步程序，但各自保存处理进度。公告 ID 用来判断是不是新公告。</p></div></div>
+      <div class="flow">
+        <article class="node green"><small>SOURCES</small><h3>五个游戏官方源</h3><p>原神 / 崩铁 / 崩三<br>绝区零 / 明日方舟</p></article>
+        <span class="arrow">→</span>
+        <article class="node blue"><small>NEW ID?</small><h3>从最新公告往下查</h3><p>公告 ID + 内容哈希<br>过滤普通版本新闻</p></article>
+        <span class="arrow">→</span>
+        <article class="node violet"><small>PARSE</small><h3>正文 + 图片 → DeepSeek</h3><p>提取品牌、IP、日期、摘要和来源</p></article>
+        <span class="arrow">→</span>
+        <article class="node blue"><small>VALIDATE</small><h3>代码规则复核</h3><p>非餐饮 / 超一年 / 日期错误就跳过</p></article>
+        <span class="arrow">→</span>
+        <article class="node amber"><small>SAVE</small><h3>写入 JSON</h3><p>每个 IP 保留最新一条<br>然后停止该来源</p></article>
+      </div>
+      <div class="answer"><strong>停止条件：</strong>找到第一条有效联动就停；碰到已经同步过的最新联动也停；公告超过一年同样停，不再回填多年历史。</div>
+      <div class="source-directory">
+        <h3>当前渠道直达</h3>
+        <p>“列表 API”返回程序实际读取的 JSON；“官网入口”适合人工浏览；“详情示例”用于核对该渠道的详情链接规则。</p>
+        <div class="source-grid">
+          <article class="source-card">
+            <h4>原神 · Genshin</h4>
+            <a href="https://ys.mihoyo.com/main/news" target="_blank" rel="noreferrer">官网入口 ↗</a>
+            <a href="https://act-api-takumi-static.mihoyo.com/content_v2_user/app/16471662a82d418a/getContentList?iChanId=719&amp;iPageSize=20&amp;iPage=1&amp;sLangKey=zh-cn&amp;isPreview=0&amp;iAppId=43" target="_blank" rel="noreferrer">列表 API · 频道 719 ↗</a>
+            <a href="https://ys.mihoyo.com/main/news/detail/165750" target="_blank" rel="noreferrer">详情示例 · 165750 ↗</a>
+          </article>
+          <article class="source-card">
+            <h4>崩坏：星穹铁道 · HSR</h4>
+            <a href="https://sr.mihoyo.com/news" target="_blank" rel="noreferrer">官网入口 ↗</a>
+            <a href="https://act-api-takumi-static.mihoyo.com/content_v2_user/app/1963de8dc19e461c/getContentList?iChanId=255&amp;iPageSize=20&amp;iPage=1&amp;sLangKey=zh-cn&amp;isPreview=0" target="_blank" rel="noreferrer">列表 API · 频道 255 ↗</a>
+            <a href="https://sr.mihoyo.com/news/165338" target="_blank" rel="noreferrer">详情示例 · 165338 ↗</a>
+          </article>
+          <article class="source-card">
+            <h4>崩坏3 · BH3</h4>
+            <a href="https://bh3.mihoyo.com/news" target="_blank" rel="noreferrer">官网入口 ↗</a>
+            <a href="https://act-api-takumi-static.mihoyo.com/content_v2_user/app/b9d5f96cd69047eb/getContentList?iChanId=693&amp;iPageSize=20&amp;iPage=1&amp;sLangKey=zh-cn&amp;isPreview=0" target="_blank" rel="noreferrer">列表 API · 频道 693 ↗</a>
+            <a href="https://bh3.mihoyo.com/news/693/126678" target="_blank" rel="noreferrer">详情示例 · 126678 ↗</a>
+          </article>
+          <article class="source-card">
+            <h4>绝区零 · ZZZ</h4>
+            <a href="https://zzz.mihoyo.com/news" target="_blank" rel="noreferrer">官网入口 ↗</a>
+            <a href="https://api-takumi-static.mihoyo.com/content_v2_user/app/706fd13a87294881/getContentList?iChanId=273&amp;iPageSize=20&amp;iPage=1&amp;sLangKey=zh-cn&amp;isPreview=0" target="_blank" rel="noreferrer">列表 API · 频道 273 ↗</a>
+            <a href="https://zzz.mihoyo.com/news/165191" target="_blank" rel="noreferrer">详情示例 · 165191 ↗</a>
+          </article>
+          <article class="source-card">
+            <h4>明日方舟 · Arknights</h4>
+            <a href="https://ak.hypergryph.com/news" target="_blank" rel="noreferrer">官网入口 ↗</a>
+            <a href="https://ak.hypergryph.com/api/news?category=ANNOUNCEMENT&amp;page=1" target="_blank" rel="noreferrer">公告 API ↗</a>
+            <a href="https://ak.hypergryph.com/api/news?category=ACTIVITY&amp;page=1" target="_blank" rel="noreferrer">活动 API ↗</a>
+            <a href="https://ak.hypergryph.com/api/news?category=NEWS&amp;page=1" target="_blank" rel="noreferrer">新闻 API ↗</a>
+            <a href="https://ak.hypergryph.com/news/7352" target="_blank" rel="noreferrer">详情示例 · 7352 ↗</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="diagram" id="wiki">
+      <div class="diagram-head"><span class="number">04</span><div><h2>ChineseFoodWiki 怎么做增量检测</h2><p>它是 MediaWiki，本身就有页面修订 ID。我们不需要猜页面有没有变化，也不需要 Firecrawl。</p></div></div>
+      <div class="branch-start">
+        <article class="node green"><small>MEDIAWIKI API</small><h3>读取 Drink IP Collab Timeline 最新 revid</h3><p>先只读修订元数据，不抓整页正文</p></article>
+      </div>
+      <div class="down">↓</div>
+      <div class="branch-start">
+        <article class="node blue"><small>COMPARE</small><h3>和本地保存的 revid 比较</h3><p><code>data/sources/chinesefoodwiki.json</code></p></article>
+      </div>
+      <div class="down">↓</div>
+      <div class="branches">
+        <div class="branch">
+          <span class="tag">revid 没变</span>
+          <div class="flow">
+            <article class="node green"><h3>本轮结束</h3><p>不读取 wikitext<br>不调用 DeepSeek<br>不调用 Firecrawl</p></article>
+          </div>
+        </div>
+        <div class="branch">
+          <span class="tag violet">revid 变了</span>
+          <div class="flow">
+            <article class="node blue"><h3>读取新版 wikitext</h3><p>解析六列表格</p></article>
+            <span class="arrow">→</span>
+            <article class="node blue"><h3>逐行比较哈希</h3><p>只挑新增或修改行</p></article>
+            <span class="arrow">→</span>
+            <article class="node violet"><h3>只解析这些行</h3><p>DeepSeek 提取字段<br>保留 Wiki 列出的来源</p></article>
+            <span class="arrow">→</span>
+            <article class="node amber"><h3>写入并推进 revid</h3><p>失败的行保留旧游标<br>下次重试</p></article>
+          </div>
+        </div>
+      </div>
+      <div class="notes">
+        <div class="note"><strong>第一次只建立基线</strong>2026-11-06 已记录 revid 3147 和 34 行哈希，没有批量导入历史。</div>
+        <div class="note"><strong>它是饮品补充源</strong>不能替代官方快餐、食品等来源；Wiki 是汇编页，原始链接会一起保留。</div>
+        <div class="note"><strong>不是每行都入库</strong>未收录 IP、非中国大陆、缺少日期或不比现有记录新的行会说明原因并跳过。</div>
+      </div>
+      <div class="answer"><strong>这条链路的 Firecrawl 消耗：</strong>0。增量靠 <code>revid + 行哈希</code>，不是靠反复抓取整个网页猜变化。<br><a href="https://www.chinesefoodwiki.org/index.php?title=Drink_IP_Collab_Timeline" target="_blank" rel="noreferrer">打开 Wiki 原页面 ↗</a> · <a href="https://www.chinesefoodwiki.org/api.php?action=query&amp;format=json&amp;formatversion=2&amp;prop=revisions&amp;titles=Drink_IP_Collab_Timeline&amp;rvprop=timestamp%7Cids&amp;rvlimit=1" target="_blank" rel="noreferrer">查看当前修订 API ↗</a></div>
+    </section>
+
+    <section class="diagram" id="firecrawl">
+      <div class="diagram-head"><span class="number">05</span><div><h2>Firecrawl 到底在哪里会被使用</h2><p>关键不是“有没有配置 Key”，而是走了哪个抓取入口。</p></div></div>
+      <div class="branches">
+        <div class="branch">
+          <span class="tag">定时同步 · 六个信息源</span>
+          <div class="flow">
+            <article class="node green"><h3>游戏官方 API / HTML</h3><p>五个游戏官网连接器</p></article>
+            <span class="arrow">→</span>
+            <article class="node green"><h3>MediaWiki API</h3><p>ChineseFoodWiki 修订接口</p></article>
+            <span class="arrow">→</span>
+            <article class="node blue"><h3>不经过 Firecrawl</h3><p>官方源和 Wiki 都不消耗 Firecrawl credits</p></article>
+          </div>
+        </div>
+        <div class="branch">
+          <span class="tag amber">本地工作台 · 手动解析 URL</span>
+          <div class="flow">
+            <article class="node amber"><h3>输入一个公告 URL</h3><p><code>/ingest</code></p></article>
+            <span class="arrow">→</span>
+            <article class="node blue"><h3>是已接入的官网吗？</h3><p>是：直接走官方连接器</p></article>
+            <span class="arrow">→</span>
+            <article class="node red"><h3>普通网页 + 配置了 Key</h3><p>优先 Firecrawl<br>失败才回退普通 HTTP</p></article>
+          </div>
+        </div>
+      </div>
+      <div class="answer"><strong>关于已经产生的消耗：</strong>仓库代码无法查看 Firecrawl 账单或调用日志。能确定的是当前定时官方源和 Wiki 都不用它；历史手动解析普通网页、早期测试或其他项目都可能产生消耗，具体要以 Firecrawl 控制台日志为准。</div>
+    </section>
+
+    <section class="diagram" id="storage">
+      <div class="diagram-head"><span class="number">06</span><div><h2>数据最后存在哪里，又怎么变成网页</h2><p>GitHub Actions 的临时文件会消失，所以真正需要保留的内容必须写回仓库。</p></div></div>
+      <div class="flow">
+        <article class="node violet"><small>SYNC</small><h3>公告 / Wiki 变更行</h3><p>模型解析 + 代码校验</p></article>
+        <span class="arrow">→</span>
+        <article class="node amber"><small>ACTIVITY DATA</small><h3><code>imported-collabs.json</code></h3><p>活动内容和原始来源</p></article>
+        <span class="arrow">+</span>
+        <article class="node amber"><small>PROGRESS DATA</small><h3><code>data/sources/</code></h3><p>公告 ID、Wiki revid、行哈希</p></article>
+        <span class="arrow">→</span>
+        <article class="node green"><small>PUBLISH</small><h3>重新构建 Pages</h3><p>所有访客看到同一个新版本</p></article>
+      </div>
+      <div class="notes">
+        <div class="note"><strong>公开网站</strong>只读构建时数据，不能在浏览器里修改 JSON。</div>
+        <div class="note"><strong>本地 /ingest</strong>可以手动解析、确认入库和同步，但它不会部署到 Pages。</div>
+        <div class="note"><strong>后续迁移服务器</strong>可以复用同步程序，把 JSON 换成数据库，不必重写信息源。</div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>这份文档只保留理解系统所需的流程图。信息源、增量规则或发布方式变化时，应与代码在同一个提交中更新对应图。</p>
+      <p>架构基线：2026-11-06 · Actions 和最近提交徽章自动刷新 · <a href="./DEVELOPMENT.md">详细开发与变更记录</a></p>
+    </footer>
+  </main>
+</body>
+</html>

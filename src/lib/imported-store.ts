@@ -28,13 +28,19 @@ export function keepOnlyLatestForIp(items: Collaboration[], keepId: string, ipId
   return items.filter((item) => item.id === keepId || !item.ipIds.includes(ipId));
 }
 
-export async function saveImportedCollaboration(raw: RawAnnouncement, draft: CollabDraft, options: { latestForIp?: string } = {}) {
+interface SaveCollaborationOptions {
+  latestForIp?: string;
+  stableId?: string;
+  updateExisting?: boolean;
+}
+
+export async function saveImportedCollaboration(raw: RawAnnouncement, draft: CollabDraft, options: SaveCollaborationOptions = {}) {
   if (draft.isCollab === false) throw new Error("该公告不属于餐饮联动，未写入联动档案");
   const ip = getIp(draft.ipId);
   if (!ip) throw new Error("请选择已收录的 IP");
   if (draft.startDate && draft.endDate && draft.endDate < draft.startDate) throw new Error("结束日期不能早于开始日期");
 
-  const id = `imported-${createHash("sha1").update(raw.url).digest("hex").slice(0, 12)}`;
+  const id = `imported-${createHash("sha1").update(options.stableId ?? raw.url).digest("hex").slice(0, 12)}`;
   const collaboration: Collaboration = {
     id,
     ipIds: [ip.id],
@@ -63,6 +69,15 @@ export async function saveImportedCollaboration(raw: RawAnnouncement, draft: Col
   const existing = await getImportedCollaborations();
   const duplicate = existing.find((item) => item.id === id || item.sources.some((source) => source.url === raw.url));
   if (duplicate) {
+    if (options.updateExisting) {
+      const sources = [...collaboration.sources, ...duplicate.sources]
+        .filter((source, index, all) => all.findIndex((item) => item.url === source.url) === index);
+      const updated = { ...collaboration, id: duplicate.id, sources };
+      const replaced = existing.map((item) => item.id === duplicate.id ? updated : item);
+      const next = options.latestForIp ? keepOnlyLatestForIp(replaced, duplicate.id, options.latestForIp) : replaced;
+      await writeImportedCollaborations(next);
+      return { collaboration: updated, duplicate: true };
+    }
     if (options.latestForIp) {
       const next = keepOnlyLatestForIp(existing, duplicate.id, options.latestForIp);
       if (next.length !== existing.length) await writeImportedCollaborations(next);

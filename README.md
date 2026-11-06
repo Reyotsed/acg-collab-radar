@@ -24,21 +24,25 @@
 
 ## 数据从哪里来
 
-网站目前包含两类内容：
+网站目前包含三类内容：
 
 | 数据 | 用途 |
 |---|---|
 | 静态演示快照 | 展示产品界面和时间线交互，参考日期为 2026-11-04 |
 | 官方源同步记录 | 从原神、崩铁、崩三、绝区零和明日方舟公开公告中提取的真实餐饮联动，保留原始公告链接 |
+| Wiki 补充记录 | 监控 ChineseFoodWiki 饮品时间线的页面修订，只解析新增或修改的表格行，并保留 Wiki 列出的原始来源 |
 
 自动同步流程：
 
 ```text
-官方公告 → 新公告检测 → 联动候选筛选 → DeepSeek 多模态解析
-→ 字段校验与 URL 去重 → JSON 数据 → 静态网站
+游戏官方公告 → 公告 ID / 内容哈希检测 → 候选筛选
+ChineseFoodWiki → revid 检测 → 行哈希检测 → 仅取变更行
+→ DeepSeek 解析 → 字段校验与去重 → JSON 数据 → 静态网站
 ```
 
 每个游戏从最新公告开始向后查找，只保留最近一年内的最新一条有效餐饮联动；遇到已同步的最新联动或一年时间边界立即停止，不建立多年历史存档。
+
+ChineseFoodWiki 首次只建立修订基线，不批量导入历史。后续 revid 不变则不抓正文、不调用模型；revid 变化时仅解析新增或修改行。Wiki 是饮品补充源，不能替代快餐、食品等官方来源。
 
 GitHub Actions 每天定时运行两次，也可以在仓库中手动触发。即使公告没有变化，重新构建也会刷新活动状态。GitHub 调度可能延迟，因此页面不承诺秒级更新。
 
@@ -61,7 +65,7 @@ GitHub Actions 每天定时运行两次，也可以在仓库中手动触发。�
 - 功能建议与重复记录报告
 - 网页解析、别名和来源适配器贡献
 
-开发前请阅读 [DEVELOPMENT.md](./docs/DEVELOPMENT.md)，其中记录了数据规则、同步算法、环境配置、部署方式和变更历史。
+开发前请阅读 [DEVELOPMENT.md](./docs/DEVELOPMENT.md)，其中记录了数据规则、同步算法、环境配置、部署方式和变更历史。只想快速看懂网站如何运作，可以直接用浏览器打开 [六张流程图](./docs/architecture.html)：网页访问、静态发布、官方源、Wiki 增量、Firecrawl 调用边界和数据存储。
 
 ## 本地运行
 
@@ -75,7 +79,7 @@ npm run dev
 
 打开 `http://localhost:3000`。本地公告解析工作台位于 `http://localhost:3000/ingest`。
 
-只浏览页面不需要密钥；执行真实公告解析前，需要在 `.env` 中配置 `DEEPSEEK_API_KEY`。`FIRECRAWL_API_KEY` 仅作为普通网页的可选抓取服务，已接入的游戏官方接口不依赖它。
+只浏览页面不需要密钥；执行真实公告解析前，需要在 `.env` 中配置 `DEEPSEEK_API_KEY`。`FIRECRAWL_API_KEY` 仅作为本地工作台解析普通网页的可选抓取服务；五个游戏官方源和 ChineseFoodWiki 修订接口都不依赖它，也不会消耗 Firecrawl credits。
 
 ```bash
 # 运行测试
@@ -87,11 +91,11 @@ npm run build
 # 验证 GitHub Pages 静态构建
 npm run build:pages
 
-# 手动同步全部官方公告
+# 手动同步全部官方公告和 Wiki
 npm run sync:sources
 
-# 只同步一个来源（可选 genshin / hsr / bh3 / zzz / arknights）
-npm run sync:sources -- --source=zzz
+# 只同步一个来源（可选 genshin / hsr / bh3 / zzz / arknights / chinesefoodwiki）
+npm run sync:sources -- --source=chinesefoodwiki
 ```
 
 ## 部署方式
