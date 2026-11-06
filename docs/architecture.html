@@ -250,20 +250,23 @@
           <div class="flow">
             <article class="node blue"><h3>读取新版 wikitext</h3><p>解析六列表格</p></article>
             <span class="arrow">→</span>
-            <article class="node blue"><h3>逐行比较哈希</h3><p>只挑新增或修改行</p></article>
+            <article class="node blue"><h3>逐行比较哈希</h3><p>只挑新增或修改行<br>先按 IP 别名预筛选</p></article>
             <span class="arrow">→</span>
-            <article class="node violet"><h3>只解析这些行</h3><p>DeepSeek 提取字段<br>保留 Wiki 列出的来源</p></article>
+            <article class="node red"><h3>Firecrawl 补全 Sources</h3><p>初始化抓全部 / 增量最多两个<br>合并正文和图片</p></article>
+            <span class="arrow">→</span>
+            <article class="node violet"><h3>DeepSeek 统一解析</h3><p>提取字段<br>保留 Wiki 和原始来源</p></article>
             <span class="arrow">→</span>
             <article class="node amber"><h3>写入并推进 revid</h3><p>失败的行保留旧游标<br>下次重试</p></article>
           </div>
         </div>
       </div>
       <div class="notes">
-        <div class="note"><strong>第一次只建立基线</strong>2026-11-06 已记录 revid 3147 和 34 行哈希，没有批量导入历史。</div>
+        <div class="note"><strong>基线与完整初始化</strong>先记录 revid 3147 和 34 行哈希；扩充 IP 后检查 34 行、补全 24 行，最终形成 21 条 Wiki 详细记录。</div>
         <div class="note"><strong>它是饮品补充源</strong>不能替代官方快餐、食品等来源；Wiki 是汇编页，原始链接会一起保留。</div>
-        <div class="note"><strong>不是每行都入库</strong>未收录 IP、非中国大陆、缺少日期或不比现有记录新的行会说明原因并跳过。</div>
+        <div class="note"><strong>80 个 IP + 最长别名匹配</strong>支持“三角洲”“瓦罗兰特”等简称；“终末地”优先于“明日方舟”。未识别 IP 仍跳过，防止模糊误归。</div>
+        <div class="note"><strong>不是每行都入库</strong>大陆和台港澳活动可收录；明确海外、未收录 IP、缺少日期或更旧的行会说明原因并跳过。</div>
       </div>
-      <div class="answer"><strong>这条链路的 Firecrawl 消耗：</strong>0。增量靠 <code>revid + 行哈希</code>，不是靠反复抓取整个网页猜变化。<br><a href="https://www.chinesefoodwiki.org/index.php?title=Drink_IP_Collab_Timeline" target="_blank" rel="noreferrer">打开 Wiki 原页面 ↗</a> · <a href="https://www.chinesefoodwiki.org/api.php?action=query&amp;format=json&amp;formatversion=2&amp;prop=revisions&amp;titles=Drink_IP_Collab_Timeline&amp;rvprop=timestamp%7Cids&amp;rvlimit=1" target="_blank" rel="noreferrer">查看当前修订 API ↗</a></div>
+      <div class="answer"><strong>这条链路什么时候消耗 Firecrawl：</strong>revid 没变时为 0；手动初始化抓全部 Sources，自动增量最多两个；失败行通过 pendingRows 重试。报告会记录 <code>firecrawlUsed</code> 和补全行数。<br><a href="https://www.chinesefoodwiki.org/index.php?title=Drink_IP_Collab_Timeline" target="_blank" rel="noreferrer">打开 Wiki 原页面 ↗</a> · <a href="https://www.chinesefoodwiki.org/api.php?action=query&amp;format=json&amp;formatversion=2&amp;prop=revisions&amp;titles=Drink_IP_Collab_Timeline&amp;rvprop=timestamp%7Cids&amp;rvlimit=1" target="_blank" rel="noreferrer">查看当前修订 API ↗</a></div>
     </section>
 
     <section class="diagram" id="firecrawl">
@@ -274,9 +277,9 @@
           <div class="flow">
             <article class="node green"><h3>游戏官方 API / HTML</h3><p>五个游戏官网连接器</p></article>
             <span class="arrow">→</span>
-            <article class="node green"><h3>MediaWiki API</h3><p>ChineseFoodWiki 修订接口</p></article>
+            <article class="node green"><h3>MediaWiki 修订检测</h3><p>revid 没变：不抓 Sources，消耗为 0</p></article>
             <span class="arrow">→</span>
-            <article class="node blue"><h3>不经过 Firecrawl</h3><p>官方源和 Wiki 都不消耗 Firecrawl credits</p></article>
+            <article class="node red"><h3>仅 Wiki 有效行补全</h3><p>初始化抓全部 Sources，自动增量最多两个</p></article>
           </div>
         </div>
         <div class="branch">
@@ -290,7 +293,7 @@
           </div>
         </div>
       </div>
-      <div class="answer"><strong>关于已经产生的消耗：</strong>仓库代码无法查看 Firecrawl 账单或调用日志。能确定的是当前定时官方源和 Wiki 都不用它；历史手动解析普通网页、早期测试或其他项目都可能产生消耗，具体要以 Firecrawl 控制台日志为准。</div>
+      <div class="answer"><strong>关于消耗：</strong>五个游戏官方源始终不经过 Firecrawl；Wiki 无修订变化时不消耗，变更行会按 Sources 数量消耗；手动普通网页也可能消耗。本次手动补跑已确认 <code>firecrawlUsed=true</code>，具体账单仍以 Firecrawl 控制台为准。</div>
     </section>
 
     <section class="diagram" id="storage">

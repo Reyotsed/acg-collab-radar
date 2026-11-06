@@ -163,7 +163,7 @@ export function IngestWorkbench() {
                 <label className="field-full">联动标题<input value={draft.title} onChange={(event) => updateDraft("title", event.target.value)} required /></label>
                 <label>合作品牌<input value={draft.brand} onChange={(event) => updateDraft("brand", event.target.value)} required /></label>
                 <label>联动类型<select value={draft.category} onChange={(event) => updateDraft("category", event.target.value as CollabDraft["category"])}>{Object.entries(CATEGORY_LABELS).map(([value, label]) => <option value={value} key={value}>{label}</option>)}</select></label>
-                <label>地区<select value={draft.region} onChange={(event) => updateDraft("region", event.target.value as CollabDraft["region"])}><option>中国大陆</option><option>日本</option></select></label>
+                <label>地区<select value={draft.region} onChange={(event) => updateDraft("region", event.target.value as CollabDraft["region"])}><option>中国大陆</option><option>中国台湾</option><option>中国香港</option><option>中国澳门</option><option>日本</option></select></label>
                 <label>公告日期<input type="date" value={draft.announcedAt} onChange={(event) => updateDraft("announcedAt", event.target.value)} required /></label>
                 <label>开始日期<input type="date" value={draft.startDate ?? ""} onChange={(event) => updateDraft("startDate", event.target.value || null)} required /></label>
                 <label>结束日期<span className="label-note">未官宣可留空</span><input type="date" value={draft.endDate ?? ""} onChange={(event) => updateDraft("endDate", event.target.value || null)} /></label>

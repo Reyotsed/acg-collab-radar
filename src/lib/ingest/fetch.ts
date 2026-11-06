@@ -61,9 +61,11 @@ export async function fetchAnnouncement(input: string) {
   const apiKey = process.env.FIRECRAWL_API_KEY;
   if (apiKey) {
     try {
-      return await fetchFirecrawl(url, apiKey);
+      const raw = await fetchFirecrawl(url, apiKey);
+      return { ...raw, firecrawlAttempted: true };
     } catch {
-      return fetchDirect(url);
+      const raw = await fetchDirect(url);
+      return { ...raw, firecrawlAttempted: true };
     }
   }
   return fetchDirect(url);

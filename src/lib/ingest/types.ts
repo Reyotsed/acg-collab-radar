@@ -1,4 +1,4 @@
-import type { CollabCategory, Evidence, SourceTier } from "@/lib/types";
+import type { CollabCategory, CollabRegion, Evidence, SourceTier } from "@/lib/types";
 
 export interface RawAnnouncement {
   url: string;
@@ -7,6 +7,7 @@ export interface RawAnnouncement {
   sourceName: string;
   sourceTier: SourceTier;
   fetcher: "mihoyo-api" | "mihoyo-content-v2" | "official-html" | "mediawiki-api" | "firecrawl" | "direct-http";
+  firecrawlAttempted?: boolean;
   text: string;
   images: string[];
   relatedSources?: Evidence[];
@@ -19,7 +20,7 @@ export interface CollabDraft {
   title: string;
   brand: string;
   category: CollabCategory;
-  region: "中国大陆" | "日本";
+  region: CollabRegion;
   location: string;
   startDate: string | null;
   endDate: string | null;

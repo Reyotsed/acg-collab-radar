@@ -3,6 +3,19 @@ import type { Collaboration, Evidence, IpEntity } from "./types";
 export const DEMO_REFERENCE_DATE = "2026-11-04";
 export const DEMO_REFERENCE_ISO = "2026-11-04T12:00:00+08:00";
 
+function popularIp(
+  id: string,
+  name: string,
+  englishName: string,
+  aliases: string[],
+  kind: IpEntity["kind"],
+  monogram: string,
+  colors: [string, string, string],
+  nativeName = name,
+): IpEntity {
+  return { id, name, nativeName, englishName, aliases: [...new Set([name, englishName, ...aliases])], kind, monogram, colors };
+}
+
 export const ips: IpEntity[] = [
   { id: "honor-of-kings", name: "王者荣耀", nativeName: "王者荣耀", englishName: "Honor of Kings", aliases: ["王者", "王者荣耀KPL", "KPL", "Honor of Kings"], kind: "游戏", monogram: "王", colors: ["#172554", "#2563eb", "#fbbf24"] },
   { id: "chiikawa", name: "吉伊卡哇", nativeName: "ちいかわ", englishName: "Chiikawa", aliases: ["Chiikawa", "ちいかわ", "吉伊卡哇", "小可爱"], kind: "角色", monogram: "ち", colors: ["#9f456d", "#f58fb5", "#fde68a"] },
@@ -24,18 +37,72 @@ export const ips: IpEntity[] = [
   { id: "big-ear-tutu", name: "大耳朵图图", nativeName: "大耳朵图图", englishName: "Big Ear Tutu", aliases: ["图图", "大耳朵图图", "Big Ear Tutu"], kind: "动画", monogram: "图", colors: ["#9a3412", "#fb923c", "#fde68a"] },
   { id: "promise-of-wizard", name: "魔法使的约定", nativeName: "魔法使いの約束", englishName: "Promise of Wizard", aliases: ["魔法药", "魔法使的约定", "魔法师的约定", "魔法使いの約束", "Mahoyaku"], kind: "游戏", monogram: "魔", colors: ["#3b0764", "#8b5cf6", "#ddd6fe"] },
   { id: "promised-neverland", name: "约定的梦幻岛", nativeName: "約束のネバーランド", englishName: "The Promised Neverland", aliases: ["梦幻岛", "约定的梦幻岛", "Promised Neverland"], kind: "动画", monogram: "岛", colors: ["#052e16", "#15803d", "#bbf7d0"] },
+  popularIp("delta-force", "三角洲行动", "Delta Force", ["三角洲", "三角洲行动手游", "Delta Force: Hawk Ops"], "游戏", "三", ["#172554", "#4f7cac", "#d9e8f5"]),
+  popularIp("valorant", "无畏契约", "VALORANT", ["瓦罗兰特", "瓦洛兰特", "无畏契约：源能行动", "VALORANT Mobile"], "游戏", "瓦", ["#20242d", "#ff4655", "#ffd7dc"]),
+  popularIp("arknights-endfield", "明日方舟：终末地", "Arknights: Endfield", ["终末地", "明日方舟终末地", "Arknights Endfield", "Endfield"], "游戏", "终", ["#1d2939", "#7c8da6", "#e4ebf3"]),
+  popularIp("love-and-deepspace", "恋与深空", "Love and Deepspace", ["深空", "LADS"], "游戏", "深", ["#312e81", "#a78bfa", "#ede9fe"]),
+  popularIp("link-click", "时光代理人", "Link Click", ["时光", "时光代理人动画"], "动画", "时", ["#164e63", "#38bdf8", "#e0f2fe"]),
+  popularIp("renegade-immortal", "仙逆", "Renegade Immortal", ["仙逆动画"], "动画", "仙", ["#3f2d20", "#b98a54", "#f4e6cf"]),
+  popularIp("butterbear", "黄油小熊", "Butterbear", ["Butter Bear", "黄油小熊IP"], "角色", "黄", ["#8a5a16", "#f5bd4f", "#fff0bd"], "Butterbear"),
+  popularIp("siamese-lipu", "暹罗厘普", "Siamese Lipu", ["暹罗厘普猫", "厘普"], "角色", "厘", ["#5b4636", "#c7a683", "#f4e7d4"]),
+  popularIp("miffy", "米菲", "Miffy", ["米菲兔"], "角色", "米", ["#b45309", "#f8d35c", "#fff7d6"], "Miffy"),
+  popularIp("monchhichi", "蒙奇奇", "Monchhichi", ["Monchichi", "萌奇奇"], "角色", "蒙", ["#6b3f2a", "#c58b66", "#f6e2d5"]),
+  popularIp("disney-princesses", "迪士尼公主", "Disney Princesses", ["Disney Princess", "迪士尼公主系列"], "角色", "公", ["#4c1d95", "#c084fc", "#f3e8ff"]),
+  popularIp("disney-villains", "迪士尼反派", "Disney Villains", ["Disney Villains Apple Party", "迪士尼反派角色"], "角色", "反", ["#18181b", "#7e22ce", "#e9d5ff"]),
+  popularIp("popmart-zsiga", "嘎子姐", "Zsiga", ["Pop Mart Zsiga", "泡泡玛特嘎子姐"], "角色", "嘎", ["#3f3f46", "#e879a3", "#fce7f3"]),
+  popularIp("carrot-fantasy-4", "保卫萝卜4", "Carrot Fantasy 4", ["保卫萝卜", "Carrot Fantasy"], "游戏", "萝", ["#166534", "#f59e0b", "#fef3c7"]),
+  popularIp("gaspard-lisa", "卡斯波和丽莎", "Gaspard et Lisa", ["Gaspard and Lisa", "卡斯波丽莎"], "角色", "卡", ["#1e40af", "#f3c64f", "#fff3c4"]),
+  popularIp("identity-v", "第五人格", "Identity V", ["第五", "第五人格手游"], "游戏", "五", ["#27272a", "#8b6f47", "#e8dcc8"]),
+  popularIp("onmyoji", "阴阳师", "Onmyoji", ["阴阳师手游", "痒痒鼠"], "游戏", "阴", ["#31151e", "#b84a62", "#f5d8df"]),
+  popularIp("eggy-party", "蛋仔派对", "Eggy Party", ["蛋仔"], "游戏", "蛋", ["#0f766e", "#fbbf24", "#fef3c7"]),
+  popularIp("wuthering-waves", "鸣潮", "Wuthering Waves", ["WuWa", "鸣潮手游"], "游戏", "鸣", ["#164e63", "#22d3ee", "#cffafe"]),
+  popularIp("tower-of-fantasy", "幻塔", "Tower of Fantasy", ["ToF", "幻塔手游"], "游戏", "幻", ["#312e81", "#38bdf8", "#e0f2fe"]),
+  popularIp("punishing-gray-raven", "战双帕弥什", "Punishing Gray Raven", ["战双", "PGR"], "游戏", "战", ["#292524", "#9ca3af", "#e5e7eb"]),
+  popularIp("aether-gazer", "深空之眼", "Aether Gazer", ["深空之眼手游"], "游戏", "眼", ["#1e1b4b", "#818cf8", "#e0e7ff"]),
+  popularIp("snowbreak", "尘白禁区", "Snowbreak", ["尘白"], "游戏", "尘", ["#334155", "#7dd3fc", "#e0f2fe"]),
+  popularIp("path-to-nowhere", "无期迷途", "Path to Nowhere", ["无期", "PTN"], "游戏", "无", ["#3f2a3d", "#b46aa8", "#f2dcef"]),
+  popularIp("reverse-1999", "重返未来：1999", "Reverse: 1999", ["重返未来", "1999", "Reverse 1999"], "游戏", "重", ["#20342d", "#7d9b87", "#e1ece5"]),
+  popularIp("blue-archive", "蔚蓝档案", "Blue Archive", ["碧蓝档案", "BA"], "游戏", "蔚", ["#075985", "#67e8f9", "#ecfeff"]),
+  popularIp("goddess-of-victory-nikke", "胜利女神：妮姬", "GODDESS OF VICTORY: NIKKE", ["NIKKE", "妮姬", "胜利女神：新的希望"], "游戏", "妮", ["#3b2f2f", "#f2b8c6", "#fff0f3"]),
+  popularIp("infinity-nikki", "无限暖暖", "Infinity Nikki", ["无限暖暖手游"], "游戏", "暖", ["#9d174d", "#f9a8d4", "#fce7f3"]),
+  popularIp("shining-nikki", "闪耀暖暖", "Shining Nikki", ["闪暖"], "游戏", "闪", ["#9f456d", "#f58fb5", "#fde68a"]),
+  popularIp("love-and-producer", "恋与制作人", "Mr Love: Queen's Choice", ["恋与", "Mr Love"], "游戏", "恋", ["#4c1d95", "#c4b5fd", "#ede9fe"]),
+  popularIp("light-and-night", "光与夜之恋", "Light and Night", ["光夜"], "游戏", "光", ["#172554", "#f2b880", "#faead8"]),
+  popularIp("beyond-the-world", "世界之外", "Beyond the World", ["世外"], "游戏", "世", ["#1f2937", "#94a3b8", "#e2e8f0"]),
+  popularIp("code-kite", "代号鸢", "Ashes of the Kingdom", ["如鸢", "Code Kite"], "游戏", "鸢", ["#4c0519", "#be123c", "#fda4af"]),
+  popularIp("girls-frontline-2", "少女前线2：追放", "Girls' Frontline 2: Exilium", ["少前2", "少女前线2", "追放", "GFL2"], "游戏", "追", ["#27272a", "#a3a3a3", "#e5e5e5"]),
+  popularIp("azur-lane", "碧蓝航线", "Azur Lane", ["碧蓝", "BLHX"], "游戏", "碧", ["#164e63", "#38bdf8", "#e0f2fe"]),
+  popularIp("league-of-legends", "英雄联盟", "League of Legends", ["LOL", "撸啊撸", "英雄联盟端游"], "游戏", "英", ["#172554", "#0e7490", "#cffafe"]),
+  popularIp("luoxiaohei", "罗小黑战记", "The Legend of Luo Xiaohei", ["罗小黑", "Luo Xiaohei"], "动画", "罗", ["#164e4a", "#58a58c", "#e0f0e8"]),
+  popularIp("the-outcast", "一人之下", "The Outcast", ["一人", "一人之下动画"], "动画", "一", ["#422006", "#ca8a04", "#fef3c7"]),
+  popularIp("fox-spirit-matchmaker", "狐妖小红娘", "Fox Spirit Matchmaker", ["狐妖"], "动画", "狐", ["#881337", "#fb7185", "#ffe4e6"]),
+  popularIp("kings-avatar", "全职高手", "The King's Avatar", ["全职"], "动画", "全", ["#1e3a8a", "#60a5fa", "#dbeafe"]),
+  popularIp("mo-dao-zu-shi", "魔道祖师", "Mo Dao Zu Shi", ["MDZS", "魔道"], "动画", "魔", ["#312e81", "#8b5cf6", "#ddd6fe"]),
+  popularIp("scissor-seven", "伍六七", "Scissor Seven", ["刺客伍六七"], "动画", "伍", ["#164e63", "#f59e0b", "#fef3c7"]),
+  popularIp("aotu-world", "凹凸世界", "Aotu World", ["凹凸"], "动画", "凹", ["#3f3f46", "#e879f9", "#fae8ff"]),
+  popularIp("ling-cage", "灵笼", "Ling Cage", ["灵笼：INCARNATION"], "动画", "灵", ["#27272a", "#6b8f71", "#e1ebe3"]),
+  popularIp("mortal-journey", "凡人修仙传", "A Record of a Mortal's Journey to Immortality", ["凡人", "凡人动画"], "动画", "凡", ["#3f2d20", "#a37b4f", "#ede0cf"]),
+  popularIp("soul-land", "斗罗大陆", "Soul Land", ["斗罗"], "动画", "斗", ["#312e81", "#60a5fa", "#dbeafe"]),
+  popularIp("battle-through-heavens", "斗破苍穹", "Battle Through the Heavens", ["斗破"], "动画", "破", ["#7c2d12", "#fb923c", "#ffedd5"]),
+  popularIp("fei-ren-zai", "非人哉", "Fei Ren Zai", ["非人哉动画"], "动画", "非", ["#134e4a", "#5eead4", "#ccfbf1"]),
+  popularIp("you-shou-yan", "有兽焉", "You Shou Yan", ["有兽焉动画"], "动画", "有", ["#713f12", "#fbbf24", "#fef3c7"]),
+  popularIp("pleasant-goat", "喜羊羊与灰太狼", "Pleasant Goat and Big Big Wolf", ["喜羊羊", "喜灰"], "动画", "喜", ["#166534", "#facc15", "#fef9c3"]),
+  popularIp("boonie-bears", "熊出没", "Boonie Bears", ["熊出没动画"], "动画", "熊", ["#422006", "#ca8a04", "#fef3c7"]),
+  popularIp("pokemon", "宝可梦", "Pokémon", ["Pokemon", "精灵宝可梦", "口袋妖怪"], "游戏", "宝", ["#1d4ed8", "#facc15", "#fef08a"], "ポケットモンスター"),
+  popularIp("naruto", "火影忍者", "Naruto", ["火影", "火影忍者手游"], "动画", "火", ["#7c2d12", "#fb923c", "#ffedd5"], "NARUTO"),
+  popularIp("one-piece", "海贼王", "One Piece", ["航海王", "OP"], "动画", "海", ["#1e3a8a", "#fbbf24", "#fef3c7"], "ONE PIECE"),
+  popularIp("detective-conan", "名侦探柯南", "Detective Conan", ["柯南", "Case Closed"], "动画", "柯", ["#172554", "#60a5fa", "#dbeafe"], "名探偵コナン"),
+  popularIp("jujutsu-kaisen", "咒术回战", "Jujutsu Kaisen", ["咒术", "JJK"], "动画", "咒", ["#18181b", "#6366f1", "#e0e7ff"]),
+  popularIp("spy-family", "间谍过家家", "SPY×FAMILY", ["Spy Family", "间谍家家酒"], "动画", "谍", ["#164e4a", "#f472b6", "#fce7f3"]),
+  popularIp("frieren", "葬送的芙莉莲", "Frieren: Beyond Journey's End", ["Frieren", "芙莉莲"], "动画", "芙", ["#164e63", "#a5f3fc", "#ecfeff"], "葬送のフリーレン"),
+  popularIp("sanrio", "三丽鸥", "Sanrio", ["三丽鸥家族", "Sanrio Characters"], "角色", "三", ["#9f1239", "#fda4af", "#ffe4e6"]),
+  popularIp("someone-someone", "某某", "Someone Someone", ["晋江某某", "某某小说"], "角色", "某", ["#365314", "#a3e635", "#ecfccb"]),
 ];
 
 const media = (title: string, source: string, url: string, publishedAt: string): Evidence => ({ title, source, url, publishedAt, tier: "media" });
 const official = (title: string, source: string, url: string, publishedAt: string): Evidence => ({ title, source, url, publishedAt, tier: "official" });
 
 export const collaborations: Collaboration[] = [
-  {
-    id: "kpl-luckin-2026", ipIds: ["honor-of-kings"], title: "KPL 十周年 × 瑞幸咖啡", brand: "瑞幸咖啡", brandShort: "瑞", category: "coffee", region: "中国大陆", location: "全国参与门店",
-    startDate: "2026-10-26", endDate: null, announcedAt: "2026-10-20", updatedAt: "2026-11-03",
-    summary: "两弹联名包装与周边陆续上线，包含选手主题杯、纸袋、杯套及水敏小卡。结束时间以官方公告为准。", tags: ["限定包装", "联名周边", "两弹上线"],
-    sources: [media("瑞幸 KPL 联名周边发售", "微博", "https://weibo.com/2504770437/5356009434383847", "2026-10-26"), media("瑞幸与王者荣耀 KPL 十周年联动", "新浪科技", "https://finance.sina.com.cn/tech/shenji/2026-11-03/doc-inixmnpz0030839.shtml", "2026-11-03")],
-  },
   {
     id: "genshin-baskin-2026", ipIds: ["genshin"], title: "原神 × 31 冰淇淋", brand: "31 冰淇淋", brandShort: "31", category: "food", region: "日本", location: "日本参与门店",
     startDate: "2026-08-28", endDate: null, announcedAt: "2026-08-20", updatedAt: "2026-10-31",
@@ -107,12 +174,6 @@ export const collaborations: Collaboration[] = [
     startDate: "2026-08-25", endDate: "2026-09-11", announcedAt: "2026-08-01", updatedAt: "2026-08-25",
     summary: "十周年纪念主题咖啡，呈现角色菜单、限定特典与纪念周边。", tags: ["十周年", "双城活动", "纪念周边"],
     sources: [media("约定的梦幻岛十周年 × 公主咖啡厅", "Collabo Cafe", "https://collabo-cafe.com/zh-hans/events/collabo/dorama-ceza65ox/", "2026-08-01")],
-  },
-  {
-    id: "tutu-shuyi-2026", ipIds: ["big-ear-tutu"], title: "大耳朵图图 × 书亦烧仙草", brand: "书亦烧仙草", brandShort: "书", category: "tea", region: "中国大陆", location: "全国参与门店",
-    startDate: "2026-09-30", endDate: "2026-10-07", announcedAt: "2026-09-25", updatedAt: "2026-09-30",
-    summary: "「一起快乐秋游」主题饮品、主题门店与图图周边。", tags: ["快乐秋游", "主题门店", "童年动画"],
-    sources: [media("Drink IP Collab Timeline", "Chinese Food Wiki", "https://www.chinesefoodwiki.org/index.php?title=Drink_IP_Collab_Timeline", "2026-09-30")],
   },
   {
     id: "tears-chapanda-2025", ipIds: ["tears-of-themis"], title: "未定事件簿 × 茶百道", brand: "茶百道", brandShort: "茶", category: "tea", region: "中国大陆", location: "全国参与门店及主题商场",

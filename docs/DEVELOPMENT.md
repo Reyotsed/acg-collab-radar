@@ -6,7 +6,7 @@
 
 ## 1. 当前产品范围
 
-中国版 ACG 联动情报站 Demo，当前只关注**国内二次元 IP 与餐饮、食品、饮品及相关门店的联动**。
+中国版 ACG 联动情报站 Demo，当前关注**中国大陆及台港澳二次元 IP 与餐饮、食品、饮品及相关门店的联动**。IP 注册表当前有 80 个实体，Wiki 按最长有效别名匹配。
 
 公开页面只保留一条竖向时间线：
 
@@ -44,7 +44,7 @@ JSON 去重入库，各来源独立保存处理状态
 国内联动时间线 / IP 时间线
 ```
 
-ChineseFoodWiki 使用独立的 MediaWiki 修订链路：最新 `revid` → 本地修订比较 → 新版 wikitext → 六列表格行哈希 → 仅变更行进入 DeepSeek。首次只建立基线，不导入历史；该链路不经过 Firecrawl。
+ChineseFoodWiki 使用独立的 MediaWiki 修订链路：最新 `revid` → 本地修订比较 → 新版 wikitext → 六列表格行哈希 → IP 别名预筛选 → 初始化全部 Sources / 增量最多两个经 Firecrawl 补全 → 合并正文与图片进入 DeepSeek。首次只建立基线，不导入历史；revid 不变时不调用模型或 Firecrawl。
 
 ### 技术栈
 
@@ -103,8 +103,8 @@ DEEPSEEK_MODEL=deepseek-flash
 INGEST_ADMIN_TOKEN=
 ```
 
-- 五个游戏官方源及 ChineseFoodWiki MediaWiki API 均不消耗 Firecrawl credits。
-- 只有本地工作台解析未接入的普通网页时才优先 Firecrawl，失败后回退普通 HTTP；已配置 Key 不等于定时任务会调用。
+- 五个游戏官方源和 Wiki 修订元数据不消耗 Firecrawl；Wiki 变更行通过 IP 预筛选后，最多两个 Sources 会经 Firecrawl 补全，revid 不变时消耗为 0。
+- 本地工作台解析未接入的普通网页时也优先 Firecrawl，失败后回退普通 HTTP；`firecrawlAttempted` 会记录成功或失败后回退前是否实际发起过请求。
 - 生产环境必须配置 `INGEST_ADMIN_TOKEN`，否则解析和同步写入接口会禁用。
 - `DATA_FILE` 可覆盖联动记录位置，`SOURCE_STATE_DIR` 可覆盖各来源状态目录。
 - `GENSHIN_STATE_FILE` 仅用于兼容读取旧原神状态；新状态统一写入 `data/sources/{source}.json`。
@@ -149,14 +149,23 @@ INGEST_ADMIN_TOKEN=
 ### ChineseFoodWiki 修订增量
 
 - 首次读取当前修订和 wikitext，保存 `revisionId / revisionTimestamp / rows[key]=hash`，不导入历史、不调用模型
-- 后续先只读修订元数据；revid 不变时直接结束，不读取 wikitext，不调用 DeepSeek 或 Firecrawl
+- 后续先只读修订元数据；revid 不变且 `pendingRows` 为空时直接结束，不读取 wikitext，不调用 DeepSeek 或 Firecrawl
 - revid 变化时解析六列表格，以“日期 + 品牌 + IP”生成稳定行键，以整行内容生成哈希，仅处理新增或修改行
+- 先按现有 IP 名称和别名预筛选，未收录 IP 在 Sources 抓取和模型调用前直接跳过；所有候选中取最长有效别名，确保“明日方舟：终末地”优先于“明日方舟”，过短别名不单独作为依据以避免“观园吉 → 东方 Project”
+- 手动初始化默认 `limit=all + sourceLimit=all`，处理全部行并抓取全部 Sources；自动增量默认最多两个 Sources，也可用 `--limit=N --source-limit=N` 覆盖
+- 普通网页由 Firecrawl 获取 markdown/html，已接入官网仍走官方连接器，失败可回退普通 HTTP
+- 合并 Wiki 行、来源正文和来源图片后交给 DeepSeek；Firecrawl 只负责抓取，不替代统一 Schema 和业务校验；每个来源正文最多 12000 字符、合计最多 45000 字符，降低空响应概率
+- 模型 `tags` 最多保留 8 个、`evidenceQuotes` 最多保留 10 个，避免非关键数组超长导致整行失败
+- 完整多模态输入失败时，使用同一来源正文但不含图片、最多 20000 字符的纯文本输入再降级重试；仍失败才进入 pendingRows
+- 有完整 Wiki 日期时，先在 Sources 抓取前跳过不晚于当前 IP 最新记录的行，避免旧活动浪费 Firecrawl 和模型请求
+- 所有 Sources 都失败时降级使用 Wiki 行；报告记录 `enrichedRows` 和实际是否发起 Firecrawl 请求
+- 手动模式 `npm run sync:sources -- --source=chinesefoodwiki --manual` 可在 revid 不变时初始化全部行；必须先有基线，也可追加 `--limit=14 --source-limit=2` 限量补跑
 - 表格结束符不参与单元格哈希，避免同一行移动位置造成伪变更
 - Wiki 原始 URL 使用修订 permalink 和行锚点，存储则以 `chinesefoodwiki:{rowKey}` 生成稳定活动 ID；同一行修订会更新原记录并合并证据
-- 非中国大陆、未收录 IP、非餐饮、缺少开始日期、日期无效或不晚于当前最新记录的行会跳过并记录原因
+- 明确海外地区、未收录 IP、非餐饮、缺少开始日期、日期无效或不晚于当前最新记录的行会跳过并记录原因；Wiki 的 Region: Taiwan/Hong Kong/Macau 分别映射为中国台湾/香港/澳门
 - 多行按活动日期从旧到新处理，只有严格更新的 Wiki 活动才能替换该 IP 当前记录；同一稳定行 ID 的修订除外
-- 某行解析失败时保留旧 revision 游标和该行旧哈希，其他成功行可推进，失败行下一轮重试
-- 报告包含 `baseline / previousRevisionId / revisionId / stateAdvanced / changedRows / imported / skipped / errors / firecrawlUsed=false`
+- 某行解析失败时保留旧 revision 游标和该行旧哈希，并加入 `pendingRows`；即使 revid 和行哈希未变也会重试，成功或明确跳过后才移除，已删除的 Wiki 行不阻塞推进
+- 报告包含 `baseline / manual / enrichedRows / previousRevisionId / revisionId / stateAdvanced / changedRows / imported / skipped / errors / firecrawlUsed`；基线和无变化时 `firecrawlUsed=false`，来源补全可能为 true
 
 ### 已验证样例
 
@@ -172,11 +181,11 @@ INGEST_ADMIN_TOKEN=
 - `announcedAt` 是公告发布时间，不是活动开始时间
 - 未公布结束日期必须保存 `null`，页面显示“结束时间未官宣”
 - 未公布开始日期也必须保存 `null`，状态为 `announced`，页面显示“日期待定 / 活动时间未官宣”
-- 官方明确“售完、发完、领完、赠完即止”时保存 `endRule=while_supplies_last`；没有固定结束日期的活动从开始日期起默认一个月后截止，页面标注“默认截止”，到期进入历史联动
+- 官方明确“售完、发完、领完、赠完即止”时保存 `endRule=while_supplies_last`；只要存在开始日期且没有固定结束日期，无论是否有 endRule，都从开始日期起默认一个月后截止，页面标注“默认截止”，到期进入历史联动
 - 静态演示记录带“演示快照”标签；真实入库记录显示官方或媒体来源，二者不得混同
 - 官网内容展示有效期不能当作活动结束日期
 - 公开时间线按状态分组，再按 `updatedAt`、`startDate` 倒序
-- 首页只展示 `region === "中国大陆"` 的记录
+- 首页展示 `region !== "日本"` 的记录，覆盖中国大陆、中国台湾、中国香港和中国澳门；模型、草稿和人工工作台使用同一地区枚举
 - 测试通过 `COLLAB_REFERENCE_NOW=2026-11-04T12:00:00+08:00` 固定参考时间；正常开发和 Pages 构建使用当前时间
 
 ## 7. API
@@ -204,10 +213,13 @@ npm audit
 
 当前验证结果：
 
-- 40 项测试通过，新增 Wiki 表格解析、基线、无变化、单行变更、旧记录/非大陆跳过和失败游标测试
-- Next.js standalone 生产构建与 Pages 静态导出通过，生成 20 个 IP 详情
+- 43 项测试通过，新增三角洲简称、台灣地区、终末地最长别名优先和观园吉防误匹配测试
+- Next.js standalone 生产构建与 Pages 静态导出通过，生成 80 个 IP 详情
 - 五个游戏官方源均执行过真实同步；Wiki 已真实建立 revid 3147 基线并验证第二次 changedRows=0，两次均 firecrawlUsed=false
-- 当前真实入库为原神、崩铁、绝区零各一条 2026 年最新联动；2024 原神、2019 明日方舟和 2018 崩三旧记录已移除
+- 当前真实入库共 24 条、覆盖 24 个不同 IP，其中 21 条为 Wiki 详细记录；王者荣耀和大耳朵图图旧静态重复项已删除
+- 扩充 IP 后完整初始化检查 34 行、补全 24 行；三角洲（中国台湾）、无畏契约、终末地均已实际入库，最终 pendingRows 为空
+- 模型 tags 超过 8 个时安全截断；完整输入失败时用纯文本 20000 字以内降级重试，终末地和天官赐福均通过该路径完成
+- 所有有开始日期但无结束日期的记录统一默认一个月截止，不再长期占用“正在进行”
 - 绝区零 KFC 已用肯德基官方套餐规则修正为 2026-07-24 上市和售完即止，不再只展示 PV 标题
 - 崩铁茶百道与绝区零 KFC 分别默认于 2026-05-25、2026-08-24 截止，页面标注“默认截止”并自动进入历史联动
 - 崩铁真实记录保留官方微博原帖和新浪镜像证据，旧静态重复对象已删除
@@ -362,6 +374,45 @@ docker compose up --build -d
 - 核清 Firecrawl：五个官方源和 Wiki 均不使用；只有本地工作台解析未接入的普通网页且配置 Key 时才优先调用。代码无法判断账单中历史消耗来自哪个具体项目或请求
 - 真实建立 revid 3147、34 行哈希基线，第二次 changedRows=0，两次 firecrawlUsed=false；未改变三条现有活动
 - 修复表格结束符导致同一行位置变化时哈希不稳定的问题；新增 7 项测试，共 40 项
+
+### 2026-11-06：Wiki Sources 详情补全与手动更新
+
+- 用户要求实际查看一次 Wiki 更新效果，并建议通过 Sources 原始网页补全简单列表缺少的详情
+- Wiki 继续用 revid + 行哈希发现变化；有效候选先按 IP 别名预筛选，再最多抓取两个 Sources，合并正文和图片后交给 DeepSeek，Firecrawl 不直接替代统一结构化解析
+- 新增 `--manual --limit=N` 限量补跑，支持 revid 不变时选择最近行；未知 IP 在 Firecrawl 和模型调用前跳过
+- `RawAnnouncement.firecrawlAttempted` 记录成功或失败回退前是否实际发起请求，Wiki 报告增加 `manual / enrichedRows / firecrawlUsed`
+- 真实手动检查最近 14 行：5 行来源补全，新增吉伊卡哇、王者荣耀、初音未来、天官赐福 4 条，10 行跳过，0 错误，`firecrawlUsed=true`
+- 删除与真实王者荣耀瑞幸活动重复的静态演示记录；当前共七条真实导入记录
+- 新增手动补跑测试，共 41 项；流程图和 Firecrawl 说明同步改为“无修订变化为 0，变更行 Sources 按需调用”
+
+### 2026-11-06：完整 Wiki 初始化与统一默认截止
+
+- 用户指出首次初始化应尽量补全，改为手动默认全部行、全部 Sources；自动增量仍只处理变更行且最多两个 Sources
+- 增加 `limit=all / sourceLimit=all` 与可覆盖参数，全部来源正文分来源限长后合并，避免模型输入过大
+- 所有有开始日期但无结束日期的活动统一默认一个月截止，不再只限 while_supplies_last
+- 真实完整检查 34 行、补全 9 行；新增大耳朵图图并更新已有 Wiki 记录，删除其静态重复项
+- 修复短别名误匹配：删除观园吉 × 东方 Project 错误记录；明确排除明日方舟：终末地独立 IP
+- 两个 DeepSeek 空响应行通过 pendingRows 重试，天官赐福补全成功，终末地跳过，最终 pendingRows 为空
+- 最终五条 Wiki 详细记录、全站八条真实记录；新增误匹配与重试测试，共 42 项
+
+### 2026-11-06：IP 注册表扩充与最长别名匹配
+
+- 应用户要求新增三角洲行动、无畏契约、明日方舟：终末地，并扩充 Wiki 已出现及国内热门游戏、国创、角色 IP，从 20 个增加到 80 个
+- 新增 `popularIp` 注册辅助函数，统一维护中文名、英文名、别名、类型和档案页配色
+- Wiki 匹配从“首个命中”改为“全部候选中最长有效别名”，终末地不再被明日方舟抢占；三角洲、瓦罗兰特等简称可识别，过短歧义别名仍不单独匹配
+- 地区类型新增中国台湾、中国香港、中国澳门，模型提示、Zod、人工工作台、首页和 IP 详情同步支持；仅明确海外地区跳过
+- 参考网上信息选择扩充对象：[无畏契约官网](https://val.qq.com/main.html)、[恋与深空餐饮联名报道](https://news.qq.com/rain/a/20260625A032CW00)、[国产动画商业化盘点](https://view.inews.qq.com/a/20260129A07PY000)、[二次元手游市场参考](https://news.yxrb.net/mobile/index.php?m=mobile&c=index&a=show&catid=6&id=6446)
+- 新增三角洲简称与台湾、终末地独立匹配测试，共 43 项；完整构建和 Pages 的 80 个 IP 档案页生成通过
+- 本轮只扩注册表和匹配规则，未再次执行全量初始化，避免重复消耗 Firecrawl；后续手动初始化会使用新规则
+
+### 2026-11-06：80 IP 完整初始化与失败降级
+
+- 用户确认重新初始化，使用 80 个 IP、最长别名和台港澳规则完整检查 Wiki 34 行，24 行完成 Sources 补全
+- 新增三角洲行动（中国台湾）、无畏契约、终末地、保卫萝卜、蒙奇奇、恋与深空、时光代理人、仙逆等记录；最终 21 条 Wiki 记录、全站 24 条且 IP 不重复
+- 三角洲首次因 tags 超 8 被 Schema 拒绝，现统一截断 tags/evidenceQuotes 后成功入库，并保留明确活动结束日期 2026-11-30
+- 终末地和天官赐福多次空响应后，使用纯文本 20000 字以内降级重试成功；pendingRows 最终清空
+- 旧王者荣耀活动在 Sources 前预跳过，避免重复消耗；每个 IP 仍只保留最新一条
+- 43 项测试、TypeScript 与完整构建通过；Pages 生成 80 个 IP 档案和 24 条真实记录
 
 ## 变更记录维护规则
 

@@ -10,7 +10,7 @@ const draftSchema = z.object({
   title: z.string().min(1),
   brand: z.string().min(1).nullable().default(null),
   category: z.enum(["tea", "coffee", "fastfood", "cafe", "food"]).nullable().default(null),
-  region: z.enum(["中国大陆", "日本"]),
+  region: z.enum(["中国大陆", "中国台湾", "中国香港", "中国澳门", "日本"]),
   location: z.string().min(1).nullable().default(null),
   startDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).nullable(),
   endDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).nullable(),
@@ -27,7 +27,7 @@ const systemPrompt = `你是二次元餐饮商业联动公告解析器。阅读�
 字段：isCollab, ipId, ipName, title, brand, category, region, location, startDate, endDate, endRule, announcedAt, summary, tags, confidence, evidenceQuotes, warnings。
 规则：
 1. isCollab 只用于判断公告是否属于与餐饮品牌、食品饮品、餐饮门店或主题咖啡相关的商业联动；普通游戏活动、祈愿、创作者合作和非餐饮合作填 false。
-2. category 只能是 tea/coffee/fastfood/cafe/food；region 只能是中国大陆或日本。
+2. category 只能是 tea/coffee/fastfood/cafe/food；region 只能是中国大陆、中国台湾、中国香港、中国澳门或日本。
 3. 日期使用 YYYY-MM-DD。公告发布日期是 announcedAt，绝不能把网站展示有效期当作活动结束日期。
 4. 未明确公布的日期填 null，不得猜测。跨阶段活动以主要联动企划的起止时间为准，并在 summary 中补充阶段信息。
 5. 公告明确写出“售完即止、发完即止、领完即止、赠完即止、随餐发完即止”时，endRule 填 while_supplies_last；否则填 null，不能凭限量一词推断当前已经售罄。
@@ -90,6 +90,8 @@ export async function extractCollab(raw: RawAnnouncement, imageContent: unknown[
     }
   }
   if (!output) throw new Error("DeepSeek 未返回有效 JSON 对象");
+  if (Array.isArray(output.tags)) output.tags = output.tags.slice(0, 8);
+  if (Array.isArray(output.evidenceQuotes)) output.evidenceQuotes = output.evidenceQuotes.slice(0, 10);
   const candidate = output.isCollab === false ? {
     isCollab: false,
     ipId: "",

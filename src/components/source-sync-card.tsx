@@ -43,7 +43,7 @@ export function SourceSyncCard({ adminToken }: { adminToken: string }) {
       <div className="source-sync-card__main">
         <span>OFFICIAL + WIKI CONNECTORS</span>
         <h2>官方源与 Wiki · 增量联动监控</h2>
-        <p>覆盖五个游戏官网和 ChineseFoodWiki 饮品时间线。官网按公告 ID 增量，Wiki 按页面修订和行哈希增量，不消耗 Firecrawl。</p>
+        <p>覆盖五个游戏官网和 ChineseFoodWiki 饮品时间线。官网按公告 ID 增量；Wiki 按修订和行哈希发现变化，再用 Firecrawl 补全 Sources，无变化时不消耗。</p>
       </div>
       <button type="button" onClick={sync} disabled={syncing}>{syncing ? <LoaderCircle className="spin" size={16} /> : <RefreshCw size={16} />}{syncing ? "正在同步" : "同步全部信息源"}</button>
       {error && <p className="sync-error">{error}</p>}
@@ -75,7 +75,7 @@ export function SourceSyncCard({ adminToken }: { adminToken: string }) {
                 <strong>Chinese Food Wiki · 饮品时间线</strong>
                 <p>{wikiReport.baseline
                   ? `已建立修订 ${wikiReport.revisionId} 基线，不导入历史；后续只解析变更行。`
-                  : `修订 ${wikiReport.previousRevisionId} → ${wikiReport.revisionId}，变更 ${wikiReport.changedRows} 行，入库 ${wikiReport.imported.length} 条，跳过 ${wikiReport.skipped.length} 条，失败 ${wikiReport.errors.length} 条。`}</p>
+                  : `修订 ${wikiReport.previousRevisionId} → ${wikiReport.revisionId}，变更 ${wikiReport.changedRows} 行，来源补全 ${wikiReport.enrichedRows} 行，入库 ${wikiReport.imported.length} 条，跳过 ${wikiReport.skipped.length} 条，失败 ${wikiReport.errors.length} 条；Firecrawl ${wikiReport.firecrawlUsed ? "已调用" : "未调用"}。`}</p>
               </div>
               <a href="https://www.chinesefoodwiki.org/index.php?title=Drink_IP_Collab_Timeline" target="_blank" rel="noreferrer">查看<ArrowRight size={15} /></a>
             </div>

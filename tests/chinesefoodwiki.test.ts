@@ -4,6 +4,8 @@ import { parseChineseFoodWikiRows, syncChineseFoodWiki } from "@/lib/sources/chi
 
 const mocks = vi.hoisted(() => ({
   fetch: vi.fn(),
+  fetchDetail: vi.fn(),
+  prepareImages: vi.fn(),
   extract: vi.fn(),
   getImported: vi.fn(),
   saveImported: vi.fn(),
@@ -24,6 +26,8 @@ vi.mock("node:fs/promises", () => ({
   rename: vi.fn().mockResolvedValue(undefined),
 }));
 vi.mock("@/lib/ingest/http", () => ({ fetchPublic: mocks.fetch }));
+vi.mock("@/lib/ingest/fetch", () => ({ fetchAnnouncement: mocks.fetchDetail }));
+vi.mock("@/lib/ingest/images", () => ({ prepareModelImages: mocks.prepareImages }));
 vi.mock("@/lib/ingest/extract", () => ({ extractCollab: mocks.extract }));
 vi.mock("@/lib/imported-store", () => ({
   getImportedCollaborations: mocks.getImported,
@@ -70,6 +74,19 @@ beforeEach(() => {
   vi.clearAllMocks();
   mocks.state.value = null;
   mocks.getImported.mockResolvedValue([]);
+  mocks.prepareImages.mockResolvedValue({ content: [], tileCount: 0, totalBytes: 0, warnings: [] });
+  mocks.fetchDetail.mockImplementation(async (url: string) => ({
+    url,
+    title: "来源详细公告",
+    publishedAt: "2026-11-02",
+    sourceName: "来源网站",
+    sourceTier: "media",
+    fetcher: "firecrawl",
+    firecrawlAttempted: true,
+    text: `来源网页的详细联动内容，包括活动时间、参与门店、套餐内容、周边规则、购买方式和注意事项。`.repeat(2) + url,
+    images: [],
+    relatedSources: [],
+  }));
   mocks.extract.mockResolvedValue(draft());
   mocks.saveImported.mockResolvedValue({ collaboration: { id: "imported-wiki", title: "原神 × 喜茶" }, duplicate: false });
 });
@@ -134,18 +151,64 @@ describe("ChineseFoodWiki revision synchronization", () => {
     const report = await syncChineseFoodWiki();
 
     expect(report.skipped[0].reason).toBe("不晚于该 IP 当前最新记录");
+    expect(mocks.fetchDetail).not.toHaveBeenCalled();
+    expect(mocks.extract).not.toHaveBeenCalled();
     expect(mocks.saveImported).not.toHaveBeenCalled();
   });
 
-  it("skips non-mainland rows without calling the model", async () => {
-    const changed = row("2026-11-02", "TEA TOP", "三角洲行动", "Region: Taiwan. Collab drinks.");
+  it("skips explicitly overseas rows without calling the model", async () => {
+    const changed = row("2026-11-02", "日本品牌", "原神", "Region: Japan. Collab drinks.");
     mocks.state.value = JSON.stringify({ source: "chinesefoodwiki", revisionId: 10, revisionTimestamp: "2026-11-01", rows: {} });
     mocks.fetch.mockResolvedValueOnce(revision(11)).mockResolvedValueOnce(revision(11, wiki(changed)));
 
     const report = await syncChineseFoodWiki();
 
-    expect(report.skipped[0].reason).toBe("非中国大陆活动");
+    expect(report.skipped[0].reason).toBe("非中国地区活动");
     expect(mocks.extract).not.toHaveBeenCalled();
+  });
+
+  it("manually enriches all sources for known IPs and skips unknown IPs before fetching", async () => {
+    const unknown = row("2026-11-03", "品牌", "未知 IP");
+    const known = row("2026-11-02", "喜茶", "原神").replace(
+      "[https://example.com/official Official announcement]",
+      "[https://example.com/1 One] · [https://example.com/2 Two] · [https://example.com/3 Three]",
+    );
+    mocks.state.value = JSON.stringify({ source: "chinesefoodwiki", revisionId: 10, revisionTimestamp: "2026-11-01", rows: {} });
+    mocks.fetch.mockResolvedValue(revision(11, wiki(unknown, known)));
+
+    const report = await syncChineseFoodWiki({ manual: true, limit: 2 });
+
+    expect(report).toMatchObject({ manual: true, changedRows: 2, enrichedRows: 1, firecrawlUsed: true });
+    expect(report.skipped[0].reason).toContain("未收录 IP");
+    expect(mocks.fetchDetail).toHaveBeenCalledTimes(3);
+    expect(mocks.extract).toHaveBeenCalledTimes(1);
+    expect(mocks.saveImported).toHaveBeenCalledTimes(1);
+  });
+
+  it("resolves Endfield separately from Arknights without confusing Guanyuanji with Touhou", async () => {
+    const guanyuanji = row("2026-09-29", "茉莉奶白", "Guanyuanji / 观园吉 (“守护东方”) ");
+    const endfield = row("2026-09-20", "奈雪", "Arknights: Endfield / 明日方舟：终末地");
+    mocks.state.value = JSON.stringify({ source: "chinesefoodwiki", revisionId: 10, revisionTimestamp: "2026-11-01", rows: {} });
+    mocks.fetch.mockResolvedValue(revision(11, wiki(guanyuanji, endfield)));
+
+    const report = await syncChineseFoodWiki({ manual: true, limit: 2 });
+
+    expect(report.skipped.map((item) => item.reason)).toEqual(["未收录 IP：Guanyuanji / 观园吉 (“守护东方”)"]);
+    expect(report.imported).toHaveLength(1);
+    expect(mocks.fetchDetail).toHaveBeenCalledTimes(1);
+    expect(mocks.extract).toHaveBeenCalledTimes(1);
+    expect(mocks.saveImported).toHaveBeenCalledWith(expect.any(Object), expect.objectContaining({ ipId: "arknights-endfield" }), expect.any(Object));
+  });
+
+  it("supports the Delta Force short alias and Taiwan region", async () => {
+    const delta = row("2026-11-02", "TEA TOP", "Garena Delta Force / 三角洲", "Region: Taiwan. Collab drinks.");
+    mocks.state.value = JSON.stringify({ source: "chinesefoodwiki", revisionId: 10, revisionTimestamp: "2026-11-01", rows: {} });
+    mocks.fetch.mockResolvedValue(revision(11, wiki(delta)));
+
+    const report = await syncChineseFoodWiki({ manual: true, limit: 1 });
+
+    expect(report.imported).toHaveLength(1);
+    expect(mocks.saveImported).toHaveBeenCalledWith(expect.any(Object), expect.objectContaining({ ipId: "delta-force", region: "中国台湾" }), expect.any(Object));
   });
 
   it("keeps the previous revision cursor when row parsing fails so it can retry", async () => {
@@ -159,5 +222,13 @@ describe("ChineseFoodWiki revision synchronization", () => {
     expect(report.errors).toHaveLength(1);
     expect(report.stateAdvanced).toBe(false);
     expect(JSON.parse(mocks.state.value!).revisionId).toBe(10);
+    expect(JSON.parse(mocks.state.value!).pendingRows).toHaveLength(1);
+
+    mocks.extract.mockResolvedValue(draft());
+    mocks.fetch.mockResolvedValueOnce(revision(11)).mockResolvedValueOnce(revision(11, wiki(changed)));
+    const retry = await syncChineseFoodWiki();
+    expect(retry.errors).toHaveLength(0);
+    expect(retry.stateAdvanced).toBe(true);
+    expect(JSON.parse(mocks.state.value!).pendingRows).toEqual([]);
   });
 });

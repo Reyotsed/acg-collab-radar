@@ -130,5 +130,1077 @@
         "tier": "media"
       }
     ]
+  },
+  {
+    "id": "imported-e9b4ddf5dfc5",
+    "ipIds": [
+      "chiikawa"
+    ],
+    "title": "万圣夜，「巧」遇CHIIKAWA",
+    "brand": "茉莉奶白（Molly Tea）",
+    "brandShort": "茉",
+    "category": "tea",
+    "region": "中国大陆",
+    "location": "全国",
+    "startDate": "2026-10-29",
+    "endDate": null,
+    "announcedAt": "2026-11-02",
+    "updatedAt": "2026-11-02",
+    "summary": "茉莉奶白与吉伊卡哇推出万圣节主题联动，首次呈现CHIIKAWA万圣主题图库，包含吉伊卡哇、哈奇喵、乌萨奇、飞鼠与古本屋；推出联名饮品、联名杯、纸袋、搅拌棒、冰箱贴、立体牌等周边，联名套餐自2026-10-29 00:00起供应，并设置主题店装饰。公告未明确活动结束日期。",
+    "tags": [
+      "Chiikawa",
+      "吉伊卡哇",
+      "茉莉奶白",
+      "Molly Tea",
+      "万圣节",
+      "茶饮",
+      "联名周边"
+    ],
+    "sources": [
+      {
+        "title": "手机新浪网",
+        "source": "www.sina.cn",
+        "url": "https://www.sina.cn/news/detail/5357121743880705.html",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      },
+      {
+        "title": "ChineseFoodWiki：Molly Tea × Chiikawa / 吉伊卡哇 · Halloween (“万圣夜，「巧」遇CHIIKAWA”)",
+        "source": "Chinese Food Wiki",
+        "url": "https://www.chinesefoodwiki.org/index.php?title=Drink_IP_Collab_Timeline&oldid=3147#collab-57027d84fa2b",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      },
+      {
+        "title": "Sina / Chiikawa Weibo",
+        "source": "Sina / Chiikawa Weibo",
+        "url": "https://www.sina.cn/weibo/detail/5358340064411663.html",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      },
+      {
+        "title": "4A广告网",
+        "source": "4A广告网",
+        "url": "https://www.4anet.com/p/01m5kvwqfebkbedddpjfcwcmkv",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      }
+    ]
+  },
+  {
+    "id": "imported-ad5ca67f77da",
+    "ipIds": [
+      "honor-of-kings"
+    ],
+    "title": "十年此刻，瑞幸把 KPL 十大年度记忆人物请来了",
+    "brand": "瑞幸咖啡",
+    "brandShort": "瑞",
+    "category": "coffee",
+    "region": "中国大陆",
+    "location": "全国",
+    "startDate": "2026-10-26",
+    "endDate": null,
+    "announcedAt": "2026-11-02",
+    "updatedAt": "2026-11-02",
+    "summary": "瑞幸咖啡与《王者荣耀》KPL 十周年展开联名，主题为“十年此刻，开瑞全场”，于10月26日开启。公告公布梦泪、Fly、久诚、Cat、暖阳、清融、花海、小胖、长生、一诺十位“KPL十大年度记忆人物”，并推出KPL十周年限定“加星气泡美式”，同时列出各人物对应推荐饮品。",
+    "tags": [
+      "瑞幸咖啡",
+      "王者荣耀",
+      "KPL",
+      "十周年",
+      "咖啡联名",
+      "游戏赛事"
+    ],
+    "sources": [
+      {
+        "title": "十年此刻，瑞幸把 KPL 十大年度记忆人物请来了|瑞幸咖啡|王者荣耀|KPL|梦泪|Fly|久诚|Cat|暖阳|清融|花海|小胖|长生|一诺_新浪新闻",
+        "source": "www.sina.cn",
+        "url": "https://www.sina.cn/news/detail/5356411996606156.html",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      },
+      {
+        "title": "ChineseFoodWiki：Luckin Coffee × Honor of Kings / 《王者荣耀》 KPL 10th anniversary (“十年此刻，开瑞全场”)",
+        "source": "Chinese Food Wiki",
+        "url": "https://www.chinesefoodwiki.org/index.php?title=Drink_IP_Collab_Timeline&oldid=3147#collab-159612c7abd8",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      },
+      {
+        "title": "Sina / Luckin Weibo",
+        "source": "Sina / Luckin Weibo",
+        "url": "https://www.sina.cn/news/detail/5357499169374749.html",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      },
+      {
+        "title": "vgover",
+        "source": "vgover",
+        "url": "https://www.vgover.com/news/242056",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      }
+    ]
+  },
+  {
+    "id": "imported-4ecd280040e7",
+    "ipIds": [
+      "hatsune-miku"
+    ],
+    "title": "沪上阿姨×初音未来·未来有你2026演唱会",
+    "brand": "沪上阿姨",
+    "brandShort": "沪",
+    "category": "tea",
+    "region": "中国大陆",
+    "location": "上海指定门店（14家）",
+    "startDate": "2026-10-26",
+    "endDate": null,
+    "endRule": "while_supplies_last",
+    "announcedAt": "2026-11-02",
+    "updatedAt": "2026-11-02",
+    "summary": "沪上阿姨与初音未来围绕“未来有你2026演唱会”在上海指定门店推出联名活动，主题为游乐园。2026-10-26 10:00起微信小程序开启，2026-10-27 10:00起外卖平台上线；推出“未来有你·双杯周边套餐”，含两杯饮品、旋转杯套、双杯纸袋和抽拉明信片，6家打卡店可获联名贴纸。",
+    "tags": [
+      "初音未来",
+      "沪上阿姨",
+      "奶茶",
+      "上海",
+      "未来有你2026",
+      "联名套餐",
+      "周边"
+    ],
+    "sources": [
+      {
+        "title": "去上海喝杯奶茶，杯套旋转木马，把初音未来请进现实|沪上阿姨|初音未来|新创华|未来有你 2026 演唱会_新浪新闻",
+        "source": "www.sina.cn",
+        "url": "https://www.sina.cn/news/detail/5356456656241028.html",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      },
+      {
+        "title": "ChineseFoodWiki：Auntea Jenny × Hatsune Miku / 初音未来 · MIKU WITH YOU 2026 (“未来有你2026演唱会”)",
+        "source": "Chinese Food Wiki",
+        "url": "https://www.chinesefoodwiki.org/index.php?title=Drink_IP_Collab_Timeline&oldid=3147#collab-c6051eaeeb10",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      },
+      {
+        "title": "Sina / Hatsune Miku Weibo",
+        "source": "Sina / Hatsune Miku Weibo",
+        "url": "https://www.sina.cn/news/detail/5356457434022591.html",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      },
+      {
+        "title": "FindKizashi",
+        "source": "FindKizashi",
+        "url": "https://findkizashi.com/articles/auntea-jenny-hatsune-miku-with-you-2026-collab-shanghai/",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      },
+      {
+        "title": "vgover",
+        "source": "vgover",
+        "url": "https://www.vgover.com/news/241890",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      }
+    ]
+  },
+  {
+    "id": "imported-9dee98abe8ba",
+    "ipIds": [
+      "tgcf"
+    ],
+    "title": "幸运咖联动天官赐福，IP粉钱包捂不住了",
+    "brand": "幸运咖",
+    "brandShort": "幸",
+    "category": "coffee",
+    "region": "中国大陆",
+    "location": "全国",
+    "startDate": "2026-10-09",
+    "endDate": "2026-10-30",
+    "announcedAt": "2026-11-02",
+    "updatedAt": "2026-11-02",
+    "summary": "幸运咖与《天官赐福》动画进行限时咖啡联动，推出“福云维也纳”“福云抹茶维也纳”及“福光入镜”透卡、“福运幸临”徽章福贴、“思君如故”亚克力立牌等周边套餐；线上小程序活动期为2026-10-09至2026-10-30，美团外卖渠道至2026-10-15。",
+    "tags": [
+      "幸运咖",
+      "天官赐福",
+      "咖啡",
+      "联名",
+      "花城",
+      "谢怜",
+      "限定周边"
+    ],
+    "sources": [
+      {
+        "title": "幸运咖联动天官赐福，IP粉钱包捂不住了 - 4A广告网",
+        "source": "www.4anet.com",
+        "url": "https://www.4anet.com/p/01m4f95sy4t4mjnnse372b0r41",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      },
+      {
+        "title": "ChineseFoodWiki：幸运咖 × Heaven Official's Blessing / 《天官赐福》动画 (“福运幸临”)",
+        "source": "Chinese Food Wiki",
+        "url": "https://www.chinesefoodwiki.org/index.php?title=Drink_IP_Collab_Timeline&oldid=3147#collab-37bb0fca20b5",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      },
+      {
+        "title": "知遇枢",
+        "source": "知遇枢",
+        "url": "https://zhiyushuip.com/indexNewsDetail/36155c15-3457-45e7-9934-8eb9c31a11c0",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      },
+      {
+        "title": "幸运咖 Weibo",
+        "source": "幸运咖 Weibo",
+        "url": "https://weibo.com/6519396553/Rl8GN4gMZ",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      }
+    ]
+  },
+  {
+    "id": "imported-7466c0003e42",
+    "ipIds": [
+      "big-ear-tutu"
+    ],
+    "title": "书亦烧仙草 × 大耳朵图图开启快乐「秋游」",
+    "brand": "书亦烧仙草",
+    "brandShort": "书",
+    "category": "tea",
+    "region": "中国大陆",
+    "location": "全国主题店",
+    "startDate": "2026-09-30",
+    "endDate": "2026-10-07",
+    "announcedAt": "2026-11-02",
+    "updatedAt": "2026-11-02",
+    "summary": "2026年9月30日至10月7日，书亦烧仙草与大耳朵图图开展“一起快乐秋游”联名，推出抹茶布蕾蛋糕珍珠、粉芭乐抹茶、红豆夹心糯糯珠抹茶三款饮品，并设置图图主题店；购买单杯套餐可获联名贴纸，购买双杯套餐可获联名双杯纸袋和对错牌扇子。",
+    "tags": [
+      "茶饮",
+      "联名",
+      "大耳朵图图",
+      "书亦烧仙草",
+      "秋游",
+      "主题店",
+      "周边"
+    ],
+    "sources": [
+      {
+        "title": "书亦烧仙草 × 大耳朵图图开启快乐「秋游」｜SocialBeta",
+        "source": "socialbeta.com",
+        "url": "https://socialbeta.com/campaign/28652",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      },
+      {
+        "title": "ChineseFoodWiki：书亦烧仙草 × Big Ear Tutu / 大耳朵图图 (“一起快乐秋游”)",
+        "source": "Chinese Food Wiki",
+        "url": "https://www.chinesefoodwiki.org/index.php?title=Drink_IP_Collab_Timeline&oldid=3147#collab-82bb17bcbeab",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      },
+      {
+        "title": "EEO",
+        "source": "EEO",
+        "url": "http://www.eeo.com.cn/2026/1007/1056958.shtml",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      },
+      {
+        "title": "4A广告网",
+        "source": "4A广告网",
+        "url": "https://www.4anet.com/p/01m3rq4645tx4cd16dtz3zhfpr",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      }
+    ]
+  },
+  {
+    "id": "imported-7f53302ccbcf",
+    "ipIds": [
+      "carrot-fantasy-4"
+    ],
+    "title": "书亦烧仙草 x 保卫萝卜联名暗黑奶茶",
+    "brand": "书亦烧仙草",
+    "brandShort": "书",
+    "category": "tea",
+    "region": "中国大陆",
+    "location": "全国门店",
+    "startDate": "2026-10-29",
+    "endDate": null,
+    "announcedAt": "2026-11-02",
+    "updatedAt": "2026-11-02",
+    "summary": "书亦烧仙草与《保卫萝卜4》开展万圣节“捣蛋夜”联名，自2026-10-29起在全国门店上新三款暗黑有料奶茶，并推出联名黑化主题杯、夜光纸袋、黑化眼镜等周边；购买指定饮品可获得相应周边。",
+    "tags": [
+      "书亦烧仙草",
+      "保卫萝卜4",
+      "万圣节",
+      "暗黑有料奶茶",
+      "联名周边"
+    ],
+    "sources": [
+      {
+        "title": "书亦烧仙草 x 保卫萝卜联名暗黑奶茶|书亦烧仙草|保卫萝卜|暗黑有料奶茶_新浪新闻",
+        "source": "www.sina.cn",
+        "url": "https://www.sina.cn/news/detail/5359296000558849.html",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      },
+      {
+        "title": "ChineseFoodWiki：书亦烧仙草 × Carrot Fantasy 4 / 《保卫萝卜4》 · Halloween (“捣蛋夜” · 黑化)",
+        "source": "Chinese Food Wiki",
+        "url": "https://www.chinesefoodwiki.org/index.php?title=Drink_IP_Collab_Timeline&oldid=3147#collab-58731e89bbe8",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      },
+      {
+        "title": "Sina / 书亦烧仙草 Weibo",
+        "source": "Sina / 书亦烧仙草 Weibo",
+        "url": "https://www.sina.cn/news/detail/5358933984413117.html",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      },
+      {
+        "title": "4A广告网",
+        "source": "4A广告网",
+        "url": "https://www.4anet.com/p/01m66ag3zwrn8x3bp1d8kge8t1",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      }
+    ]
+  },
+  {
+    "id": "imported-7c10599c4919",
+    "ipIds": [
+      "monchhichi"
+    ],
+    "title": "霸王茶姬 | Monchhichi 联名周边",
+    "brand": "霸王茶姬",
+    "brandShort": "霸",
+    "category": "tea",
+    "region": "中国大陆",
+    "location": "全国门店；主题门店活动以门店实际为准",
+    "startDate": "2026-10-28",
+    "endDate": null,
+    "endRule": "while_supplies_last",
+    "announcedAt": "2026-11-02",
+    "updatedAt": "2026-11-02",
+    "summary": "霸王茶姬与Monchhichi（蒙奇奇）推出可可系列联名，2026-10-28起在中国大陆全国门店上线。购买指定单杯产品随杯赠随机联名抽拉小卡；购买指定单杯套餐赠联名贴纸套组；购买指定双杯套餐赠冰箱贴（三选一）；橙巧可可gelato同步上线，10月28日买一送一，购可可系列gelato产品随单赠限定gelato贴纸；联名主题包材同步上线；参与主题门店活动可获联名徽章。部分周边数量有限，先到先得或用完即止。",
+    "tags": [
+      "茶饮",
+      "餐饮联动",
+      "角色IP",
+      "霸王茶姬",
+      "Monchhichi",
+      "蒙奇奇",
+      "可可系列"
+    ],
+    "sources": [
+      {
+        "title": "为了联名愿意等，但瑞幸这速度让我想捂嘴哭|瑞幸|联名_新浪新闻",
+        "source": "www.sina.cn",
+        "url": "https://www.sina.cn/weibo/detail/5358321139451457.html",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      },
+      {
+        "title": "ChineseFoodWiki：Chagee × Monchhichi / 蒙奇奇 (“可可茶工坊”)",
+        "source": "Chinese Food Wiki",
+        "url": "https://www.chinesefoodwiki.org/index.php?title=Drink_IP_Collab_Timeline&oldid=3147#collab-97fabfdfa2d9",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      },
+      {
+        "title": "FindKizashi",
+        "source": "FindKizashi",
+        "url": "https://findkizashi.com/articles/chagee-monchhichi-cocoa-tea-workshop-china/",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      }
+    ]
+  },
+  {
+    "id": "imported-f91adeb6ecbb",
+    "ipIds": [
+      "valorant"
+    ],
+    "title": "库迪咖啡 × 无畏契约手游「C点集结，组队开闹」联名活动",
+    "brand": "库迪咖啡",
+    "brandShort": "库",
+    "category": "coffee",
+    "region": "中国大陆",
+    "location": "全国门店（含150家主题门店、10家深度夜行主题店）；上海限定主题店活动",
+    "startDate": "2026-10-26",
+    "endDate": null,
+    "announcedAt": "2026-11-02",
+    "updatedAt": "2026-11-02",
+    "summary": "库迪咖啡与《无畏契约：源能行动》（无畏契约手游）开展“C点集结，组队开闹”万圣节联动，2026年10月26日起全国上线手瓦南瓜夜限定套餐及暗夜限定包装；指定单杯套餐赠送金属卡套或纸夹透卡套组，并设150家主题门店打卡、10家深度夜行主题店暗号免单券。上海限定主题店活动为2026年10月31日至11月1日。",
+    "tags": [
+      "库迪咖啡",
+      "无畏契约手游",
+      "VALORANT Mobile",
+      "万圣节",
+      "咖啡联动",
+      "主题店"
+    ],
+    "sources": [
+      {
+        "title": "库迪咖啡与无畏契约手游联名活动官宣|无畏契约手游|库迪咖啡|南瓜夜限定套餐|联名_新浪新闻",
+        "source": "www.sina.cn",
+        "url": "https://www.sina.cn/news/detail/5358193972347281.html",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      },
+      {
+        "title": "ChineseFoodWiki：Cotti Coffee × VALORANT Mobile / 《无畏契约：源能行动》 (“C点集结，组队开闹” · 手瓦南瓜夜)",
+        "source": "Chinese Food Wiki",
+        "url": "https://www.chinesefoodwiki.org/index.php?title=Drink_IP_Collab_Timeline&oldid=3147#collab-5b819fdae9aa",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      },
+      {
+        "title": "Sina / VALORANT Mobile Weibo",
+        "source": "Sina / VALORANT Mobile Weibo",
+        "url": "https://www.sina.cn/news/detail/5358290601247191.html",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      },
+      {
+        "title": "4A广告网",
+        "source": "4A广告网",
+        "url": "https://www.4anet.com/p/01m5hfaqrc77fhffv1fjw3z4ca",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      }
+    ]
+  },
+  {
+    "id": "imported-6e3519025844",
+    "ipIds": [
+      "gaspard-lisa"
+    ],
+    "title": "奈雪×卡斯波和丽莎联名",
+    "brand": "奈雪的茶",
+    "brandShort": "奈",
+    "category": "tea",
+    "region": "中国大陆",
+    "location": "未公布",
+    "startDate": "2026-10-22",
+    "endDate": null,
+    "announcedAt": "2026-11-02",
+    "updatedAt": "2026-11-02",
+    "summary": "奈雪的茶与卡斯波和丽莎联名，官方微博于2026年10月19日预告，联名于2026年10月22日正式上线，围绕法式可可系列展开。公告未明确活动结束日期。",
+    "tags": [
+      "奈雪的茶",
+      "卡斯波和丽莎",
+      "法式可可",
+      "联名",
+      "茶饮"
+    ],
+    "sources": [
+      {
+        "title": "当卡斯波和丽莎穿上围裙，街角的风都染上了可可香|奈雪的茶|法式可可_新浪新闻",
+        "source": "www.sina.cn",
+        "url": "https://www.sina.cn/news/detail/5355782888751162.html",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      },
+      {
+        "title": "ChineseFoodWiki：Nayuki × Gaspard et Lisa / 卡斯波和丽莎 (French cocoa)",
+        "source": "Chinese Food Wiki",
+        "url": "https://www.chinesefoodwiki.org/index.php?title=Drink_IP_Collab_Timeline&oldid=3147#collab-03a25e8af2b4",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      }
+    ]
+  },
+  {
+    "id": "imported-680b4e1c8924",
+    "ipIds": [
+      "butterbear"
+    ],
+    "title": "黄油小熊 × 瑞幸",
+    "brand": "瑞幸咖啡",
+    "brandShort": "瑞",
+    "category": "coffee",
+    "region": "中国大陆",
+    "location": "全国",
+    "startDate": "2026-10-12",
+    "endDate": null,
+    "endRule": "while_supplies_last",
+    "announcedAt": "2026-11-02",
+    "updatedAt": "2026-11-02",
+    "summary": "瑞幸咖啡与黄油小熊开展“Happy Butter Day”联名，配合小黄油2周年。10月12日第一弹上线，包含7款主题杯、3款主题袋、2款杯套，任意两杯发泡贴纸，指定双杯套餐得金属或毛绒挂件，指定咖啡券包可得保温杯或毯子，指定套餐可获两款拼豆套装；10月19日第二弹追加周边及新品小黄油曲奇拿铁。活动结束日期未明确，部分物料发完即止。",
+    "tags": [
+      "瑞幸咖啡",
+      "黄油小熊",
+      "Butterbear",
+      "咖啡联名",
+      "小黄油2周年"
+    ],
+    "sources": [
+      {
+        "title": "黄油小熊 × 瑞幸",
+        "source": "www.ip365x.com",
+        "url": "https://www.ip365x.com/news/info/18367",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      },
+      {
+        "title": "ChineseFoodWiki：Luckin Coffee × Butterbear / 黄油小熊 (“Happy Butter Day”)",
+        "source": "Chinese Food Wiki",
+        "url": "https://www.chinesefoodwiki.org/index.php?title=Drink_IP_Collab_Timeline&oldid=3147#collab-3d4ffee0a4cd",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      },
+      {
+        "title": "Sina / Luckin Weibo",
+        "source": "Sina / Luckin Weibo",
+        "url": "https://www.sina.cn/news/detail/5353527996056442.html",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      },
+      {
+        "title": "知遇枢",
+        "source": "知遇枢",
+        "url": "https://zhiyushuip.com/indexNewsDetail/9be1b099-183c-4d73-a4cc-cbc9a56275d6",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      }
+    ]
+  },
+  {
+    "id": "imported-56d3de9cb88a",
+    "ipIds": [
+      "siamese-lipu"
+    ],
+    "title": "瑞幸陪你假期瑞~到厘普！",
+    "brand": "瑞幸咖啡",
+    "brandShort": "瑞",
+    "category": "coffee",
+    "region": "中国大陆",
+    "location": "中国大陆瑞幸咖啡门店（部分门店/地区供应有差异）",
+    "startDate": "2026-09-28",
+    "endDate": "2026-10-11",
+    "endRule": "while_supplies_last",
+    "announcedAt": "2026-11-02",
+    "updatedAt": "2026-11-02",
+    "summary": "瑞幸咖啡与暹罗厘普在国庆假期前后展开联名。首周 9.28-10.4，同单购买双杯饮品可获联名贴纸，指定套餐可获手帕纸/纸巾、斜挎包、金属徽章、亚克力挂件等周边，并有五杯预存套餐及陶瓷吸管杯券包玩法；次周 10.5-10.11 上线职场向贴纸、工牌、桌面立牌。同步推出高蛋白莓果酸奶饮、高蛋白椰蓝酸奶饮和流心芝士拿铁。",
+    "tags": [
+      "瑞幸咖啡",
+      "暹罗厘普",
+      "IP联名",
+      "餐饮联名",
+      "咖啡",
+      "国庆假期",
+      "表情包IP"
+    ],
+    "sources": [
+      {
+        "title": "瑞幸陪你假期瑞~到厘普！｜SocialBeta",
+        "source": "socialbeta.com",
+        "url": "https://socialbeta.com/campaign/28624",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      },
+      {
+        "title": "ChineseFoodWiki：Luckin Coffee × Siamese Lipu / 暹罗厘普 (“假期就要瑞～到厘普”)",
+        "source": "Chinese Food Wiki",
+        "url": "https://www.chinesefoodwiki.org/index.php?title=Drink_IP_Collab_Timeline&oldid=3147#collab-2017f6d002af",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      }
+    ]
+  },
+  {
+    "id": "imported-d91d6381cf5d",
+    "ipIds": [
+      "miffy"
+    ],
+    "title": "霸王茶姬联名米菲中秋桂花系列新品发布",
+    "brand": "霸王茶姬（CHAGEE）",
+    "brandShort": "霸",
+    "category": "tea",
+    "region": "中国大陆",
+    "location": "全国",
+    "startDate": "2026-09-24",
+    "endDate": null,
+    "announcedAt": "2026-11-02",
+    "updatedAt": "2026-11-02",
+    "summary": "霸王茶姬与米菲在中秋节点推出桂花系列，于2026-09-24全国上新，包含桂馥兰香冰酿、桂馥芭乐冰酿、桂馥秋梨冰奶及桂馥兰香；联名周边有贴纸、冰箱贴小卡盲袋、可拆分毛绒冰箱贴等。公告未明确活动结束日期；部分周边领取和加购规则来自二手汇总文章。",
+    "tags": [
+      "餐饮联名",
+      "茶饮",
+      "米菲",
+      "中秋",
+      "桂花",
+      "全国活动"
+    ],
+    "sources": [
+      {
+        "title": "霸王茶姬联名米菲中秋桂花系列新品发布_新浪新闻",
+        "source": "www.sina.cn",
+        "url": "https://www.sina.cn/news/detail/5345887687805732.html",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      },
+      {
+        "title": "ChineseFoodWiki：Chagee × Miffy / 米菲 · Mid-Autumn osmanthus",
+        "source": "Chinese Food Wiki",
+        "url": "https://www.chinesefoodwiki.org/index.php?title=Drink_IP_Collab_Timeline&oldid=3147#collab-6ea58399bd55",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      },
+      {
+        "title": "SMZDM",
+        "source": "SMZDM",
+        "url": "https://post.smzdm.com/p/al3lrn0p/",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      }
+    ]
+  },
+  {
+    "id": "imported-43fc155745cb",
+    "ipIds": [
+      "someone-someone"
+    ],
+    "title": "沪上阿姨 ×《某某》重温不一样的「开学季」",
+    "brand": "沪上阿姨",
+    "brandShort": "沪",
+    "category": "tea",
+    "region": "中国大陆",
+    "location": "全国（含100家主题店、20家深度主题店、南京主题巴士及全国20城大屏/摩天轮应援）",
+    "startDate": "2026-09-21",
+    "endDate": null,
+    "announcedAt": "2026-11-02",
+    "updatedAt": "2026-11-02",
+    "summary": "沪上阿姨与晋江文学城小说《某某》展开开学季联名，主套餐分两弹上线：9月21日第一弹包含单杯/双杯套餐及薄荷糖杯套、山楂糖杯套、透卡、纸袋、亚克力套组等；9月28日第二弹包含双杯套餐及青梅糖杯套、纸袋、光栅吧唧等。消费者可从六杯品牌热门单品中任选组成套餐。活动另设全国100家主题店（其中20家深度主题店）、9月21日至30日定制线稿小票上色互动、定制小人杯贴、南京主题巴士及全国20城大屏与摩天轮应援。",
+    "tags": [
+      "餐饮联名",
+      "茶饮",
+      "小说IP",
+      "校园",
+      "开学季",
+      "主题店",
+      "周边"
+    ],
+    "sources": [
+      {
+        "title": "沪上阿姨 ×《某某》重温不一样的「开学季」｜SocialBeta",
+        "source": "socialbeta.com",
+        "url": "https://socialbeta.com/campaign/28551",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      },
+      {
+        "title": "ChineseFoodWiki：Auntea Jenny × Someone Someone / 《某某》 (Jinjiang campus novel)",
+        "source": "Chinese Food Wiki",
+        "url": "https://www.chinesefoodwiki.org/index.php?title=Drink_IP_Collab_Timeline&oldid=3147#collab-f196099c1677",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      },
+      {
+        "title": "4A",
+        "source": "4A",
+        "url": "https://www.4anet.com/p/01m2sxzfvmgkd48ebhqgpfg9tn",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      },
+      {
+        "title": "Sina / Auntea Weibo",
+        "source": "Sina / Auntea Weibo",
+        "url": "https://www.sina.cn/news/detail/5344815388819983.html",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      }
+    ]
+  },
+  {
+    "id": "imported-071ff23c4958",
+    "ipIds": [
+      "link-click"
+    ],
+    "title": "瑞幸咖啡×时光代理人「咸芝士豆乳系列」联名",
+    "brand": "瑞幸咖啡",
+    "brandShort": "瑞",
+    "category": "coffee",
+    "region": "中国大陆",
+    "location": "瑞幸咖啡门店/官方小程序",
+    "startDate": "2026-09-14",
+    "endDate": "2026-09-27",
+    "endRule": "while_supplies_last",
+    "announcedAt": "2026-11-02",
+    "updatedAt": "2026-11-02",
+    "summary": "瑞幸咖啡与《时光代理人》联动，于2026-09-14至09-27推出「咸芝士豆乳系列」三款饮品及限定包装，9月21日进入第二波。周边涉及怀表挂件、徽章、镭射票等，部分随指定套餐获取；杯套、纸袋等赠品送完即止。",
+    "tags": [
+      "瑞幸咖啡",
+      "时光代理人",
+      "咖啡",
+      "联名",
+      "咸芝士豆乳"
+    ],
+    "sources": [
+      {
+        "title": "瑞幸咖啡上新「咸芝士豆乳系列」 | Foodaily每日食品",
+        "source": "www.foodaily.com",
+        "url": "https://www.foodaily.com/newsflashes/21678",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      },
+      {
+        "title": "ChineseFoodWiki：Luckin Coffee × Link Click / 时光代理人",
+        "source": "Chinese Food Wiki",
+        "url": "https://www.chinesefoodwiki.org/index.php?title=Drink_IP_Collab_Timeline&oldid=3147#collab-55d8badf0fab",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      },
+      {
+        "title": "SMZDM",
+        "source": "SMZDM",
+        "url": "https://post.smzdm.com/p/anv3kr77/",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      }
+    ]
+  },
+  {
+    "id": "imported-9cd6b15374c4",
+    "ipIds": [
+      "disney-princesses"
+    ],
+    "title": "霸王茶姬 × 迪士尼一起「推开世界的门」！",
+    "brand": "霸王茶姬",
+    "brandShort": "霸",
+    "category": "tea",
+    "region": "中国大陆",
+    "location": "全国；线下多城主题门店",
+    "startDate": "2026-09-04",
+    "endDate": null,
+    "endRule": "while_supplies_last",
+    "announcedAt": "2026-11-02",
+    "updatedAt": "2026-11-02",
+    "summary": "霸王茶姬与迪士尼公主推出“轻因系列”联名，2026-09-04全国上新，含轻因·桂馥兰香、轻因·折桂令等饮品，并同步推出四款主题杯、随杯光栅书签和主题纸袋。周边分两波：9月4日起购单杯套餐赠贴纸套组、购双杯套餐赠冰箱贴盲袋；9月9日起双杯套餐改赠镜子盲袋，并提供花木兰发簪、茉莉挂链等加价购周边。9月4日至14日另有小程序任务兑好茶券活动，线下多城主题门店同步开启；整体活动结束日期未公布。",
+    "tags": [
+      "餐饮联名",
+      "茶饮",
+      "迪士尼公主",
+      "霸王茶姬",
+      "轻因系列",
+      "联名周边",
+      "主题门店"
+    ],
+    "sources": [
+      {
+        "title": "霸王茶姬 × 迪士尼一起「推开世界的门」！｜SocialBeta",
+        "source": "socialbeta.com",
+        "url": "https://socialbeta.com/campaign/28435",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      },
+      {
+        "title": "ChineseFoodWiki：Chagee × Disney Princesses / 迪士尼公主 (“推开世界的门”)",
+        "source": "Chinese Food Wiki",
+        "url": "https://www.chinesefoodwiki.org/index.php?title=Drink_IP_Collab_Timeline&oldid=3147#collab-a02e50dbd38a",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      },
+      {
+        "title": "Sina / Chagee Weibo",
+        "source": "Sina / Chagee Weibo",
+        "url": "https://www.sina.cn/news/detail/5341177059477447.html",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      }
+    ]
+  },
+  {
+    "id": "imported-565b62bbe0ba",
+    "ipIds": [
+      "renegade-immortal"
+    ],
+    "title": "益禾堂 ×《仙逆》和你一起顶峰相「芋」",
+    "brand": "益禾堂",
+    "brandShort": "益",
+    "category": "tea",
+    "region": "中国大陆",
+    "location": "全国多地高校及商圈门店（武汉、长沙、南京、杭州、南昌等）；广州北京路、武汉江汉路等线下大屏",
+    "startDate": "2026-08-28",
+    "endDate": "2026-09-09",
+    "announcedAt": "2026-11-02",
+    "updatedAt": "2026-11-02",
+    "summary": "益禾堂与国漫《仙逆》展开茶饮联名，主题为「新途问道 顶峰相『芋』」，围绕芋泥啵啵奶绿、葡萄仙芋、抹茶仙芋推出联名套餐及光栅卡、撕拉吧唧、流麻等周边，并开放DIY杯贴、设置高校及商圈人形立牌和线下大屏。活动分两弹：8月28日至9月3日为王林款，9月4日至9月9日为李慕婉款。",
+    "tags": [
+      "二次元",
+      "国漫",
+      "茶饮",
+      "联名",
+      "仙逆",
+      "益禾堂",
+      "校园",
+      "开学季"
+    ],
+    "sources": [
+      {
+        "title": "益禾堂 ×《仙逆》和你一起顶峰相「芋」｜SocialBeta",
+        "source": "socialbeta.com",
+        "url": "https://socialbeta.com/campaign/28563",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      },
+      {
+        "title": "ChineseFoodWiki：益禾堂 × Renegade Immortal / 《仙逆》 (“新途问道 顶峰相『芋』”)",
+        "source": "Chinese Food Wiki",
+        "url": "https://www.chinesefoodwiki.org/index.php?title=Drink_IP_Collab_Timeline&oldid=3147#collab-2a3b83c090aa",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      }
+    ]
+  },
+  {
+    "id": "imported-c7da0689d713",
+    "ipIds": [
+      "disney-villains"
+    ],
+    "title": "瑞幸已严肃加入迪士尼「后妈茶话会」",
+    "brand": "瑞幸咖啡",
+    "brandShort": "瑞",
+    "category": "coffee",
+    "region": "中国大陆",
+    "location": "中国大陆瑞幸咖啡门店（海南、吉林等部分门店供应受限）",
+    "startDate": "2026-08-10",
+    "endDate": null,
+    "endRule": "while_supplies_last",
+    "announcedAt": "2026-11-02",
+    "updatedAt": "2026-11-02",
+    "summary": "瑞幸咖啡于2026年8月10日上线与迪士尼反派合作的「Apple Party」企划，集结邪恶皇后、玛琳菲森、库伊拉和乌苏拉，推出皇后限定苹果拿铁、苹果C美式、苹果C冰茶，并配套联名杯套、纸袋、冰箱贴、亚克力相框、卡包、魔镜磁贴和贴纸等周边。公告未公布活动结束日期；海报提示联名杯/套/袋数量有限、用完即止，且海南、吉林等部分门店存在供应限制。",
+    "tags": [
+      "瑞幸咖啡",
+      "迪士尼",
+      "迪士尼反派",
+      "咖啡联名",
+      "苹果派对",
+      "后妈茶话会"
+    ],
+    "sources": [
+      {
+        "title": "瑞幸已严肃加入迪士尼「后妈茶话会」｜SocialBeta",
+        "source": "socialbeta.com",
+        "url": "https://socialbeta.com/campaign/28139",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      },
+      {
+        "title": "ChineseFoodWiki：Luckin Coffee × Disney Villains Apple Party",
+        "source": "Chinese Food Wiki",
+        "url": "https://www.chinesefoodwiki.org/index.php?title=Drink_IP_Collab_Timeline&oldid=3147#collab-2e0a1cb58788",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      },
+      {
+        "title": "Digitaling",
+        "source": "Digitaling",
+        "url": "https://www.digitaling.com/projects/375360.html",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      },
+      {
+        "title": "Dao Insights",
+        "source": "Dao Insights",
+        "url": "https://daoinsights.com/news/luckin-disney-villain-tea-party/",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      }
+    ]
+  },
+  {
+    "id": "imported-c6183ac920f7",
+    "ipIds": [
+      "love-and-deepspace"
+    ],
+    "title": "深空之下·爱不留白",
+    "brand": "茉莉奶白",
+    "brandShort": "茉",
+    "category": "tea",
+    "region": "中国大陆",
+    "location": "全国茉莉奶白门店；线上小程序、淘宝闪购、美团等平台",
+    "startDate": "2026-06-18",
+    "endDate": null,
+    "announcedAt": "2026-11-02",
+    "updatedAt": "2026-11-02",
+    "summary": "2026年6月18日，茉莉奶白与《恋与深空》五位男主推出联名饮品及套餐，线上小程序与线下门店同步开售。联名包含联名包装、纸袋、杯套、PVC卡套组、水敏卡，双杯套餐加赠亚克力工牌相框。开售即爆单，并出现小程序崩溃、门店排队和周边售罄；品牌随后致歉并释放库存。活动结束日期未明确。",
+    "tags": [
+      "茶饮",
+      "乙女游戏",
+      "游戏联动",
+      "联名套餐",
+      "水敏卡",
+      "主题门店"
+    ],
+    "sources": [
+      {
+        "title": "又一现象级联名！茉莉奶白X恋与深空怎么就爆了？ | Foodaily每日食品",
+        "source": "www.foodaily.com",
+        "url": "https://www.foodaily.com/articles/41899",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      },
+      {
+        "title": "ChineseFoodWiki：Molly Tea × Love and Deepspace / 恋与深空",
+        "source": "Chinese Food Wiki",
+        "url": "https://www.chinesefoodwiki.org/index.php?title=Drink_IP_Collab_Timeline&oldid=3147#collab-1ab1d4ccaa87",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      }
+    ]
+  },
+  {
+    "id": "imported-058569265495",
+    "ipIds": [
+      "popmart-zsiga"
+    ],
+    "title": "瑞幸“绑定”嘎子姐，《阴阳师》茉莉奶白场景共创，春季联名款你选谁？",
+    "brand": "瑞幸咖啡",
+    "brandShort": "瑞",
+    "category": "coffee",
+    "region": "中国大陆",
+    "location": "全国门店；城市限定帆布袋覆盖7个城市",
+    "startDate": "2026-03-02",
+    "endDate": null,
+    "announcedAt": "2026-11-02",
+    "updatedAt": "2026-11-02",
+    "summary": "瑞幸咖啡与泡泡玛特IP Zsiga（嘎子姐）的联名于2026-03-02登陆全国门店，周边包括杯套、纸袋、贴纸、徽章、手机支架、限定冰热杯，并有覆盖7个城市的城市限定帆布袋；联名贴纸及部分双杯套餐与指定新品“雪酪芝士葡萄”绑定。原文另报道茉莉奶白与《阴阳师》的18城联动。",
+    "tags": [
+      "瑞幸咖啡",
+      "泡泡玛特",
+      "Zsiga",
+      "嘎子姐",
+      "咖啡联名",
+      "联名周边",
+      "雪酪芝士葡萄"
+    ],
+    "sources": [
+      {
+        "title": "瑞幸“绑定”嘎子姐，《阴阳师》茉莉奶白场景共创，春季联名款你选谁？",
+        "source": "www.yzwb.net",
+        "url": "https://www.yzwb.net/news/ch/202603/t20260303_327180.html",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      },
+      {
+        "title": "ChineseFoodWiki：Luckin Coffee × Pop Mart Zsiga / 嘎子姐",
+        "source": "Chinese Food Wiki",
+        "url": "https://www.chinesefoodwiki.org/index.php?title=Drink_IP_Collab_Timeline&oldid=3147#collab-003c39e8b497",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      }
+    ]
+  },
+  {
+    "id": "imported-bb71497efa7a",
+    "ipIds": [
+      "delta-force"
+    ],
+    "title": "TEA TOP ×《Garena 三角洲行動》最強遊戲聯名來了！",
+    "brand": "TEA TOP 第一味",
+    "brandShort": "T",
+    "category": "tea",
+    "region": "中国台湾",
+    "location": "TEA TOP 第一味全台門市（商場店不適用）；西門旗艦店（11/14 一日店長）",
+    "startDate": "2026-11-02",
+    "endDate": "2026-11-30",
+    "endRule": "while_supplies_last",
+    "announcedAt": "2026-11-02",
+    "updatedAt": "2026-11-02",
+    "summary": "TEA TOP 第一味与《Garena 三角洲行動》的商业联动，主活动 2026-11-02 至 2026-11-30 在全台门市（商场店不适用）推出三款芭乐系列联名饮品与联名杯；购买任一款联名饮品每杯赠 1 张虚宝卡，其他饮品单笔满 100 元赠 1 张，单笔最多 2 张。附阶段：11/9-11/15 三款芭乐系列同品项第二杯半价；11/14 赤鬼伯伯于西门旗舰店担任一日店长。",
+    "tags": [
+      "游戏联名",
+      "手摇饮",
+      "三角洲行动",
+      "TEA TOP",
+      "芭乐系列",
+      "虚宝卡",
+      "一日店长"
+    ],
+    "sources": [
+      {
+        "title": "TEA TOP ×《Garena 三角洲行動》最強遊戲聯名來了！-TEA TOP第一味",
+        "source": "www.teatop.com.tw",
+        "url": "https://www.teatop.com.tw/news-detail/351__61/",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      },
+      {
+        "title": "ChineseFoodWiki：TEA TOP / 第一味 × Garena Delta Force / 《三角洲行动》 (“酸角洲 · 爆绿超高 · 搜瓜物资”)",
+        "source": "Chinese Food Wiki",
+        "url": "https://www.chinesefoodwiki.org/index.php?title=Drink_IP_Collab_Timeline&oldid=3147#collab-89826fa7b865",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      },
+      {
+        "title": "Garena Delta Force",
+        "source": "Garena Delta Force",
+        "url": "https://deltaforce.garena.com/zh_tw/news/event/CN6DUS",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      },
+      {
+        "title": "UDN",
+        "source": "UDN",
+        "url": "https://woman.udn.com/woman/story/123162/9849097",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      }
+    ]
+  },
+  {
+    "id": "imported-a9cfa71d89b9",
+    "ipIds": [
+      "arknights-endfield"
+    ],
+    "title": "奈雪的茶×明日方舟终末地联名活动",
+    "brand": "奈雪的茶",
+    "brandShort": "奈",
+    "category": "tea",
+    "region": "中国大陆",
+    "location": "全国奈雪门店，约140家主题店",
+    "startDate": "2026-09-23",
+    "endDate": null,
+    "announcedAt": "2026-11-02",
+    "updatedAt": "2026-11-02",
+    "summary": "奈雪的茶与《明日方舟：终末地》开展联名活动，于2026-09-23正式上线，包含联名果奶、联名烘焙、主题店及周边活动，覆盖全国约140家主题店；公告未明确活动结束日期。",
+    "tags": [
+      "奈雪的茶",
+      "明日方舟：终末地",
+      "联名",
+      "茶饮",
+      "主题店"
+    ],
+    "sources": [
+      {
+        "title": "奈雪的茶×明日方舟终末地联名活动_新浪新闻",
+        "source": "www.sina.cn",
+        "url": "https://www.sina.cn/news/detail/5341961851768537.html",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      },
+      {
+        "title": "ChineseFoodWiki：Nayuki × Arknights: Endfield / 明日方舟：终末地 (“果韵香迎”)",
+        "source": "Chinese Food Wiki",
+        "url": "https://www.chinesefoodwiki.org/index.php?title=Drink_IP_Collab_Timeline&oldid=3147#collab-7ff55b049db2",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      },
+      {
+        "title": "NetEase guide",
+        "source": "NetEase guide",
+        "url": "https://cg.163.com/static/content/6aaf8d55d156c30b800bb47a",
+        "publishedAt": "2026-11-02",
+        "tier": "media"
+      }
+    ]
   }
 ]

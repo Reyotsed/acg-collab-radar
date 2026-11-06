@@ -12,21 +12,21 @@ import { collaborations } from "@/lib/data";
     expect(getCollabStatus(ended)).toBe("ended");
   });
 
-  it("keeps an unknown end date explicit", () => {
-    const collab = collaborations.find((item) => item.id === "kpl-luckin-2026")!;
+  it("applies a default month to every missing end date", () => {
+    const collab = { ...collaborations.find((item) => item.id === "genshin-baskin-2026")!, startDate: "2026-10-15", endDate: null, endRule: undefined };
     expect(getCollabStatus(collab)).toBe("ongoing");
-    expect(formatDateRange(collab)).toContain("结束时间未官宣");
+    expect(formatDateRange(collab)).toContain("2026.11.15（默认截止）");
   });
 
   it("keeps undated official announcements without inventing dates", () => {
-    const collab = { ...collaborations[0], id: "imported-undated", startDate: null, endDate: null };
+    const collab = { ...collaborations[0], id: "imported-undated", ipIds: ["honor-of-kings"], startDate: null, endDate: null };
     expect(getCollabStatus(collab)).toBe("announced");
     expect(formatDateRange(collab)).toBe("活动时间未官宣");
     expect(getIpTimeline("honor-of-kings", "current", [collab]).map((item) => item.id)).toContain("imported-undated");
   });
 
   it("moves while-supplies-last campaigns to history after a default month", () => {
-    const collab = { ...collaborations[0], id: "imported-stock", startDate: "2026-01-01", endDate: null, endRule: "while_supplies_last" as const };
+    const collab = { ...collaborations[0], id: "imported-stock", ipIds: ["honor-of-kings"], startDate: "2026-01-01", endDate: null, endRule: "while_supplies_last" as const };
     expect(getCollabStatus(collab)).toBe("ended");
     expect(formatDateRange(collab)).toBe("2026.01.01 — 2026.02.01（默认截止）");
     expect(getIpTimeline("honor-of-kings", "history", [collab]).map((item) => item.id)).toContain("imported-stock");
@@ -56,7 +56,7 @@ describe("IP radar queries", () => {
   });
 
   it("separates current collaborations from history", () => {
-    expect(getIpTimeline("genshin", "current").map((item) => item.id)).toContain("genshin-baskin-2026");
+    expect(getIpTimeline("chiikawa", "current").map((item) => item.id)).toContain("chiikawa-potato-2026");
     expect(getIpTimeline("hatsune-miku", "history").map((item) => item.id)).toContain("miku-bullpulu-2026");
     expect(getIpTimeline("hatsune-miku", "current").map((item) => item.id)).not.toContain("miku-bullpulu-2026");
   });

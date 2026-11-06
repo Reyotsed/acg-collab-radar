@@ -4,7 +4,7 @@ import { collaborations } from "@/lib/data";
 import type { Collaboration } from "@/lib/types";
 
 export function DomesticTimeline({ imported = [] }: { imported?: Collaboration[] }) {
-  const items = [...collaborations, ...imported].filter((collab) => collab.region === "中国大陆");
+  const items = [...collaborations, ...imported].filter((collab) => collab.region !== "日本");
 
   return (
     <div className="home-page">

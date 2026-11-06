@@ -2,6 +2,7 @@ export type CollabCategory = "tea" | "coffee" | "fastfood" | "cafe" | "food";
 export type CollabStatus = "ongoing" | "upcoming" | "announced" | "ended" | "cancelled";
 export type Timeline = "current" | "history" | "all";
 export type SourceTier = "official" | "media";
+export type CollabRegion = "中国大陆" | "中国台湾" | "中国香港" | "中国澳门" | "日本";
 
 export interface IpEntity {
   id: string;
@@ -29,7 +30,7 @@ export interface Collaboration {
   brand: string;
   brandShort: string;
   category: CollabCategory;
-  region: "中国大陆" | "日本";
+  region: CollabRegion;
   location: string;
   startDate: string | null;
   endDate: string | null;

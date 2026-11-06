@@ -13,7 +13,7 @@ const clamp01 = (value: number) => Math.max(0, Math.min(1, value));
 
 export function getCollabEndDate(collab: Collaboration) {
   if (collab.endDate) return collab.endDate;
-  if (collab.endRule !== "while_supplies_last" || !collab.startDate) return null;
+  if (!collab.startDate) return null;
   const [year, month, day] = collab.startDate.split("-").map(Number);
   const nextMonthDays = new Date(Date.UTC(year, month + 1, 0)).getUTCDate();
   return new Date(Date.UTC(year, month, Math.min(day, nextMonthDays))).toISOString().slice(0, 10);
@@ -161,7 +161,7 @@ export function formatShortDate(date: string) {
 export function formatDateRange(collab: Collaboration) {
   const endDate = getCollabEndDate(collab);
   if (!collab.startDate) return endDate ? `开始时间未官宣 — ${formatDate(endDate)}` : "活动时间未官宣";
-  const isDefaultEnd = !collab.endDate && collab.endRule === "while_supplies_last";
+  const isDefaultEnd = !collab.endDate;
   return `${formatDate(collab.startDate)} — ${endDate ? `${formatDate(endDate)}${isDefaultEnd ? "（默认截止）" : ""}` : "结束时间未官宣"}`;
 }
 

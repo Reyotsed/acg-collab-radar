@@ -8,7 +8,7 @@ type Detail = NonNullable<ReturnType<typeof getIpDetail>>;
 
 export function SimpleIpDetail({ detail }: { detail: Detail }) {
   const { ip } = detail;
-  const domestic = detail.all.filter((collab) => collab.region === "中国大陆");
+  const domestic = detail.all.filter((collab) => collab.region !== "日本");
   const ongoing = domestic.filter((collab) => getCollabStatus(collab) === "ongoing").length;
   const upcoming = domestic.filter((collab) => getCollabStatus(collab) === "upcoming").length;
   const heroStyle = {
