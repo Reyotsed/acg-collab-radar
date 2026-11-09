@@ -1202,5 +1202,60 @@
         "tier": "media"
       }
     ]
+  },
+  {
+    "id": "imported-708814f2157f",
+    "ipIds": [
+      "naruto"
+    ],
+    "title": "火影忍者疾风传联名今日上线！",
+    "brand": "库迪咖啡",
+    "brandShort": "库",
+    "category": "coffee",
+    "region": "中国大陆",
+    "location": "全国门店",
+    "startDate": "2026-11-09",
+    "endDate": null,
+    "announcedAt": "2026-11-09",
+    "updatedAt": "2026-11-09",
+    "summary": "库迪咖啡与《火影忍者疾风传》于2026-11-09全国上线联名，推出黄油南瓜派拿铁、黄油南瓜派红茶等饮品，并同步上线主题包材、联名小票及第1弹周边（4款联名吧唧、指尖手里剑等）。温变马克杯首批于上线当天可兑换，第二批自11月16日起陆续到店；黄油南瓜系列套餐活动期为11.09-11.22，主联名整体结束日期未明确公布。",
+    "tags": [
+      "库迪咖啡",
+      "火影忍者疾风传",
+      "咖啡联名",
+      "黄油南瓜派",
+      "主题包材",
+      "联名周边"
+    ],
+    "sources": [
+      {
+        "title": "CottiCoffee库迪咖啡的微博_新浪新闻",
+        "source": "www.sina.cn",
+        "url": "https://www.sina.cn/media/7791266545",
+        "publishedAt": "2026-11-09",
+        "tier": "media"
+      },
+      {
+        "title": "ChineseFoodWiki：Cotti Coffee × Naruto Shippuden / 《火影忍者疾风传》",
+        "source": "Chinese Food Wiki",
+        "url": "https://www.chinesefoodwiki.org/index.php?title=Drink_IP_Collab_Timeline&oldid=3153#collab-67e47909384d",
+        "publishedAt": "2026-11-09",
+        "tier": "media"
+      },
+      {
+        "title": "Sina / Cotti Weibo",
+        "source": "Sina / Cotti Weibo",
+        "url": "https://www.sina.cn/weibo/detail/5362927524905548.html",
+        "publishedAt": "2026-11-09",
+        "tier": "media"
+      },
+      {
+        "title": "知遇枢",
+        "source": "知遇枢",
+        "url": "https://zhiyushuip.com/indexNewsDetail/00e1bc35-b330-4961-9a3e-4731945e18e6",
+        "publishedAt": "2026-11-09",
+        "tier": "media"
+      }
+    ]
   }
 ]
