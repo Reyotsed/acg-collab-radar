@@ -2265,6 +2265,12 @@
       "contentHash": "9f8f25213d8401ca692ae48eb4695441b8e8a01a",
       "processedAt": "2026-11-11T07:45:54.760Z",
       "reason": "标题未命中候选词"
+    },
+    "167333": {
+      "status": "ignored",
+      "contentHash": "4ab5974f48432719de8f496124e93300259c159e",
+      "processedAt": "2026-11-12T08:20:42.396Z",
+      "reason": "标题未命中候选词"
     }
   }
 }

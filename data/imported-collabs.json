@@ -1257,5 +1257,61 @@
         "tier": "media"
       }
     ]
+  },
+  {
+    "id": "imported-99e26aee3b83",
+    "ipIds": [
+      "beyond-the-world"
+    ],
+    "title": "「云岭初雪 赴梦之约」奈雪×世界之外联名活动",
+    "brand": "奈雪的茶",
+    "brandShort": "奈",
+    "category": "tea",
+    "region": "中国大陆",
+    "location": "中国大陆奈雪门店（含130+家联名主题店，清单见官方发布）",
+    "startDate": "2026-11-12",
+    "endDate": "2026-11-25",
+    "announcedAt": "2026-11-12",
+    "updatedAt": "2026-11-12",
+    "summary": "奈雪的茶与乙女游戏《世界之外》开展联名活动，主题为「云岭初雪 赴梦之约」，活动期为11月12日至11月25日，可通过【奈雪点单】小程序及第三方外卖平台购买。推出四款角色主题联名饮品（顾时夜·初雪云酪蓝莓、易遇·初雪云酪芭乐、柏源·初雪云酪苹果、夏萧因·初雪云酪葡萄）与两款联名烘焙（初雪浓抹爆浆蛋糕、初雪生巧爆浆蛋糕），并设联名周边套餐、赠品及130+家联名主题店打卡活动。官方另发布套餐优化说明，开放饮品口味自选并调整周边规则。",
+    "tags": [
+      "奶茶",
+      "游戏联动",
+      "乙女游戏",
+      "世界之外",
+      "奈雪的茶",
+      "主题店",
+      "联名周边"
+    ],
+    "sources": [
+      {
+        "title": "奈雪的茶的微博_新浪新闻",
+        "source": "www.sina.cn",
+        "url": "https://www.sina.cn/media/5884674413",
+        "publishedAt": "2026-11-12",
+        "tier": "media"
+      },
+      {
+        "title": "ChineseFoodWiki：Nayuki × Beyond the World / 《世界之外》 (“云岭初雪 赴梦之约”)",
+        "source": "Chinese Food Wiki",
+        "url": "https://www.chinesefoodwiki.org/index.php?title=Drink_IP_Collab_Timeline&oldid=3157#collab-52b67e96db6f",
+        "publishedAt": "2026-11-12",
+        "tier": "media"
+      },
+      {
+        "title": "ip365x",
+        "source": "ip365x",
+        "url": "https://www.ip365x.com/news/info/18447",
+        "publishedAt": "2026-11-12",
+        "tier": "media"
+      },
+      {
+        "title": "4A广告网",
+        "source": "4A广告网",
+        "url": "https://www.4anet.com/p/01m72ec3wghm2m9cd7f81a41jd",
+        "publishedAt": "2026-11-12",
+        "tier": "media"
+      }
+    ]
   }
 ]
