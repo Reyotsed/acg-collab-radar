@@ -274,13 +274,23 @@
       <div class="diagram-head"><span class="number">05</span><div><h2>Firecrawl 到底在哪里会被使用</h2><p>关键不是“有没有配置 Key”，而是走了哪个抓取入口。</p></div></div>
       <div class="branches">
         <div class="branch">
-          <span class="tag">定时同步 · 六个信息源</span>
+          <span class="tag">定时同步 · 六个直连源</span>
           <div class="flow">
             <article class="node green"><h3>游戏官方 API / HTML</h3><p>五个游戏官网连接器</p></article>
             <span class="arrow">→</span>
             <article class="node green"><h3>MediaWiki 修订检测</h3><p>revid 没变：不抓 Sources，消耗为 0</p></article>
             <span class="arrow">→</span>
             <article class="node red"><h3>仅 Wiki 有效行补全</h3><p>初始化抓全部 Sources，自动增量最多两个</p></article>
+          </div>
+        </div>
+        <div class="branch">
+          <span class="tag violet">每日补漏 · web-discovery</span>
+          <div class="flow">
+            <article class="node red"><h3>Firecrawl Search</h3><p>3 组查询 · 最近 7 天<br>每 20 小时最多一次</p></article>
+            <span class="arrow">→</span>
+            <article class="node blue"><h3>URL 去重 + IP 预筛选</h3><p>只保留新候选<br>搜索本身不直接入库</p></article>
+            <span class="arrow">→</span>
+            <article class="node violet"><h3>最多 5 页 → DeepSeek</h3><p>本轮与累计额度<br>写入 web-discovery.json</p></article>
           </div>
         </div>
         <div class="branch">
@@ -294,17 +304,17 @@
           </div>
         </div>
       </div>
-      <div class="answer"><strong>关于消耗：</strong>五个游戏官方源始终不经过 Firecrawl；Wiki 无修订变化时不消耗，变更行会按 Sources 数量消耗；手动普通网页也可能消耗。本次手动补跑已确认 <code>firecrawlUsed=true</code>，具体账单仍以 Firecrawl 控制台为准。</div>
+      <div class="answer"><strong>关于消耗：</strong>五个游戏官方源不经过 Firecrawl；Wiki 无修订变化时不消耗；Search 每轮最多 3 组查询和 5 个页面，账本记录本轮与累计预估值。实际账单仍以 Firecrawl 控制台为准。</div>
     </section>
 
     <section class="diagram" id="storage">
       <div class="diagram-head"><span class="number">06</span><div><h2>数据最后存在哪里，又怎么变成网页</h2><p>GitHub Actions 的临时文件会消失，所以真正需要保留的内容必须写回仓库。</p></div></div>
       <div class="flow">
-        <article class="node violet"><small>SYNC</small><h3>公告 / Wiki 变更行</h3><p>模型解析 + 代码校验</p></article>
+        <article class="node violet"><small>SYNC</small><h3>公告 / Wiki / Search 候选</h3><p>模型解析 + 代码校验</p></article>
         <span class="arrow">→</span>
         <article class="node amber"><small>ACTIVITY DATA</small><h3><code>imported-collabs.json</code></h3><p>活动内容和原始来源</p></article>
         <span class="arrow">+</span>
-        <article class="node amber"><small>PROGRESS DATA</small><h3><code>data/sources/</code></h3><p>公告 ID、Wiki revid、行哈希</p></article>
+        <article class="node amber"><small>PROGRESS DATA</small><h3><code>data/sources/</code></h3><p>公告 ID、Wiki revid<br>Search URL 与消耗账本</p></article>
         <span class="arrow">→</span>
         <article class="node green"><small>PUBLISH</small><h3>重新构建 Pages</h3><p>所有访客看到同一个新版本</p></article>
       </div>

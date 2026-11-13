@@ -46,6 +46,8 @@ JSON 去重入库，各来源独立保存处理状态
 
 ChineseFoodWiki 使用独立的 MediaWiki 修订链路：最新 `revid` → 本地修订比较 → 新版 wikitext → 六列表格行哈希 → IP 别名预筛选 → 初始化全部 Sources / 增量最多两个经 Firecrawl 补全 → 合并正文与图片进入 DeepSeek。首次只建立基线，不导入历史；revid 不变时不调用模型或 Firecrawl。
 
+Firecrawl Search 是每日补漏链路：最近 7 天的三组查询 → URL 规范化与签名去重 → 联动 / 餐饮关键词和 IP 别名预筛选 → 每日最多 5 个页面 → 现有 DeepSeek Schema 与日期规则 → JSON。Search 只负责发现 URL，不直接生成公开记录。
+
 ### 技术栈
 
 - Next.js 16 + React 19 + TypeScript
@@ -84,7 +86,8 @@ src/
     sources/arknights.ts           明日方舟官网连接器
     sources/sync.ts                共享增量扫描、筛选与入库
     sources/state.ts               各来源独立处理状态
-data/                              联动记录与官方源处理状态
+    sources/web-discovery.ts       Firecrawl Search 发现、限额与消耗账本
+data/                              联动记录与各来源处理状态
 scripts/                           独立同步与 Pages 构建命令
 tests/                             数据规则和来源筛选测试
 docs/                              架构、部署与变更记录
@@ -109,6 +112,7 @@ INGEST_ADMIN_TOKEN=
 - `DATA_FILE` 可覆盖联动记录位置，`SOURCE_STATE_DIR` 可覆盖各来源状态目录。
 - `GENSHIN_STATE_FILE` 仅用于兼容读取旧原神状态；新状态统一写入 `data/sources/{source}.json`。
 - `WIKI_STATE_FILE` 可单独覆盖 Wiki 修订与行哈希状态位置，默认是 `data/sources/chinesefoodwiki.json`。
+- `WEB_DISCOVERY_STATE_FILE` 可覆盖 Search 去重与消耗账本，默认是 `data/sources/web-discovery.json`；未配置 Firecrawl Key 时该来源显示 `disabled`，不调用搜索。
 
 ## 5. 信息源同步规则
 
@@ -122,6 +126,7 @@ INGEST_ADMIN_TOKEN=
 | 绝区零 | `content_v2_user/app/706fd13a87294881` | `iChanId=273` | `getContent` |
 | 明日方舟 | `ak.hypergryph.com/api/news` | `ANNOUNCEMENT / ACTIVITY / NEWS` | 官方 HTML |
 | ChineseFoodWiki | `www.chinesefoodwiki.org/api.php` | `Drink_IP_Collab_Timeline` 的 `revid` | MediaWiki wikitext 六列表格 |
+| Firecrawl Search | `api.firecrawl.dev/v2/search` | 三组最近 7 天查询，20 小时频率限制 | 仅发现 URL，筛选后复用现有抓取与解析 |
 
 五个游戏参数来自 2026-11-05 对官网新闻页真实网络请求和直接 API 响应的验证。旧米游社 `getNewsList` 当前返回 404，不作为来源。Wiki 于 2026-11-06 验证 `pageid=852`、`revid=3147`，34 行均可稳定拆成 Date / Brand / IP / Circle / Notes / Sources 六列。
 
@@ -166,6 +171,17 @@ INGEST_ADMIN_TOKEN=
 - 多行按活动日期从新到旧处理，只有严格更新的 Wiki 活动才能替换该 IP 当前记录；同一稳定行 ID 的修订除外
 - 某行解析失败时保留旧 revision 游标和该行旧哈希，并加入 `pendingRows`；即使 revid 和行哈希未变也会重试，成功或明确跳过后才移除，已删除的 Wiki 行不阻塞推进
 - 报告包含 `baseline / manual / enrichedRows / previousRevisionId / revisionId / stateAdvanced / changedRows / imported / skipped / errors / firecrawlUsed`；基线和无变化时 `firecrawlUsed=false`，来源补全可能为 true
+
+### Firecrawl Search 全网补漏
+
+- 复用现有早晚同步 Workflow，但距上次搜索不足 20 小时时返回 `not-due`，保证每天最多实际运行一次；`npm run sync:sources -- --source=web-discovery` 可手动强制执行
+- 三组查询分别覆盖泛餐饮、快餐品牌和高产出媒体域名；只请求 `web` 结果，`limit=10`、`tbs=sbd:1,qdr:w`，不附带 `scrapeOptions`，搜索阶段不抓正文
+- URL 移除锚点与常见跟踪参数后去重，同时保存标题和摘要签名；签名未变化的 URL 不重复抓取，签名变化允许重新解析
+- 抓取前要求标题或摘要同时命中联动词、餐饮词和已收录 IP 别名；每天最多处理 5 个页面，超额与失败页保存在 `pending` 后续处理
+- 页面继续经过发布日期与最近一年检查、图片处理、DeepSeek Schema、活动日期和最新记录保护，不因为 Search 或 Agent 输出直接发布
+- 每次查询按 2 额度、每个非官方页面按 1 额度估算，每日上限约 11 额度；失败请求也计入预估值，因此它是用于观察消耗的上限口径，不替代 Firecrawl 实际账单
+- `data/sources/web-discovery.json` 保存 `seen / pending / history / totalEstimatedCredits`，保留最近 30 轮；工作台和 CLI 展示本轮及累计预估值，查询和解析错误纳入现有健康检查
+- 本轮只使用模拟响应验证，不启用 Firecrawl Agent，也不新增第三方依赖
 
 ### 已验证样例
 
@@ -213,9 +229,10 @@ npm audit
 
 当前验证结果：
 
-- 49 项测试通过，覆盖公告修订写回、同页重排、新旧记录保护、Wiki 每轮限额和跨域重定向密钥保护
+- 55 项测试通过，覆盖公告修订、同页重排、新旧记录保护、Wiki 限额、跨域密钥保护及 Search 频率、去重、限额和消耗账本
 - Next.js standalone 生产构建与 Pages 静态导出通过，生成 80 个 IP 详情
 - 五个游戏官方源均执行过真实同步；Wiki 已真实建立 revid 3147 基线并验证第二次 changedRows=0，两次均 firecrawlUsed=false
+- Search 本轮仅运行模拟响应，零真实搜索消耗；初始账本为 0，待部署后的定时任务产生首轮数据
 - 当前真实入库共 26 条、覆盖 26 个不同 IP，其中 23 条为 Wiki 详细记录；最近一周自动同步已新增世界之外和火影忍者活动
 - 扩充 IP 后完整初始化检查 34 行、补全 24 行；三角洲（中国台湾）、无畏契约、终末地均已实际入库，最终 pendingRows 为空
 - 模型 tags 超过 8 个时安全截断；完整输入失败时用纯文本 20000 字以内降级重试，终末地和天官赐福均通过该路径完成
@@ -241,7 +258,7 @@ docker compose up --build -d
 - `scripts/build-pages.mjs` 构建期间暂时移出 `src/app/api`、`src/app/ingest`，结束后恢复
 - Next.js 16 将本次静态导出直接写入 `NEXT_DIST_DIR`，默认产物目录为 `out`
 - 活动状态按构建时间计算，每天两次重建可刷新状态
-- Actions 定时或手动触发时先同步，再构建，构建成功后提交 JSON 到 `main` 并部署
+- Actions 定时或手动触发时先同步，再构建，构建成功后提交 JSON 到 `main` 并部署；Search 在同一任务内按 20 小时状态间隔限频，不新增 Workflow
 - 普通代码推送只构建部署，不执行模型同步
 - 同步和部署必须在同一工作流中，因为使用 `GITHUB_TOKEN` 推送的数据提交不会再触发另一个 push 工作流
 - 后续迁移服务器时复用同一同步核心和 JSON 数据，静态产物可直接交给 Nginx
@@ -424,6 +441,15 @@ docker compose up --build -d
 - 跨域重定向移除 Authorization；同源重定向和其他请求头保持不变
 - 新增 6 项回归测试，共 49 项；TypeScript、完整构建、Pages 构建和 26 条真实记录静态断言通过，未调用真实付费同步
 - 跨页极端重排抽查、DNS 连接固定、standalone 跨进程锁等较重加固暂不纳入本轮
+
+### 2026-11-13：Firecrawl Search 每日补漏试运行
+
+- 用户希望扩充可靠信息源，先低量试用定时 Search 观察数天消耗，不启用 Agent 或新增服务器
+- 新增 `web-discovery`：三组最近 7 天查询、20 小时频率限制、URL 规范化与签名去重、联动 / 餐饮 / IP 预筛选和每日 5 页上限
+- 新页面复用现有 Firecrawl 抓取、DeepSeek Schema、最近一年和最新记录保护；搜索本身不直接发布内容
+- 新增零消耗账本 `data/sources/web-discovery.json`，保存 seen、pending、最近 30 轮和累计预估额度；查询按 2、抓取按 1 额度估算
+- 统一 CLI、同步 API、健康检查和本地工作台展示；单源 CLI 可强制搜索，常规任务不满足间隔时返回 not-due
+- 新增 6 项模拟回归，共 55 项；TypeScript、完整构建和 Pages 构建通过，未执行真实 Search，26 条真实记录不变
 
 ## 变更记录维护规则
 

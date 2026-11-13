@@ -3,7 +3,7 @@ import { monitoredSourceIds, syncMonitoredSources, type MonitoredSourceId } from
 
 async function main() {
   if (process.argv.includes("--help")) {
-    console.log(`用法：npm run sync:sources [-- --source=zzz]\n增量同步五个游戏官方源及 ChineseFoodWiki 饮品页面。可选：${monitoredSourceIds.join(", ")}\nWiki 初始化（全部行、全部 Sources）：npm run sync:sources -- --source=chinesefoodwiki --manual\n限量补跑可追加：--limit=14 --source-limit=2`);
+    console.log(`用法：npm run sync:sources [-- --source=zzz]\n增量同步游戏官方源、ChineseFoodWiki 和每日 Firecrawl Search。可选：${monitoredSourceIds.join(", ")}\nWiki 初始化（全部行、全部 Sources）：npm run sync:sources -- --source=chinesefoodwiki --manual\n限量补跑可追加：--limit=14 --source-limit=2\n立即执行一次搜索：npm run sync:sources -- --source=web-discovery`);
     return;
   }
 
@@ -25,7 +25,8 @@ async function main() {
   }
   const result = await syncMonitoredSources(requested as MonitoredSourceId | undefined, { wikiManual, wikiLimit, wikiSourceLimit });
   const healthy = result.reports.every((report) => !report.error)
-    && (!result.chineseFoodWiki || result.chineseFoodWiki.errors.length === 0);
+    && (!result.chineseFoodWiki || result.chineseFoodWiki.errors.length === 0)
+    && (!result.webDiscovery || result.webDiscovery.errors.length === 0);
   console.log(JSON.stringify({ syncedAt: new Date().toISOString(), healthy, ...result }, null, 2));
   if (process.env.GITHUB_OUTPUT) appendFileSync(process.env.GITHUB_OUTPUT, `healthy=${healthy}\n`, "utf8");
 }

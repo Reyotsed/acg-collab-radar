@@ -5,11 +5,13 @@ import Link from "next/link";
 import { ArrowRight, CheckCircle2, LoaderCircle, Radar, RefreshCw, TriangleAlert } from "lucide-react";
 import type { SourceSyncReport } from "@/lib/sources/types";
 import type { ChineseFoodWikiReport } from "@/lib/sources/chinesefoodwiki";
+import type { WebDiscoveryReport } from "@/lib/sources/web-discovery";
 
 export function SourceSyncCard({ adminToken }: { adminToken: string }) {
   const [syncing, setSyncing] = useState(false);
   const [reports, setReports] = useState<SourceSyncReport[]>([]);
   const [wikiReport, setWikiReport] = useState<ChineseFoodWikiReport | null>(null);
+  const [discoveryReport, setDiscoveryReport] = useState<WebDiscoveryReport | null>(null);
   const [error, setError] = useState("");
 
   const sync = async () => {
@@ -20,10 +22,11 @@ export function SourceSyncCard({ adminToken }: { adminToken: string }) {
         method: "POST",
         headers: adminToken ? { "x-admin-token": adminToken } : {},
       });
-      const payload = await response.json() as { data?: { reports: SourceSyncReport[]; chineseFoodWiki: ChineseFoodWikiReport | null }; error?: string };
+      const payload = await response.json() as { data?: { reports: SourceSyncReport[]; chineseFoodWiki: ChineseFoodWikiReport | null; webDiscovery: WebDiscoveryReport | null }; error?: string };
       if (!response.ok) throw new Error(payload.error || "同步失败");
       setReports(payload.data?.reports ?? []);
       setWikiReport(payload.data?.chineseFoodWiki ?? null);
+      setDiscoveryReport(payload.data?.webDiscovery ?? null);
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "同步失败");
     } finally {
@@ -41,20 +44,21 @@ export function SourceSyncCard({ adminToken }: { adminToken: string }) {
     <section className="source-sync-card">
       <div className="source-sync-card__icon"><Radar size={20} /></div>
       <div className="source-sync-card__main">
-        <span>OFFICIAL + WIKI CONNECTORS</span>
-        <h2>官方源与 Wiki · 增量联动监控</h2>
-        <p>覆盖五个游戏官网和 ChineseFoodWiki 饮品时间线。官网按公告 ID 增量；Wiki 按修订和行哈希发现变化，再用 Firecrawl 补全 Sources，无变化时不消耗。</p>
+        <span>OFFICIAL + WIKI + WEB DISCOVERY</span>
+        <h2>官方源、Wiki 与全网发现</h2>
+        <p>官网和 Wiki 走确定性增量；Firecrawl Search 每天最多一次，3 组查询、最多抓取 5 个新页面，并记录预估额度。</p>
       </div>
       <button type="button" onClick={sync} disabled={syncing}>{syncing ? <LoaderCircle className="spin" size={16} /> : <RefreshCw size={16} />}{syncing ? "正在同步" : "同步全部信息源"}</button>
       {error && <p className="sync-error">{error}</p>}
-      {(reports.length > 0 || wikiReport) && (
+      {(reports.length > 0 || wikiReport || discoveryReport) && (
         <div className="sync-report">
           <div className="sync-report__stats">
-            <span>来源 <b>{reports.length + (wikiReport ? 1 : 0)}</b> 个</span>
+            <span>来源 <b>{reports.length + (wikiReport ? 1 : 0) + (discoveryReport ? 1 : 0)}</b> 个</span>
             <span>扫描 <b>{totals.pages}</b> 页</span>
             <span>新 ID <b>{totals.newIds}</b></span>
             <span>联动候选 <b>{totals.candidates}</b></span>
             {wikiReport && <span>Wiki 变更行 <b>{wikiReport.changedRows}</b></span>}
+            {discoveryReport && <span>Search 预估额度 <b>{discoveryReport.estimatedCredits.total}</b></span>}
           </div>
           {reports.map((report) => (
             <div className="sync-report__result" key={report.source}>
@@ -78,6 +82,16 @@ export function SourceSyncCard({ adminToken }: { adminToken: string }) {
                   : `修订 ${wikiReport.previousRevisionId} → ${wikiReport.revisionId}，变更 ${wikiReport.changedRows} 行，来源补全 ${wikiReport.enrichedRows} 行，入库 ${wikiReport.imported.length} 条，跳过 ${wikiReport.skipped.length} 条，失败 ${wikiReport.errors.length} 条；Firecrawl ${wikiReport.firecrawlUsed ? "已调用" : "未调用"}。`}</p>
               </div>
               <a href="https://www.chinesefoodwiki.org/index.php?title=Drink_IP_Collab_Timeline" target="_blank" rel="noreferrer">查看<ArrowRight size={15} /></a>
+            </div>
+          )}
+          {discoveryReport && (
+            <div className="sync-report__result">
+              {discoveryReport.errors.length ? <TriangleAlert size={18} /> : <CheckCircle2 size={18} />}
+              <div>
+                <strong>Firecrawl Search · 全网补漏</strong>
+                <p>状态 {discoveryReport.status}，查询 {discoveryReport.queries} 组，结果 {discoveryReport.results} 条，处理 {discoveryReport.processed} 页，入库 {discoveryReport.imported.length} 条，待续跑 {discoveryReport.pendingCount} 页；本轮预估 {discoveryReport.estimatedCredits.total} 额度（搜索 {discoveryReport.estimatedCredits.search} + 抓取 {discoveryReport.estimatedCredits.scrape}），累计预估 {discoveryReport.totalEstimatedCredits}。</p>
+              </div>
+              <a href="https://docs.firecrawl.dev/zh/features/search" target="_blank" rel="noreferrer">说明<ArrowRight size={15} /></a>
             </div>
           )}
         </div>
