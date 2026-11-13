@@ -170,6 +170,7 @@
       <div class="notes">
         <div class="note"><strong>代码 push 到 main</strong>不同步公告，直接用仓库当前 JSON 构建并发布。</div>
         <div class="note"><strong>每天约 09:17 / 21:17</strong>先同步信息源，再构建、提交数据变化并发布。</div>
+        <div class="note"><strong>同步健康检查</strong>成功取得的数据仍先发布；只要有来源或 Wiki 行解析失败，最后一步会把运行标红。</div>
         <div class="note"><strong>手动 Run workflow</strong>和定时任务一样，先同步再发布；GitHub 调度可能延迟。</div>
       </div>
     </section>
@@ -185,9 +186,9 @@
         <span class="arrow">→</span>
         <article class="node blue"><small>VALIDATE</small><h3>代码规则复核</h3><p>非餐饮 / 超一年 / 日期错误就跳过</p></article>
         <span class="arrow">→</span>
-        <article class="node amber"><small>SAVE</small><h3>写入 JSON</h3><p>每个 IP 保留最新一条<br>然后停止该来源</p></article>
+        <article class="node amber"><small>SAVE</small><h3>写入 JSON</h3><p>公告修订写回原记录<br>较旧活动不能覆盖新记录</p></article>
       </div>
-      <div class="answer"><strong>停止条件：</strong>找到第一条有效联动就停；碰到已经同步过的最新联动也停；公告超过一年同样停，不再回填多年历史。</div>
+      <div class="answer"><strong>停止条件：</strong>找到有效联动就停；发现已同步联动时会把当前页检查完再停，避免同页重排漏掉新公告；超过一年不回填。</div>
       <div class="source-directory">
         <h3>当前渠道直达</h3>
         <p>“列表 API”返回程序实际读取的 JSON；“官网入口”适合人工浏览；“详情示例”用于核对该渠道的详情链接规则。</p>
@@ -250,7 +251,7 @@
           <div class="flow">
             <article class="node blue"><h3>读取新版 wikitext</h3><p>解析六列表格</p></article>
             <span class="arrow">→</span>
-            <article class="node blue"><h3>逐行比较哈希</h3><p>只挑新增或修改行<br>先按 IP 别名预筛选</p></article>
+            <article class="node blue"><h3>逐行比较哈希</h3><p>只挑新增或修改行<br>每轮最新 5 行，其余下轮继续</p></article>
             <span class="arrow">→</span>
             <article class="node red"><h3>Firecrawl 补全 Sources</h3><p>初始化抓全部 / 增量最多两个<br>合并正文和图片</p></article>
             <span class="arrow">→</span>
@@ -266,7 +267,7 @@
         <div class="note"><strong>80 个 IP + 最长别名匹配</strong>支持“三角洲”“瓦罗兰特”等简称；“终末地”优先于“明日方舟”。未识别 IP 仍跳过，防止模糊误归。</div>
         <div class="note"><strong>不是每行都入库</strong>大陆和台港澳活动可收录；明确海外、未收录 IP、缺少日期或更旧的行会说明原因并跳过。</div>
       </div>
-      <div class="answer"><strong>这条链路什么时候消耗 Firecrawl：</strong>revid 没变时为 0；手动初始化抓全部 Sources，自动增量最多两个；失败行通过 pendingRows 重试。报告会记录 <code>firecrawlUsed</code> 和补全行数。<br><a href="https://www.chinesefoodwiki.org/index.php?title=Drink_IP_Collab_Timeline" target="_blank" rel="noreferrer">打开 Wiki 原页面 ↗</a> · <a href="https://www.chinesefoodwiki.org/api.php?action=query&amp;format=json&amp;formatversion=2&amp;prop=revisions&amp;titles=Drink_IP_Collab_Timeline&amp;rvprop=timestamp%7Cids&amp;rvlimit=1" target="_blank" rel="noreferrer">查看当前修订 API ↗</a></div>
+      <div class="answer"><strong>这条链路什么时候消耗 Firecrawl：</strong>revid 没变时为 0；手动初始化抓全部 Sources，自动增量每轮最新 5 行、每行最多两个 Sources；失败或暂缓行通过 pendingRows 留到后续运行。报告会记录 <code>firecrawlUsed</code> 和补全行数。<br><a href="https://www.chinesefoodwiki.org/index.php?title=Drink_IP_Collab_Timeline" target="_blank" rel="noreferrer">打开 Wiki 原页面 ↗</a> · <a href="https://www.chinesefoodwiki.org/api.php?action=query&amp;format=json&amp;formatversion=2&amp;prop=revisions&amp;titles=Drink_IP_Collab_Timeline&amp;rvprop=timestamp%7Cids&amp;rvlimit=1" target="_blank" rel="noreferrer">查看当前修订 API ↗</a></div>
     </section>
 
     <section class="diagram" id="firecrawl">

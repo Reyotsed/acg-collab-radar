@@ -24,7 +24,19 @@ async function writeImportedCollaborations(collaborations: Collaboration[]) {
   await rename(/* turbopackIgnore: true */ temporary, dataFile);
 }
 
+const activityDate = (item: Collaboration) => item.startDate ?? item.announcedAt;
+
+export function preferredExistingForIp(items: Collaboration[], candidate: Collaboration, ipId: string) {
+  return items
+    .filter((item) => item.ipIds.includes(ipId) && activityDate(item) >= activityDate(candidate))
+    .sort((a, b) => activityDate(b).localeCompare(activityDate(a)))[0] ?? null;
+}
+
 export function keepOnlyLatestForIp(items: Collaboration[], keepId: string, ipId: string) {
+  const keep = items.find((item) => item.id === keepId);
+  if (keep && items.some((item) => item.id !== keepId && item.ipIds.includes(ipId) && activityDate(item) > activityDate(keep))) {
+    return items;
+  }
   return items.filter((item) => item.id === keepId || !item.ipIds.includes(ipId));
 }
 
@@ -34,7 +46,7 @@ interface SaveCollaborationOptions {
   updateExisting?: boolean;
 }
 
-export async function saveImportedCollaboration(raw: RawAnnouncement, draft: CollabDraft, options: SaveCollaborationOptions = {}) {
+export async function saveImportedCollaboration(raw: RawAnnouncement, draft: CollabDraft, options: SaveCollaborationOptions = {}): Promise<{ collaboration: Collaboration; duplicate: boolean; skipped?: boolean }> {
   if (draft.isCollab === false) throw new Error("该公告不属于餐饮联动，未写入联动档案");
   const ip = getIp(draft.ipId);
   if (!ip) throw new Error("请选择已收录的 IP");
@@ -72,7 +84,7 @@ export async function saveImportedCollaboration(raw: RawAnnouncement, draft: Col
     if (options.updateExisting) {
       const sources = [...collaboration.sources, ...duplicate.sources]
         .filter((source, index, all) => all.findIndex((item) => item.url === source.url) === index);
-      const updated = { ...collaboration, id: duplicate.id, sources };
+      const updated = { ...collaboration, id: duplicate.id, sources, updatedAt: new Date().toISOString().slice(0, 10) };
       const replaced = existing.map((item) => item.id === duplicate.id ? updated : item);
       const next = options.latestForIp ? keepOnlyLatestForIp(replaced, duplicate.id, options.latestForIp) : replaced;
       await writeImportedCollaborations(next);
@@ -83,6 +95,10 @@ export async function saveImportedCollaboration(raw: RawAnnouncement, draft: Col
       if (next.length !== existing.length) await writeImportedCollaborations(next);
     }
     return { collaboration: duplicate, duplicate: true };
+  }
+  if (options.latestForIp) {
+    const preferred = preferredExistingForIp(existing, collaboration, options.latestForIp);
+    if (preferred) return { collaboration: preferred, duplicate: true, skipped: true };
   }
   const retained = options.latestForIp
     ? keepOnlyLatestForIp(existing, id, options.latestForIp)

@@ -104,6 +104,44 @@ describe("latest-only official source synchronization", () => {
     expect(mocks.saveImported).not.toHaveBeenCalled();
   });
 
+  it("checks the whole current page so reordered new announcements are not missed", async () => {
+    const synced = news("synced", "已同步肯德基联动", "2026-11-01");
+    const reordered = news("reordered", "重排后的最新瑞幸联动", "2026-11-05");
+    mocks.loadState.mockResolvedValue({
+      source: "genshin",
+      processed: {
+        synced: { status: "done", contentHash: hash(synced), collaborationId: "imported-latest", processedAt: "2026-11-01" },
+      },
+    });
+    mocks.fetch.mockResolvedValue(raw(reordered));
+
+    const report = await syncOfficialSource(sourceWith([synced, reordered]), now);
+
+    expect(report.stopReason).toBe("latest-collab-saved");
+    expect(mocks.fetch).toHaveBeenCalledTimes(1);
+    expect(mocks.saveImported).toHaveBeenCalledWith(raw(reordered), expect.any(Object), { latestForIp: "genshin", updateExisting: true });
+  });
+
+  it("writes edited announcements back to the existing record", async () => {
+    const original = news("edited", "原肯德基联动", "2026-11-01");
+    const revised = { ...original, title: "修订后的肯德基联动", signature: "修订后的正文\n2026-11-01" };
+    mocks.loadState.mockResolvedValue({
+      source: "genshin",
+      processed: {
+        edited: { status: "done", contentHash: hash(original), collaborationId: "imported-latest", processedAt: "2026-11-01" },
+      },
+    });
+    mocks.fetch.mockResolvedValue(raw(revised));
+
+    const report = await syncOfficialSource(sourceWith([revised]), now);
+
+    expect(report.stopReason).toBe("latest-collab-saved");
+    expect(mocks.saveImported).toHaveBeenCalledWith(raw(revised), expect.any(Object), { latestForIp: "genshin", updateExisting: true });
+    expect(mocks.saveState).toHaveBeenCalledWith(expect.objectContaining({
+      processed: expect.objectContaining({ edited: expect.objectContaining({ contentHash: hash(revised) }) }),
+    }));
+  });
+
   it("stops before announcements older than one year", async () => {
     const recent = news("recent", "版本更新公告", "2026-11-01");
     const ancient = news("ancient", "2019 肯德基联动", "2019-10-27");
@@ -129,7 +167,7 @@ describe("latest-only official source synchronization", () => {
     expect(report.stopReason).toBe("latest-collab-saved");
     expect(report.result?.id).toBe("imported-latest");
     expect(mocks.fetch).toHaveBeenCalledTimes(1);
-    expect(mocks.saveImported).toHaveBeenCalledWith(raw(latest), expect.any(Object), { latestForIp: "genshin" });
+    expect(mocks.saveImported).toHaveBeenCalledWith(raw(latest), expect.any(Object), { latestForIp: "genshin", updateExisting: true });
     expect(source.list).toHaveBeenCalledTimes(1);
   });
 

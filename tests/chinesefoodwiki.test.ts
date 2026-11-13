@@ -142,6 +142,29 @@ describe("ChineseFoodWiki revision synchronization", () => {
     expect(mocks.saveImported).toHaveBeenCalledWith(expect.any(Object), expect.any(Object), expect.objectContaining({ latestForIp: "genshin", updateExisting: true }));
   });
 
+  it("limits automatic runs to five newest rows and defers the rest", async () => {
+    const rows = [
+      row("2026-11-01", "品牌一", "原神"),
+      row("2026-11-02", "品牌二", "绝区零"),
+      row("2026-11-03", "品牌三", "崩坏：星穹铁道"),
+      row("2026-11-04", "品牌四", "明日方舟"),
+      row("2026-11-05", "品牌五", "王者荣耀"),
+      row("2026-11-06", "品牌六", "初音未来"),
+    ];
+    mocks.state.value = JSON.stringify({ source: "chinesefoodwiki", revisionId: 10, revisionTimestamp: "2026-11-01", rows: {} });
+    mocks.fetch.mockResolvedValueOnce(revision(11)).mockResolvedValueOnce(revision(11, wiki(...rows)));
+
+    const report = await syncChineseFoodWiki();
+    const state = JSON.parse(mocks.state.value!);
+
+    expect(report).toMatchObject({ changedRows: 5, stateAdvanced: false });
+    expect(report.errors).toHaveLength(0);
+    expect(mocks.extract).toHaveBeenCalledTimes(5);
+    expect(mocks.extract.mock.calls[0][0].text).toContain("初音未来");
+    expect(state.revisionId).toBe(10);
+    expect(state.pendingRows).toHaveLength(1);
+  });
+
   it("skips a wiki row that is not newer than the current record for that IP", async () => {
     const changed = row("2026-11-02", "喜茶", "原神");
     mocks.state.value = JSON.stringify({ source: "chinesefoodwiki", revisionId: 10, revisionTimestamp: "2026-11-01", rows: {} });

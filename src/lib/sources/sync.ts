@@ -44,6 +44,13 @@ export async function syncOfficialSource(source: OfficialSourceDefinition, now =
       report.pagesScanned = page;
       if (!list.length) break;
 
+      const syncedLatest = list.filter((item) => {
+        const previous = state.processed[item.id];
+        const contentHash = createHash("sha1").update(item.signature).digest("hex");
+        return previous?.status === "done" && previous.reason !== "缺少活动开始日期"
+          && (previous.contentHash === contentHash || previous.contentHash === "previously-imported");
+      }).sort((a, b) => b.publishedAt.localeCompare(a.publishedAt))[0];
+
       for (const item of list) {
         if (!isWithinSyncWindow(item.publishedAt, now)) {
           report.stoppedAt = { page, id: item.id, title: item.title };
@@ -55,12 +62,8 @@ export async function syncOfficialSource(source: OfficialSourceDefinition, now =
         const previous = state.processed[item.id];
         const retryUndatedAnnouncement = previous?.reason === "缺少活动开始日期";
         const unchanged = previous && (previous.contentHash === contentHash || previous.contentHash === "previously-imported");
-        if (previous?.status === "done" && unchanged && !retryUndatedAnnouncement) {
-          report.stoppedAt = { page, id: item.id, title: item.title };
-          report.stopReason = "latest-already-synced";
-          return report;
-        }
         if (previous && unchanged && !retryUndatedAnnouncement) continue;
+        if (syncedLatest && item.publishedAt < syncedLatest.publishedAt) continue;
 
         report.itemsScanned += 1;
         report.newIdCount += 1;
@@ -95,7 +98,7 @@ export async function syncOfficialSource(source: OfficialSourceDefinition, now =
           continue;
         }
 
-        const saved = await saveImportedCollaboration(raw, draft, { latestForIp: source.ipId });
+        const saved = await saveImportedCollaboration(raw, draft, { latestForIp: source.ipId, updateExisting: true });
         state.processed[item.id] = {
           status: "done",
           contentHash,
@@ -103,7 +106,13 @@ export async function syncOfficialSource(source: OfficialSourceDefinition, now =
           processedAt: new Date().toISOString(),
         };
         await saveSourceState(state);
-        report.candidates.push({ id: item.id, title: item.title, page, status: "imported" });
+        report.candidates.push({
+          id: item.id,
+          title: item.title,
+          page,
+          status: saved.skipped ? "rejected" : "imported",
+          reason: saved.skipped ? "不晚于该 IP 当前最新记录" : undefined,
+        });
         report.result = {
           id: saved.collaboration.id,
           title: saved.collaboration.title,
@@ -112,7 +121,13 @@ export async function syncOfficialSource(source: OfficialSourceDefinition, now =
           endDate: saved.collaboration.endDate,
         };
         report.stoppedAt = { page, id: item.id, title: item.title };
-        report.stopReason = "latest-collab-saved";
+        report.stopReason = saved.skipped ? "latest-already-synced" : "latest-collab-saved";
+        return report;
+      }
+
+      if (syncedLatest) {
+        report.stoppedAt = { page, id: syncedLatest.id, title: syncedLatest.title };
+        report.stopReason = "latest-already-synced";
         return report;
       }
     }

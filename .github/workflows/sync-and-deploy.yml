@@ -43,6 +43,7 @@ jobs:
         run: npm test
 
       - name: Sync official game collaboration data
+        id: sync
         if: github.event_name != 'push'
         run: npm run sync:sources
         env:
@@ -80,3 +81,9 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Check synchronization health
+        if: steps.sync.outputs.healthy == 'false'
+        run: |
+          echo "::error::一个或多个信息源同步失败；已部署其他成功数据，请检查同步步骤日志。"
+          exit 1

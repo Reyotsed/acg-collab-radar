@@ -1,3 +1,4 @@
+import { appendFileSync } from "node:fs";
 import { monitoredSourceIds, syncMonitoredSources, type MonitoredSourceId } from "../src/lib/sources/run";
 
 async function main() {
@@ -23,7 +24,10 @@ async function main() {
     throw new Error("--source-limit 必须是 all 或 1 到 10 的整数");
   }
   const result = await syncMonitoredSources(requested as MonitoredSourceId | undefined, { wikiManual, wikiLimit, wikiSourceLimit });
-  console.log(JSON.stringify({ syncedAt: new Date().toISOString(), ...result }, null, 2));
+  const healthy = result.reports.every((report) => !report.error)
+    && (!result.chineseFoodWiki || result.chineseFoodWiki.errors.length === 0);
+  console.log(JSON.stringify({ syncedAt: new Date().toISOString(), healthy, ...result }, null, 2));
+  if (process.env.GITHUB_OUTPUT) appendFileSync(process.env.GITHUB_OUTPUT, `healthy=${healthy}\n`, "utf8");
 }
 
 void main().catch((error) => {

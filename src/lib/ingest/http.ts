@@ -37,21 +37,27 @@ export async function assertPublicUrl(value: string) {
 
 export async function fetchPublic(input: string, init: RequestInit = {}, timeoutMs = 30_000): Promise<Response> {
   let current = input;
+  let requestInit = init;
   for (let redirect = 0; redirect < 5; redirect += 1) {
     const url = await assertPublicUrl(current);
+    const headers = new Headers(requestInit.headers);
+    if (!headers.has("user-agent")) headers.set("user-agent", "CollabRadar/0.1 (+https://github.com)");
     const response = await fetch(url, {
-      ...init,
+      ...requestInit,
       redirect: "manual",
       signal: AbortSignal.timeout(timeoutMs),
-      headers: {
-        "User-Agent": "CollabRadar/0.1 (+https://github.com)",
-        ...init.headers,
-      },
+      headers,
     });
     if ([301, 302, 303, 307, 308].includes(response.status)) {
       const location = response.headers.get("location");
       if (!location) return response;
-      current = new URL(location, url).toString();
+      const next = new URL(location, url);
+      if (next.origin !== url.origin) {
+        const redirectedHeaders = new Headers(requestInit.headers);
+        redirectedHeaders.delete("authorization");
+        requestInit = { ...requestInit, headers: redirectedHeaders };
+      }
+      current = next.toString();
       continue;
     }
     return response;

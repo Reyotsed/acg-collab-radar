@@ -299,13 +299,15 @@ export async function syncChineseFoodWiki(options: { manual?: boolean; limit?: n
   }
 
   const manualRows = manual ? [...currentRows].sort((a, b) => rowDate(b).localeCompare(rowDate(a))) : [];
-  const changedRows = manual
-    ? (limit === "all" ? manualRows : manualRows.slice(0, limit))
-    : currentRows
-      .filter((row) => previous.rows[row.key] !== row.hash || previous.pendingRows?.includes(row.key))
-      .sort((a, b) => rowDate(a).localeCompare(rowDate(b)));
+  const automaticRows = manual ? [] : currentRows
+    .filter((row) => previous.rows[row.key] !== row.hash || previous.pendingRows?.includes(row.key))
+    .sort((a, b) => rowDate(b).localeCompare(rowDate(a)));
+  const changedRows = limit === "all"
+    ? (manual ? manualRows : automaticRows)
+    : (manual ? manualRows : automaticRows).slice(0, limit);
+  const deferredRows = manual || limit === "all" ? [] : automaticRows.slice(limit);
   const nextRows = Object.fromEntries(currentRows.map((row) => [row.key, previous.rows[row.key] ?? ""]));
-  const nextPending = new Set(previous.pendingRows ?? []);
+  const nextPending = new Set([...(previous.pendingRows ?? []), ...deferredRows.map((row) => row.key)]);
   const markProcessed = (row: ChineseFoodWikiRow) => {
     nextRows[row.key] = row.hash;
     nextPending.delete(row.key);
