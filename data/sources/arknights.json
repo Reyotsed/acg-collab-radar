@@ -739,6 +739,12 @@
       "processedAt": "2026-11-05T11:39:15.363Z",
       "reason": "非餐饮联动"
     },
+    "6230": {
+      "status": "ignored",
+      "contentHash": "c5467c28b12e30b6d050cc7d792037266d0bca04",
+      "processedAt": "2026-11-16T07:59:20.147Z",
+      "reason": "标题未命中候选词"
+    },
     "6242": {
       "status": "ignored",
       "contentHash": "8a0e89e6c98723ac75af98f77efe47300962d809",
