@@ -151,6 +151,12 @@
       "processedAt": "2026-11-05T11:39:15.619Z",
       "reason": "标题未命中候选词"
     },
+    "2808": {
+      "status": "ignored",
+      "contentHash": "fe154213e6821d445e5b64ea064f88b517313d79",
+      "processedAt": "2026-11-17T09:14:27.715Z",
+      "reason": "标题未命中候选词"
+    },
     "2810": {
       "status": "ignored",
       "contentHash": "d3524e1cc76edf360f7c34d8f482dfef02ad9e0a",
