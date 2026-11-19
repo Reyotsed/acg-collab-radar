@@ -1,8 +1,78 @@
 {
   "source": "web-discovery",
-  "lastSearchedAt": null,
-  "seen": {},
-  "pending": [],
-  "history": [],
-  "totalEstimatedCredits": 0
+  "lastSearchedAt": "2026-11-19T08:49:08.813Z",
+  "seen": {
+    "https://zhuanlan.zhihu.com/p/2104578991680131880": {
+      "signature": "e55162e5521241410ffaaa9f84e8f68cd228f13a",
+      "status": "ignored",
+      "processedAt": "2026-11-19T08:49:08.813Z"
+    },
+    "https://m.sohu.com/a/1101248892_100116740?scm=10001.325_13-325_13.0.0-0-0-0-0.5_1334": {
+      "signature": "2e393ddb51c799adcb70821e434e713999fe44a9",
+      "status": "ignored",
+      "processedAt": "2026-11-19T08:49:08.813Z"
+    },
+    "https://biz.ifeng.com/c/8y9zsuv9JEK": {
+      "signature": "3f5265fec68596a2f5a463523ffa990dd19ff2d5",
+      "status": "ignored",
+      "processedAt": "2026-11-19T08:49:08.813Z"
+    },
+    "https://collabo-cafe.com/zh-hans/events/tag/%E6%BA%9D%E3%81%AE%E5%8F%A3": {
+      "signature": "8ddff2f7a56dcdb6e846ae845540062487752560",
+      "status": "ignored",
+      "processedAt": "2026-11-19T08:49:08.813Z"
+    },
+    "https://www.taptap.cn/moment/864123857374544446": {
+      "signature": "ff751c9c5cdd160cf64cdaaac59fbf4ae0793d3f",
+      "status": "ignored",
+      "processedAt": "2026-11-19T08:49:08.813Z"
+    }
+  },
+  "pending": [
+    {
+      "url": "https://post.smzdm.com/p/a3m45pq5",
+      "title": "麦当劳×原神国外联动开吃：风之翼到日本了，国服的份呢？_手机游戏",
+      "description": "国内这边同样热闹：麦当劳中国刚开启G-DRAGON亚洲多市场联动，内地8000多家餐厅上新8款美味。原神国服此前在快餐界的联动记忆，还是艾尔海森和卡维的肯德基联名。两边 ...",
+      "signature": "d257e76f5b1b809616b6af20fdc0c80670a9a037",
+      "ipId": "genshin",
+      "ipName": "原神"
+    },
+    {
+      "url": "https://weibo.com/detail/5358601539420914",
+      "title": "来自明日方舟终末地超话",
+      "description": "#汉堡王终末地联名##汉堡王##美味通行堡已就位# 汉堡王×《明日方舟：终末地》联动详情来了！ 管理员，请查收你的美味指南~ ◇ 联名套餐◇ 「美味通行」七件套 毛绒 ...",
+      "signature": "828eb7179f460a6350485ffe1c98685361735d37",
+      "ipId": "arknights-endfield",
+      "ipName": "明日方舟：终末地"
+    },
+    {
+      "url": "https://www.taptap.cn/moment/868846050998223987",
+      "title": "联动日本麦当劳！瓦雷莎与爱可菲带你吃汉堡",
+      "description": "近日，原神宣布了和日本麦当劳的全新联动，这也是双方的首次合作。活动时间定在11月18日到12月8日，登场的角色是瓦雷莎和爱可菲。 这次联动的核心餐品主打照烧堡和倍量 ...",
+      "signature": "ce6b8fa0c0742c73545fcd4ec6ace3f7c9946a5d",
+      "ipId": "genshin",
+      "ipName": "原神"
+    },
+    {
+      "url": "https://www.dealmoon.com/post/3275281",
+      "title": "五档路飞海绵宝宝｜麦当劳动漫联动  ‍☠️   | 社区母婴儿童精选 - Dealmoon",
+      "description": "上个月麦当劳与海贼王和海绵宝宝梦幻联动～. 出了一套15款不同的角色玩具. 感觉一直都在吃麦当劳happy meal . 这随手一抽竟然直接开出了9号隐藏热门款～.",
+      "signature": "58941fc5056e439189c6ff3f05d7fe56ffcdbdb4",
+      "ipId": "one-piece",
+      "ipName": "海贼王"
+    }
+  ],
+  "history": [
+    {
+      "at": "2026-11-19T08:49:08.813Z",
+      "results": 30,
+      "candidates": 9,
+      "processed": 5,
+      "imported": 0,
+      "errors": 0,
+      "searchCredits": 6,
+      "scrapeCredits": 5
+    }
+  ],
+  "totalEstimatedCredits": 11
 }
