@@ -1,6 +1,6 @@
 {
   "source": "web-discovery",
-  "lastSearchedAt": "2026-11-19T08:49:08.813Z",
+  "lastSearchedAt": "2026-11-20T08:33:14.475Z",
   "seen": {
     "https://zhuanlan.zhihu.com/p/2104578991680131880": {
       "signature": "e55162e5521241410ffaaa9f84e8f68cd228f13a",
@@ -26,40 +26,65 @@
       "signature": "ff751c9c5cdd160cf64cdaaac59fbf4ae0793d3f",
       "status": "ignored",
       "processedAt": "2026-11-19T08:49:08.813Z"
+    },
+    "https://post.smzdm.com/p/a3m45pq5": {
+      "signature": "d257e76f5b1b809616b6af20fdc0c80670a9a037",
+      "status": "ignored",
+      "processedAt": "2026-11-20T08:33:14.475Z"
+    },
+    "https://weibo.com/detail/5358601539420914": {
+      "signature": "828eb7179f460a6350485ffe1c98685361735d37",
+      "status": "ignored",
+      "processedAt": "2026-11-20T08:33:14.475Z"
+    },
+    "https://www.taptap.cn/moment/868846050998223987": {
+      "signature": "ce6b8fa0c0742c73545fcd4ec6ace3f7c9946a5d",
+      "status": "ignored",
+      "processedAt": "2026-11-20T08:33:14.475Z"
+    },
+    "https://www.dealmoon.com/post/3275281": {
+      "signature": "58941fc5056e439189c6ff3f05d7fe56ffcdbdb4",
+      "status": "ignored",
+      "processedAt": "2026-11-20T08:33:14.475Z"
+    },
+    "https://roll.sohu.com/a/1101061528_120289228": {
+      "signature": "e55162e5521241410ffaaa9f84e8f68cd228f13a",
+      "status": "ignored",
+      "processedAt": "2026-11-20T08:33:14.475Z"
     }
   },
   "pending": [
     {
-      "url": "https://post.smzdm.com/p/a3m45pq5",
-      "title": "麦当劳×原神国外联动开吃：风之翼到日本了，国服的份呢？_手机游戏",
-      "description": "国内这边同样热闹：麦当劳中国刚开启G-DRAGON亚洲多市场联动，内地8000多家餐厅上新8款美味。原神国服此前在快餐界的联动记忆，还是艾尔海森和卡维的肯德基联名。两边 ...",
-      "signature": "d257e76f5b1b809616b6af20fdc0c80670a9a037",
-      "ipId": "genshin",
-      "ipName": "原神"
+      "url": "https://collabo-cafe.com/zh-hans/events/category/eigyou-desu-kara",
+      "title": "毕竟是销售嘛联动活动一览",
+      "description": "《游戏王》高桥和希原画展主题咖啡馆将于12月12日起举办! 《街头霸王6》× Hololive 主题咖啡厅池袋/梅田店将于11月28日起举办!",
+      "signature": "83f1caedfbb033c56c0b38e6b32a76d6366a3496",
+      "ipId": "league-of-legends",
+      "ipName": "英雄联盟"
     },
     {
-      "url": "https://weibo.com/detail/5358601539420914",
-      "title": "来自明日方舟终末地超话",
-      "description": "#汉堡王终末地联名##汉堡王##美味通行堡已就位# 汉堡王×《明日方舟：终末地》联动详情来了！ 管理员，请查收你的美味指南~ ◇ 联名套餐◇ 「美味通行」七件套 毛绒 ...",
-      "signature": "828eb7179f460a6350485ffe1c98685361735d37",
+      "url": "https://m.sohu.com/a/1101248892_100116740?scm=10001.325_13-325_13.0.0-0-0-0-0.5_1334",
+      "title": "KPL联名翻车，瑞幸破圈利器“失灵”了？",
+      "description": "## KPL联名翻车，瑞幸破圈利器“失灵”了？\n2023年9月，瑞幸与贵州茅台合作，联名推出酱香拿铁，将联名效应推到了顶峰，至今仍是茶饮联名史上的标杆案例。\n\n然而，联名的泛滥早已不局限于瑞幸一家茶饮企业。 据《雷报》不完全统计，前9个月，国内19个主要现制茶饮、咖啡品牌共开展145次IP联名，平均1.9天就有一场联名上线。",
+      "signature": "4fc53b8b46c5299e4c87238a10731aee35cf73a3",
+      "ipId": "honor-of-kings",
+      "ipName": "王者荣耀"
+    },
+    {
+      "url": "https://www.taptap.cn/moment/864123857374544446",
+      "title": "汉堡王联动终末地！买餐就送毛绒~ - 明日方舟综合讨论",
+      "description": "汉堡王联动终末地！\n\n# 汉堡王联动终末地！买餐就送毛绒~\n[#今天游戏圈发生了啥](https://www.taptap.cn/hashtag/%E4%BB%8A%E5%A4%A9%E6%B8%B8%E6%88%8F%E5%9C%88%E5%8F%91%E7%94%9F%E4%BA%86%E5%95%A5) [#吃瓜杂谈](https://www.taptap.cn/hashtag/%E5%90%83%E7%93%9C%E6%9D%82%E8%B0%88) [#吃瓜爆料](https://www.taptap.cn/hashtag/%E5%90%83%E7%93%9C%E7%88%86%E6%96%99) [#游戏讨论](https://www.taptap.cn/hashtag/%E6%B8%B8%E6%88%8F%E8%AE%A8%E8%AE%BA) [#资讯评论员](https://www.taptap.cn/hashtag/%E8%B5%84%E8%AE%AF%E8%AF%84%E8%AE%BA%E5%91%98) [#游戏资讯](https://www.taptap.cn/hashtag/%E6%B8%B8%E6%88%8F%E8%B5%84%E8%AE%AF) [#明日方舟](https://www.taptap.cn/hashtag/%E6%98%8E%E6%97%A5%E6%96%B9%E8%88%9F) [#明日方舟终末地](https://www.taptap.cn/hashtag/%E6%98%8E%E6%97%A5%E6%96%B9%E8%88%9F%E7%BB%88%E6%9C%AB%E5%9C%B0)",
+      "signature": "093df67af83444ec407d2dfbafb8560d20534ca2",
       "ipId": "arknights-endfield",
       "ipName": "明日方舟：终末地"
     },
     {
-      "url": "https://www.taptap.cn/moment/868846050998223987",
-      "title": "联动日本麦当劳！瓦雷莎与爱可菲带你吃汉堡",
-      "description": "近日，原神宣布了和日本麦当劳的全新联动，这也是双方的首次合作。活动时间定在11月18日到12月8日，登场的角色是瓦雷莎和爱可菲。 这次联动的核心餐品主打照烧堡和倍量 ...",
-      "signature": "ce6b8fa0c0742c73545fcd4ec6ace3f7c9946a5d",
+      "url": "https://www.sina.cn/news/detail/5365127258048981.html",
+      "title": "原神麦当劳联动11 月18 日开启",
+      "description": "麦当劳与游戏《原神》宣布将于11 月18 日开启联动活动。内容展示了联动限定周边预览，包括爱可菲与瓦雷莎角色的徽章、毛绒、立牌、扇子等，以及印有角色图案的汉堡 ...",
+      "signature": "b01aed7e3b9761ee7d2774b8d0eda701c382a8a1",
       "ipId": "genshin",
       "ipName": "原神"
-    },
-    {
-      "url": "https://www.dealmoon.com/post/3275281",
-      "title": "五档路飞海绵宝宝｜麦当劳动漫联动  ‍☠️   | 社区母婴儿童精选 - Dealmoon",
-      "description": "上个月麦当劳与海贼王和海绵宝宝梦幻联动～. 出了一套15款不同的角色玩具. 感觉一直都在吃麦当劳happy meal . 这随手一抽竟然直接开出了9号隐藏热门款～.",
-      "signature": "58941fc5056e439189c6ff3f05d7fe56ffcdbdb4",
-      "ipId": "one-piece",
-      "ipName": "海贼王"
     }
   ],
   "history": [
@@ -72,7 +97,17 @@
       "errors": 0,
       "searchCredits": 6,
       "scrapeCredits": 5
+    },
+    {
+      "at": "2026-11-20T08:33:14.475Z",
+      "results": 30,
+      "candidates": 9,
+      "processed": 5,
+      "imported": 0,
+      "errors": 0,
+      "searchCredits": 6,
+      "scrapeCredits": 5
     }
   ],
-  "totalEstimatedCredits": 11
+  "totalEstimatedCredits": 22
 }
