@@ -188,61 +188,6 @@
     ]
   },
   {
-    "id": "imported-ad5ca67f77da",
-    "ipIds": [
-      "honor-of-kings"
-    ],
-    "title": "十年此刻，瑞幸把 KPL 十大年度记忆人物请来了",
-    "brand": "瑞幸咖啡",
-    "brandShort": "瑞",
-    "category": "coffee",
-    "region": "中国大陆",
-    "location": "全国",
-    "startDate": "2026-10-26",
-    "endDate": null,
-    "announcedAt": "2026-11-02",
-    "updatedAt": "2026-11-02",
-    "summary": "瑞幸咖啡与《王者荣耀》KPL 十周年展开联名，主题为“十年此刻，开瑞全场”，于10月26日开启。公告公布梦泪、Fly、久诚、Cat、暖阳、清融、花海、小胖、长生、一诺十位“KPL十大年度记忆人物”，并推出KPL十周年限定“加星气泡美式”，同时列出各人物对应推荐饮品。",
-    "tags": [
-      "瑞幸咖啡",
-      "王者荣耀",
-      "KPL",
-      "十周年",
-      "咖啡联名",
-      "游戏赛事"
-    ],
-    "sources": [
-      {
-        "title": "十年此刻，瑞幸把 KPL 十大年度记忆人物请来了|瑞幸咖啡|王者荣耀|KPL|梦泪|Fly|久诚|Cat|暖阳|清融|花海|小胖|长生|一诺_新浪新闻",
-        "source": "www.sina.cn",
-        "url": "https://www.sina.cn/news/detail/5356411996606156.html",
-        "publishedAt": "2026-11-02",
-        "tier": "media"
-      },
-      {
-        "title": "ChineseFoodWiki：Luckin Coffee × Honor of Kings / 《王者荣耀》 KPL 10th anniversary (“十年此刻，开瑞全场”)",
-        "source": "Chinese Food Wiki",
-        "url": "https://www.chinesefoodwiki.org/index.php?title=Drink_IP_Collab_Timeline&oldid=3147#collab-159612c7abd8",
-        "publishedAt": "2026-11-02",
-        "tier": "media"
-      },
-      {
-        "title": "Sina / Luckin Weibo",
-        "source": "Sina / Luckin Weibo",
-        "url": "https://www.sina.cn/news/detail/5357499169374749.html",
-        "publishedAt": "2026-11-02",
-        "tier": "media"
-      },
-      {
-        "title": "vgover",
-        "source": "vgover",
-        "url": "https://www.vgover.com/news/242056",
-        "publishedAt": "2026-11-02",
-        "tier": "media"
-      }
-    ]
-  },
-  {
     "id": "imported-4ecd280040e7",
     "ipIds": [
       "hatsune-miku"
@@ -1310,6 +1255,39 @@
         "source": "4A广告网",
         "url": "https://www.4anet.com/p/01m72ec3wghm2m9cd7f81a41jd",
         "publishedAt": "2026-11-12",
+        "tier": "media"
+      }
+    ]
+  },
+  {
+    "id": "imported-9ad413220bd5",
+    "ipIds": [
+      "honor-of-kings"
+    ],
+    "title": "天美把人急哭了，只因为一杯咖啡",
+    "brand": "瑞幸咖啡",
+    "brandShort": "瑞",
+    "category": "coffee",
+    "region": "中国大陆",
+    "location": "未公布",
+    "startDate": null,
+    "endDate": null,
+    "announcedAt": "2026-11-18",
+    "updatedAt": "2026-11-18",
+    "summary": "媒体报道瑞幸咖啡与《王者荣耀》职业联赛（KPL）的十周年相关联名，围绕“十大年度记忆人物”推出主题杯，并配套联名限定贴纸、冰箱贴、镭射水敏卡和小卡套组。报道未明确活动起止日期、具体门店范围或完整购买规则，文中还提及华莱士、儒意电影等其他KPL合作。",
+    "tags": [
+      "王者荣耀",
+      "KPL",
+      "瑞幸咖啡",
+      "咖啡联名",
+      "电竞"
+    ],
+    "sources": [
+      {
+        "title": "天美把人急哭了，只因为一杯咖啡|王者荣耀|电竞赛事|小果咖啡|全球总决赛冠军_网易订阅",
+        "source": "www.163.com",
+        "url": "https://www.163.com/dy/article/LC1RGGMT05268BP2.html",
+        "publishedAt": "2026-11-18",
         "tier": "media"
       }
     ]
