@@ -1102,53 +1102,6 @@
     ]
   },
   {
-    "id": "imported-a9cfa71d89b9",
-    "ipIds": [
-      "arknights-endfield"
-    ],
-    "title": "奈雪的茶×明日方舟终末地联名活动",
-    "brand": "奈雪的茶",
-    "brandShort": "奈",
-    "category": "tea",
-    "region": "中国大陆",
-    "location": "全国奈雪门店，约140家主题店",
-    "startDate": "2026-09-23",
-    "endDate": null,
-    "announcedAt": "2026-11-02",
-    "updatedAt": "2026-11-02",
-    "summary": "奈雪的茶与《明日方舟：终末地》开展联名活动，于2026-09-23正式上线，包含联名果奶、联名烘焙、主题店及周边活动，覆盖全国约140家主题店；公告未明确活动结束日期。",
-    "tags": [
-      "奈雪的茶",
-      "明日方舟：终末地",
-      "联名",
-      "茶饮",
-      "主题店"
-    ],
-    "sources": [
-      {
-        "title": "奈雪的茶×明日方舟终末地联名活动_新浪新闻",
-        "source": "www.sina.cn",
-        "url": "https://www.sina.cn/news/detail/5341961851768537.html",
-        "publishedAt": "2026-11-02",
-        "tier": "media"
-      },
-      {
-        "title": "ChineseFoodWiki：Nayuki × Arknights: Endfield / 明日方舟：终末地 (“果韵香迎”)",
-        "source": "Chinese Food Wiki",
-        "url": "https://www.chinesefoodwiki.org/index.php?title=Drink_IP_Collab_Timeline&oldid=3147#collab-7ff55b049db2",
-        "publishedAt": "2026-11-02",
-        "tier": "media"
-      },
-      {
-        "title": "NetEase guide",
-        "source": "NetEase guide",
-        "url": "https://cg.163.com/static/content/6aaf8d55d156c30b800bb47a",
-        "publishedAt": "2026-11-02",
-        "tier": "media"
-      }
-    ]
-  },
-  {
     "id": "imported-708814f2157f",
     "ipIds": [
       "naruto"
@@ -1288,6 +1241,41 @@
         "source": "www.163.com",
         "url": "https://www.163.com/dy/article/LC1RGGMT05268BP2.html",
         "publishedAt": "2026-11-18",
+        "tier": "media"
+      }
+    ]
+  },
+  {
+    "id": "imported-0604abfc212c",
+    "ipIds": [
+      "arknights-endfield"
+    ],
+    "title": "佩丽卡汉堡王联动柄图公开：明日方舟：终末地联动套餐11月5日开售",
+    "brand": "汉堡王",
+    "brandShort": "汉",
+    "category": "fastfood",
+    "region": "中国大陆",
+    "location": "全国主题店；上海快闪活动",
+    "startDate": "2026-11-05",
+    "endDate": null,
+    "announcedAt": "2026-11-20",
+    "updatedAt": "2026-11-20",
+    "summary": "汉堡王与《明日方舟：终末地》推出联动套餐，于2026年11月5日开售，售价30.9元起，含毛绒或镭射卡周边及游戏礼包码；联动角色为佩丽卡、祀、明河，线下设有全国主题店与上海快闪活动。",
+    "tags": [
+      "餐饮联动",
+      "汉堡王",
+      "明日方舟：终末地",
+      "联动套餐",
+      "周边",
+      "主题店",
+      "上海快闪"
+    ],
+    "sources": [
+      {
+        "title": "佩丽卡汉堡王联动柄图_明日方舟：终末地壁纸-网易千千壁纸",
+        "source": "qianqian.163.com",
+        "url": "https://qianqian.163.com/academy/topic/6aff5601480988e647526514",
+        "publishedAt": "2026-11-20",
         "tier": "media"
       }
     ]

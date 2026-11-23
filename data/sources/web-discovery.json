@@ -1,6 +1,6 @@
 {
   "source": "web-discovery",
-  "lastSearchedAt": "2026-11-22T07:59:57.596Z",
+  "lastSearchedAt": "2026-11-23T09:06:21.452Z",
   "seen": {
     "https://zhuanlan.zhihu.com/p/2104578991680131880": {
       "signature": "e55162e5521241410ffaaa9f84e8f68cd228f13a",
@@ -81,49 +81,34 @@
       "signature": "94653a1eb3430ae93b94c629b28480001f22aec1",
       "status": "ignored",
       "processedAt": "2026-11-22T07:59:57.596Z"
+    },
+    "https://www.instagram.com/p/Df44tPFo8jK?hl=el": {
+      "signature": "693c7abafa2966b153ec98af4010e106dc871521",
+      "status": "ignored",
+      "processedAt": "2026-11-23T09:06:21.452Z"
+    },
+    "https://qianqian.163.com/academy/topic/6aff5601480988e647526514": {
+      "signature": "1411ae39961fa76aae87348426ba7bff3945a929",
+      "status": "imported",
+      "processedAt": "2026-11-23T09:06:21.452Z"
+    },
+    "https://t.cj.sina.cn/articles/view/2953054937/b0040ad900101sfts": {
+      "signature": "ee2546cce2def9b6ef999262cee2174470cc6762",
+      "status": "ignored",
+      "processedAt": "2026-11-23T09:06:21.452Z"
+    },
+    "https://collabo-cafe.com/zh-hans/events/tag/nippon-animation": {
+      "signature": "b452969af9e50d57fccdcc3e6abe9ad83df16eab",
+      "status": "ignored",
+      "processedAt": "2026-11-23T09:06:21.452Z"
+    },
+    "https://www.taptap.cn/moment/868828522272000180": {
+      "signature": "664e15a702ab8b093b93301760d4fcfebbe69b90",
+      "status": "ignored",
+      "processedAt": "2026-11-23T09:06:21.452Z"
     }
   },
   "pending": [
-    {
-      "url": "https://www.instagram.com/p/Df44tPFo8jK?hl=el",
-      "title": "《原神》×日本麦当劳联动已开启。想拿「余暇之翼」 ...",
-      "description": "《原神》×日本麦当劳联动已开启。想拿「余暇之翼」，要在日本麦当劳App 里完成这三步： ① 注册日本麦当劳App，并加入My McDonald's Rewards。",
-      "signature": "693c7abafa2966b153ec98af4010e106dc871521",
-      "ipId": "genshin",
-      "ipName": "原神"
-    },
-    {
-      "url": "https://qianqian.163.com/academy/topic/6aff5601480988e647526514",
-      "title": "佩丽卡汉堡王联动柄图_明日方舟：终末地壁纸",
-      "description": "2026年11月5日，据网易CG消息，汉堡王携手《明日方舟：终末地》推出联动套餐，售价30.9元起，含毛绒或镭射卡周边及游戏礼包码，联动角色佩丽卡、祀、明河，佩丽卡相关 ...",
-      "signature": "1411ae39961fa76aae87348426ba7bff3945a929",
-      "ipId": "arknights-endfield",
-      "ipName": "明日方舟：终末地"
-    },
-    {
-      "url": "https://t.cj.sina.cn/articles/view/2953054937/b0040ad900101sfts",
-      "title": "看懂这场联名，才知道KPL的十年有多值",
-      "description": "游戏、电竞和饮品品牌联名早已不稀奇，这次为什么还能有这么大的动静？ 双方的影响力自然是一个原因，一个是国民电竞，另一个是超级消费品牌。去年KPL光是一场年度 ...",
-      "signature": "ee2546cce2def9b6ef999262cee2174470cc6762",
-      "ipId": "honor-of-kings",
-      "ipName": "王者荣耀"
-    },
-    {
-      "url": "https://collabo-cafe.com/zh-hans/events/tag/nippon-animation",
-      "title": "日本动画联动活动一览",
-      "description": "联动咖啡厅 ... 《街头霸王6》× Hololive 主题咖啡厅池袋/梅田店将于11月28日起举办! 《逆转裁判》25周年主题咖啡厅将于12月2日起在东京、大阪举办! VIVANT 咖啡馆将于12月2 ...",
-      "signature": "b452969af9e50d57fccdcc3e6abe9ad83df16eab",
-      "ipId": "league-of-legends",
-      "ipName": "英雄联盟"
-    },
-    {
-      "url": "https://www.taptap.cn/moment/868828522272000180",
-      "title": "麦当劳疑似联动《原神》，三角色剪影引爆玩家猜测",
-      "description": "目前，外媒Inside Games 根据剪影外形推测，这三个形象可能分别对应《原神》中的瓦雷莎、爱可菲与派蒙。三位角色都与“食物”主题存在较强关联：有的角色以爱吃为鲜明特点， ...",
-      "signature": "664e15a702ab8b093b93301760d4fcfebbe69b90",
-      "ipId": "genshin",
-      "ipName": "原神"
-    },
     {
       "url": "https://post.m.smzdm.com/p/a3m45pq5",
       "title": "麦当劳×原神国外联动开吃：风之翼到日本了，国服的份呢？_手机游戏",
@@ -131,6 +116,30 @@
       "signature": "d257e76f5b1b809616b6af20fdc0c80670a9a037",
       "ipId": "genshin",
       "ipName": "原神"
+    },
+    {
+      "url": "https://youxichaguan.com/archives/224107",
+      "title": "十位传奇选手同框，KPL×瑞幸唤醒一代玩家的十年记忆",
+      "description": "# 十位传奇选手同框，KPL×瑞幸唤醒一代玩家的十年记忆\n## **十年，在这一杯** **咖啡** **里**\n一年之后，站在联名里的，不只玩家熟悉的游戏角色，还有赛场上的职业选手。\n\n## **从一日三餐到观影休闲，十周年的KPL走进生活**\n9月开始，KPL十周年系列特别联名陆续落地，餐饮、家居、影院、零食、咖啡、快餐、手机等行业都在覆盖范围内；截至目前，十周年期间的合作品牌已达18家。",
+      "signature": "1c3242449437d019a8b2fe8e2349ed622d7fbf49",
+      "ipId": "honor-of-kings",
+      "ipName": "王者荣耀"
+    },
+    {
+      "url": "https://sichuan.scol.com.cn/ggxw/202611/83357892.html",
+      "title": "武侠游戏IP联名上线海底捞“涮”新消费丨冲刺四季度 - 四川新闻",
+      "description": "# 武侠游戏IP联名上线 海底捞“涮”新消费丨冲刺四季度\n今年以来，海底捞先后与国漫顶流《一人之下》、热门游戏《鹅鸭杀》《三角洲行动》《第五人格》等推出了联名套餐。",
+      "signature": "a3dc16b15b913d4e6339c5387b11cc5c5d3a9938",
+      "ipId": "delta-force",
+      "ipName": "三角洲行动"
+    },
+    {
+      "url": "https://www.threads.com/@niki.soon/post/Df5xj56AKat/%E9%BA%A6%E5%BD%93%E5%8A%B3-%E6%B5%B7%E7%BB%B5%E5%AE%9D%E5%AE%9D-%E8%88%AA%E6%B5%B7%E7%8E%8B%E7%BE%8E%E7%89%88%E8%81%94%E5%90%8D%E7%BB%88%E4%BA%8E%E4%BB%8A%E5%A4%A9%E7%BB%88%E4%BA%8E%E6%8A%8A%E6%95%B4%E5%A5%97%E6%94%B6%E9%9B%86%E9%BD%90%E5%95%A6-%E5%93%88%E5%93%88%E5%93%88%E4%BB%8E%E7%AC%AC%E4%B8%80%E6%AC%BE%E5%BC%80%E5%A7%8B%E6%94%B6%E9%9B%86%E5%88%B0%E4%BB%8A%E5%A4%A9%E6%88%90%E5%8A%9F%E9%9B%86%E9%BD%90%E6%BB%A1%E6%BB%A1%E7%9A%84%E9%83%BD%E6%98%AF%E5%BF%AB%E4%B9%90%E5%92%8C%E6%BB%A1%E8%B6%B3%E6%84%9Fsmittybrook-pearlrobi",
+      "title": "麦当劳#HappyMeal #海绵宝宝航海王联名玩具收藏快乐🌼♥️",
+      "description": "选项二：短小精悍版星期四快来麦当劳报到！ 本周主角：海绵宝宝×路飞派大星×索隆. 两个动漫的大神级联动，这波必须冲！吃Happy Meal. #McDonalds #HappyMeal ...",
+      "signature": "e9c7748c4424a6b2180294ca34b90b812f66e9b3",
+      "ipId": "one-piece",
+      "ipName": "海贼王"
     }
   ],
   "history": [
@@ -173,7 +182,17 @@
       "errors": 0,
       "searchCredits": 6,
       "scrapeCredits": 5
+    },
+    {
+      "at": "2026-11-23T09:06:21.452Z",
+      "results": 29,
+      "candidates": 9,
+      "processed": 5,
+      "imported": 1,
+      "errors": 0,
+      "searchCredits": 6,
+      "scrapeCredits": 5
     }
   ],
-  "totalEstimatedCredits": 44
+  "totalEstimatedCredits": 55
 }

@@ -2379,6 +2379,18 @@
       "contentHash": "974a431c5d72a1f8c5e1049b2484f8edd2576f60",
       "processedAt": "2026-11-22T07:59:40.811Z",
       "reason": "标题未命中候选词"
+    },
+    "167419": {
+      "status": "ignored",
+      "contentHash": "4fcb60ebc24542534c6a9af88efcc031e1a0a56b",
+      "processedAt": "2026-11-23T09:06:13.017Z",
+      "reason": "标题未命中候选词"
+    },
+    "167422": {
+      "status": "ignored",
+      "contentHash": "78ff9b9588886ef8917af1f57c92d3d264b4c670",
+      "processedAt": "2026-11-23T09:06:13.015Z",
+      "reason": "标题未命中候选词"
     }
   }
 }
