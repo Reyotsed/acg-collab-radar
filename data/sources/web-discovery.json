@@ -1,6 +1,6 @@
 {
   "source": "web-discovery",
-  "lastSearchedAt": "2026-11-23T09:06:21.452Z",
+  "lastSearchedAt": "2026-11-24T10:56:20.427Z",
   "seen": {
     "https://zhuanlan.zhihu.com/p/2104578991680131880": {
       "signature": "e55162e5521241410ffaaa9f84e8f68cd228f13a",
@@ -13,9 +13,9 @@
       "processedAt": "2026-11-21T08:18:08.932Z"
     },
     "https://biz.ifeng.com/c/8y9zsuv9JEK": {
-      "signature": "3f5265fec68596a2f5a463523ffa990dd19ff2d5",
+      "signature": "af4d40c424dbb19ad91888d1d09dea387e95b9fa",
       "status": "ignored",
-      "processedAt": "2026-11-19T08:49:08.813Z"
+      "processedAt": "2026-11-24T10:56:20.427Z"
     },
     "https://collabo-cafe.com/zh-hans/events/tag/%E6%BA%9D%E3%81%AE%E5%8F%A3": {
       "signature": "8ddff2f7a56dcdb6e846ae845540062487752560",
@@ -63,14 +63,14 @@
       "processedAt": "2026-11-21T08:18:08.932Z"
     },
     "https://youxichaguan.com/archives/224107": {
-      "signature": "6a472eaa232f27751081da3b055ab91d9d7cd468",
+      "signature": "1c3242449437d019a8b2fe8e2349ed622d7fbf49",
       "status": "ignored",
-      "processedAt": "2026-11-21T08:18:08.932Z"
+      "processedAt": "2026-11-24T10:56:20.427Z"
     },
     "https://sichuan.scol.com.cn/ggxw/202611/83357892.html": {
-      "signature": "7c6fb8f84d899454aa0cad5649fe2f59ef2a11f2",
+      "signature": "a3dc16b15b913d4e6339c5387b11cc5c5d3a9938",
       "status": "ignored",
-      "processedAt": "2026-11-22T07:59:57.596Z"
+      "processedAt": "2026-11-24T10:56:20.427Z"
     },
     "https://www.163.com/dy/article/LC1RGGMT05268BP2.html": {
       "signature": "93a8d211317f8ebd3160d9d5867318baaa2bddb2",
@@ -106,40 +106,34 @@
       "signature": "664e15a702ab8b093b93301760d4fcfebbe69b90",
       "status": "ignored",
       "processedAt": "2026-11-23T09:06:21.452Z"
+    },
+    "https://post.m.smzdm.com/p/a3m45pq5": {
+      "signature": "4d14db1d9f71aafc8790bd4a033185a563f04efb",
+      "status": "ignored",
+      "processedAt": "2026-11-24T10:56:20.427Z"
+    },
+    "https://www.threads.com/@niki.soon/post/Df5xj56AKat/%E9%BA%A6%E5%BD%93%E5%8A%B3-%E6%B5%B7%E7%BB%B5%E5%AE%9D%E5%AE%9D-%E8%88%AA%E6%B5%B7%E7%8E%8B%E7%BE%8E%E7%89%88%E8%81%94%E5%90%8D%E7%BB%88%E4%BA%8E%E4%BB%8A%E5%A4%A9%E7%BB%88%E4%BA%8E%E6%8A%8A%E6%95%B4%E5%A5%97%E6%94%B6%E9%9B%86%E9%BD%90%E5%95%A6-%E5%93%88%E5%93%88%E5%93%88%E4%BB%8E%E7%AC%AC%E4%B8%80%E6%AC%BE%E5%BC%80%E5%A7%8B%E6%94%B6%E9%9B%86%E5%88%B0%E4%BB%8A%E5%A4%A9%E6%88%90%E5%8A%9F%E9%9B%86%E9%BD%90%E6%BB%A1%E6%BB%A1%E7%9A%84%E9%83%BD%E6%98%AF%E5%BF%AB%E4%B9%90%E5%92%8C%E6%BB%A1%E8%B6%B3%E6%84%9Fsmittybrook-pearlrobi": {
+      "signature": "e9c7748c4424a6b2180294ca34b90b812f66e9b3",
+      "status": "ignored",
+      "processedAt": "2026-11-24T10:56:20.427Z"
     }
   },
   "pending": [
     {
-      "url": "https://post.m.smzdm.com/p/a3m45pq5",
-      "title": "麦当劳×原神国外联动开吃：风之翼到日本了，国服的份呢？_手机游戏",
-      "description": "国内这边同样热闹：麦当劳中国刚开启G-DRAGON亚洲多市场联动，内地8000多家餐厅上新8款美味。原神国服此前在快餐界的联动记忆，还是艾尔海森和卡维的肯德基联名。两边 ...",
-      "signature": "d257e76f5b1b809616b6af20fdc0c80670a9a037",
-      "ipId": "genshin",
-      "ipName": "原神"
-    },
-    {
-      "url": "https://youxichaguan.com/archives/224107",
-      "title": "十位传奇选手同框，KPL×瑞幸唤醒一代玩家的十年记忆",
-      "description": "# 十位传奇选手同框，KPL×瑞幸唤醒一代玩家的十年记忆\n## **十年，在这一杯** **咖啡** **里**\n一年之后，站在联名里的，不只玩家熟悉的游戏角色，还有赛场上的职业选手。\n\n## **从一日三餐到观影休闲，十周年的KPL走进生活**\n9月开始，KPL十周年系列特别联名陆续落地，餐饮、家居、影院、零食、咖啡、快餐、手机等行业都在覆盖范围内；截至目前，十周年期间的合作品牌已达18家。",
-      "signature": "1c3242449437d019a8b2fe8e2349ed622d7fbf49",
+      "url": "http://news.yxrb.net/2026/1118/7856.html",
+      "title": "从影院到咖啡馆，十周年的KPL为何成了品牌\"心头好\"",
+      "description": "9月起，KPL十周年系列特别联名密集上线，餐饮、家居、影院、零食、咖啡、快餐、手机等多个行业均有覆盖；截至目前，十周年期间的合作品牌达到18家。合作形式包括联名 ...",
+      "signature": "3de6c2072e0567be8439d56ec7af949fa19352ec",
       "ipId": "honor-of-kings",
       "ipName": "王者荣耀"
     },
     {
-      "url": "https://sichuan.scol.com.cn/ggxw/202611/83357892.html",
-      "title": "武侠游戏IP联名上线海底捞“涮”新消费丨冲刺四季度 - 四川新闻",
-      "description": "# 武侠游戏IP联名上线 海底捞“涮”新消费丨冲刺四季度\n今年以来，海底捞先后与国漫顶流《一人之下》、热门游戏《鹅鸭杀》《三角洲行动》《第五人格》等推出了联名套餐。",
-      "signature": "a3dc16b15b913d4e6339c5387b11cc5c5d3a9938",
-      "ipId": "delta-force",
-      "ipName": "三角洲行动"
-    },
-    {
-      "url": "https://www.threads.com/@niki.soon/post/Df5xj56AKat/%E9%BA%A6%E5%BD%93%E5%8A%B3-%E6%B5%B7%E7%BB%B5%E5%AE%9D%E5%AE%9D-%E8%88%AA%E6%B5%B7%E7%8E%8B%E7%BE%8E%E7%89%88%E8%81%94%E5%90%8D%E7%BB%88%E4%BA%8E%E4%BB%8A%E5%A4%A9%E7%BB%88%E4%BA%8E%E6%8A%8A%E6%95%B4%E5%A5%97%E6%94%B6%E9%9B%86%E9%BD%90%E5%95%A6-%E5%93%88%E5%93%88%E5%93%88%E4%BB%8E%E7%AC%AC%E4%B8%80%E6%AC%BE%E5%BC%80%E5%A7%8B%E6%94%B6%E9%9B%86%E5%88%B0%E4%BB%8A%E5%A4%A9%E6%88%90%E5%8A%9F%E9%9B%86%E9%BD%90%E6%BB%A1%E6%BB%A1%E7%9A%84%E9%83%BD%E6%98%AF%E5%BF%AB%E4%B9%90%E5%92%8C%E6%BB%A1%E8%B6%B3%E6%84%9Fsmittybrook-pearlrobi",
-      "title": "麦当劳#HappyMeal #海绵宝宝航海王联名玩具收藏快乐🌼♥️",
-      "description": "选项二：短小精悍版星期四快来麦当劳报到！ 本周主角：海绵宝宝×路飞派大星×索隆. 两个动漫的大神级联动，这波必须冲！吃Happy Meal. #McDonalds #HappyMeal ...",
-      "signature": "e9c7748c4424a6b2180294ca34b90b812f66e9b3",
-      "ipId": "one-piece",
-      "ipName": "海贼王"
+      "url": "https://www.bilibili.com/video/BV1dbs46eEEG",
+      "title": "什么！国外的米哈游联动又有魔性联动小曲了？！全新麦当劳x原神 ...",
+      "description": "",
+      "signature": "cdec8c5a3effcff2532fc112cb539116f06a3684",
+      "ipId": "genshin",
+      "ipName": "原神"
     }
   ],
   "history": [
@@ -192,7 +186,17 @@
       "errors": 0,
       "searchCredits": 6,
       "scrapeCredits": 5
+    },
+    {
+      "at": "2026-11-24T10:56:20.427Z",
+      "results": 30,
+      "candidates": 7,
+      "processed": 5,
+      "imported": 0,
+      "errors": 0,
+      "searchCredits": 6,
+      "scrapeCredits": 5
     }
   ],
-  "totalEstimatedCredits": 55
+  "totalEstimatedCredits": 66
 }
