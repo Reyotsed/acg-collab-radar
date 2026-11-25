@@ -175,6 +175,7 @@ INGEST_ADMIN_TOKEN=
 ### Firecrawl Search 全网补漏
 
 - 复用现有早晚同步 Workflow，但距上次搜索不足 20 小时时返回 `not-due`，保证每天最多实际运行一次；`npm run sync:sources -- --source=web-discovery` 可手动强制执行
+- 必须在仓库 `Settings → Secrets and variables → Actions` 配置 `FIRECRAWL_API_KEY`；未配置时返回 `disabled`、账本保持 0，并在 Actions 页面摘要提示
 - 三组查询分别覆盖泛餐饮、快餐品牌和高产出媒体域名；只请求 `web` 结果，`limit=10`、`tbs=sbd:1,qdr:w`，不附带 `scrapeOptions`，搜索阶段不抓正文
 - URL 移除锚点与常见跟踪参数后去重，同时保存标题和摘要签名；签名未变化的 URL 不重复抓取，签名变化允许重新解析
 - 抓取前要求标题或摘要同时命中联动词、餐饮词和已收录 IP 别名；每天最多处理 5 个页面，超额与失败页保存在 `pending` 后续处理
@@ -260,6 +261,7 @@ docker compose up --build -d
 - 活动状态按构建时间计算，每天两次重建可刷新状态
 - Actions 定时或手动触发时先同步，再构建，构建成功后提交 JSON 到 `main` 并部署；Search 在同一任务内按 20 小时状态间隔限频，不新增 Workflow
 - 普通代码推送只构建部署，不执行模型同步
+- Pages 上传与部署分别使用 `actions/upload-pages-artifact@v5`、`actions/deploy-pages@v5`，artifact 名称显式固定为 `github-pages`，上传保留隐藏文件
 - 同步和部署必须在同一工作流中，因为使用 `GITHUB_TOKEN` 推送的数据提交不会再触发另一个 push 工作流
 - 后续迁移服务器时复用同一同步核心和 JSON 数据，静态产物可直接交给 Nginx
 
@@ -450,6 +452,21 @@ docker compose up --build -d
 - 新增零消耗账本 `data/sources/web-discovery.json`，保存 seen、pending、最近 30 轮和累计预估额度；查询按 2、抓取按 1 额度估算
 - 统一 CLI、同步 API、健康检查和本地工作台展示；单源 CLI 可强制搜索，常规任务不满足间隔时返回 not-due
 - 新增 6 项模拟回归，共 55 项；TypeScript、完整构建和 Pages 构建通过，未执行真实 Search，26 条真实记录不变
+
+### 2026-11-19：同步失败诊断与 Search 启用状态
+
+- 用户反馈近期出现失败；Actions #35（11 月 17 日）和 #37（11 月 18 日）均在最后的同步健康检查标红，测试、构建、数据提交和 Pages 部署均成功，#38 已恢复
+- Wiki 无新增 pendingRows、Search 账本保持 0；失败来自至少一个游戏官方源的临时错误，公开摘要不能确认具体来源，未将其误归为 Pages 或 Search 故障
+- Search 自部署后未实际执行；结合零账本和代码路径，定位为 Actions 未提供有效 `FIRECRAWL_API_KEY`，需要仓库所有者配置同名 secret
+- 同步 CLI 新增 `GITHUB_STEP_SUMMARY`：逐条列出官方源、Wiki、Search 的具体错误，并展示 Search 消耗或 disabled 原因；最终失败提示直接指向本页摘要
+- 55 项测试、TypeScript 和无密钥 CLI 摘要验证通过；未执行真实搜索，26 条真实记录及零消耗账本不变
+
+### 2026-11-25：Pages artifact 连续部署失败
+
+- #48 为官方源同步健康检查失败但部署成功；#49、#50 及最新 #51 均在 deploy-pages 获取 artifact metadata 时失败，且页面同时显示 github-pages 产物已生成
+- 三轮错误一致，不再仅按偶发抖动反复重跑；Search 最近六轮自身无错误，Wiki 无 pendingRows，当前线上 HTTP 200
+- 将上传与部署从 upload-pages-artifact@v3 / deploy-pages@v4 升级至当前官方 v5，显式设置同名 github-pages artifact，并保留隐藏文件
+- 暂不拆分 Job、不引入第三方重试 Action；本次配置仍需推送后的真实 Workflow 验证，不能提前宣称已恢复
 
 ## 变更记录维护规则
 

@@ -49,7 +49,7 @@ Firecrawl Search → 最近 7 天结果 → URL 去重与 IP 预筛选
 
 ChineseFoodWiki 首次只建立修订基线，不批量导入历史。后续 revid 不变且没有待重试行时，不抓正文、不调用模型或 Firecrawl；revid 变化时仅处理新增或修改行，自动增量最多抓取两个 Sources。Wiki 是饮品补充源，不能替代快餐、食品等官方来源。
 
-Firecrawl Search 每 20 小时最多运行一次，使用 3 组最近 7 天查询，每天最多抓取 5 个筛选后的新页面。`data/sources/web-discovery.json` 保存 URL 去重、待续跑页面、最近 30 轮和累计预估额度；实际账单仍以 Firecrawl 控制台为准。
+Firecrawl Search 每 20 小时最多运行一次，使用 3 组最近 7 天查询，每天最多抓取 5 个筛选后的新页面。需要在仓库的 Actions secrets 中配置 `FIRECRAWL_API_KEY`，否则显示 `disabled` 且不消耗。`data/sources/web-discovery.json` 保存 URL 去重、待续跑页面、最近 30 轮和累计预估额度；实际账单仍以 Firecrawl 控制台为准。
 
 手动初始化使用 `npm run sync:sources -- --source=chinesefoodwiki --manual`，默认处理全部 Wiki 行并抓取每个已收录 IP 行的全部 Sources。扩充 IP 库后的完整初始化共检查 34 行、补全 24 行，最终形成 21 条 Wiki 详细记录，全站共 24 条真实记录。三角洲行动（台湾）、无畏契约、明日方舟：终末地等均已实际入库，失败行已通过 `pendingRows` 和纯文本降级重试处理完毕。
 
