@@ -18,12 +18,11 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  sync-build-deploy:
+  sync-build:
     runs-on: ubuntu-latest
     timeout-minutes: 25
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    outputs:
+      sync-healthy: ${{ steps.sync.outputs.healthy }}
     steps:
       - name: Check out main
         uses: actions/checkout@v4
@@ -80,6 +79,14 @@ jobs:
           path: out
           include-hidden-files: true
 
+  deploy:
+    needs: sync-build
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
@@ -87,7 +94,7 @@ jobs:
           artifact_name: github-pages
 
       - name: Check synchronization health
-        if: steps.sync.outputs.healthy == 'false'
+        if: needs.sync-build.outputs.sync-healthy == 'false'
         run: |
           echo "::error::一个或多个信息源同步失败；其他成功数据已部署，具体来源和错误见本页同步健康检查摘要。"
           exit 1

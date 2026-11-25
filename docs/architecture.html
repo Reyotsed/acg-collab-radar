@@ -171,7 +171,7 @@
         <div class="note"><strong>代码 push 到 main</strong>不同步公告，直接用仓库当前 JSON 构建并发布。</div>
         <div class="note"><strong>每天约 09:17 / 21:17</strong>先同步信息源，再构建、提交数据变化并发布。</div>
         <div class="note"><strong>同步健康检查</strong>成功取得的数据仍先发布；只要有来源或 Wiki 行解析失败，最后一步会把运行标红。</div>
-        <div class="note"><strong>Pages 上传与部署</strong>使用官方 v5 Actions，上传和部署显式使用同一个 <code>github-pages</code> artifact。</div>
+        <div class="note"><strong>Pages 上传与部署</strong>使用官方 v5 Actions；<code>sync-build</code> 上传结束后，独立 <code>deploy</code> Job 才读取同一个 <code>github-pages</code> artifact。</div>
         <div class="note"><strong>手动 Run workflow</strong>和定时任务一样，先同步再发布；GitHub 调度可能延迟。</div>
       </div>
     </section>

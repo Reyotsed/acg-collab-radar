@@ -262,7 +262,7 @@ docker compose up --build -d
 - Actions 定时或手动触发时先同步，再构建，构建成功后提交 JSON 到 `main` 并部署；Search 在同一任务内按 20 小时状态间隔限频，不新增 Workflow
 - 普通代码推送只构建部署，不执行模型同步
 - Pages 上传与部署分别使用 `actions/upload-pages-artifact@v5`、`actions/deploy-pages@v5`，artifact 名称显式固定为 `github-pages`，上传保留隐藏文件
-- 同步和部署必须在同一工作流中，因为使用 `GITHUB_TOKEN` 推送的数据提交不会再触发另一个 push 工作流
+- 同步和部署保留在同一 Workflow，但拆为 `sync-build` 与 `deploy` 两个顺序 Job；使用 `GITHUB_TOKEN` 推送的数据提交不会再触发另一个 push 工作流
 - 后续迁移服务器时复用同一同步核心和 JSON 数据，静态产物可直接交给 Nginx
 
 ## 9. 后续开发事项
@@ -463,10 +463,11 @@ docker compose up --build -d
 
 ### 2026-11-25：Pages artifact 连续部署失败
 
-- #48 为官方源同步健康检查失败但部署成功；#49、#50 及最新 #51 均在 deploy-pages 获取 artifact metadata 时失败，且页面同时显示 github-pages 产物已生成
-- 三轮错误一致，不再仅按偶发抖动反复重跑；Search 最近六轮自身无错误，Wiki 无 pendingRows，当前线上 HTTP 200
-- 将上传与部署从 upload-pages-artifact@v3 / deploy-pages@v4 升级至当前官方 v5，显式设置同名 github-pages artifact，并保留隐藏文件
-- 暂不拆分 Job、不引入第三方重试 Action；本次配置仍需推送后的真实 Workflow 验证，不能提前宣称已恢复
+- #48 为官方源同步健康检查失败但部署成功；#49、#50、#51 及 v5 验证运行 #52 均在 deploy-pages 获取 artifact metadata 时失败，且页面同时显示 github-pages 产物已生成
+- 连续错误不再仅按偶发抖动重跑；Search 自身无错误，Wiki 无 pendingRows，当前线上 HTTP 200
+- 上传与部署已升级到当前官方 v5，显式设置同名 github-pages artifact 并保留隐藏文件；#52 证明单独升级不足以解决
+- 改为 `sync-build → deploy` 两个 Job：上传 Job 完整结束后才部署，健康输出通过 needs 传递，部署可单独重试，不引入第三方重试 Action
+- 本次拆分仍需推送后的真实 Workflow 验证，不能提前宣称已恢复
 
 ## 变更记录维护规则
 
