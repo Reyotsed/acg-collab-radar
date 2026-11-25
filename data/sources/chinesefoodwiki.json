@@ -1,9 +1,10 @@
 {
   "source": "chinesefoodwiki",
-  "revisionId": 3163,
-  "revisionTimestamp": "2026-11-22T02:32:13Z",
+  "revisionId": 3164,
+  "revisionTimestamp": "2026-11-25T01:42:29Z",
   "rows": {
     "60dd969c3f98c8fd45d08cc7ce638ac74088e08c": "8e11a6aae76421c605f778b340ab95bef099499d",
+    "22b10e26c01bd9702fc53101cfd5abc5a7b16588": "7406a588d6e54551459c0706e58ff2db0ff4f67f",
     "7b004eab05ff33300e73cb5e0bcb53869d36f880": "13e63fe8f0cccae74f4df7ceb7e4046ed49fe049",
     "52b67e96db6f7a199644c45003479b75a25362e4": "c50296d23fa4b2cc16ace25ac2a8e9b984df8706",
     "006167fbb311db7eed818aada8cfcfc63a60c946": "d94ec8e32a2e1134c89f324280ce864744decf4a",

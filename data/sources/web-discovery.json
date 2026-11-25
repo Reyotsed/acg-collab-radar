@@ -1,6 +1,6 @@
 {
   "source": "web-discovery",
-  "lastSearchedAt": "2026-11-24T10:56:20.427Z",
+  "lastSearchedAt": "2026-11-25T09:52:27.044Z",
   "seen": {
     "https://zhuanlan.zhihu.com/p/2104578991680131880": {
       "signature": "e55162e5521241410ffaaa9f84e8f68cd228f13a",
@@ -108,34 +108,27 @@
       "processedAt": "2026-11-23T09:06:21.452Z"
     },
     "https://post.m.smzdm.com/p/a3m45pq5": {
-      "signature": "4d14db1d9f71aafc8790bd4a033185a563f04efb",
+      "signature": "620eec390e49079434201fdf54f4ef7b111381fc",
       "status": "ignored",
-      "processedAt": "2026-11-24T10:56:20.427Z"
+      "processedAt": "2026-11-25T09:52:27.044Z"
     },
     "https://www.threads.com/@niki.soon/post/Df5xj56AKat/%E9%BA%A6%E5%BD%93%E5%8A%B3-%E6%B5%B7%E7%BB%B5%E5%AE%9D%E5%AE%9D-%E8%88%AA%E6%B5%B7%E7%8E%8B%E7%BE%8E%E7%89%88%E8%81%94%E5%90%8D%E7%BB%88%E4%BA%8E%E4%BB%8A%E5%A4%A9%E7%BB%88%E4%BA%8E%E6%8A%8A%E6%95%B4%E5%A5%97%E6%94%B6%E9%9B%86%E9%BD%90%E5%95%A6-%E5%93%88%E5%93%88%E5%93%88%E4%BB%8E%E7%AC%AC%E4%B8%80%E6%AC%BE%E5%BC%80%E5%A7%8B%E6%94%B6%E9%9B%86%E5%88%B0%E4%BB%8A%E5%A4%A9%E6%88%90%E5%8A%9F%E9%9B%86%E9%BD%90%E6%BB%A1%E6%BB%A1%E7%9A%84%E9%83%BD%E6%98%AF%E5%BF%AB%E4%B9%90%E5%92%8C%E6%BB%A1%E8%B6%B3%E6%84%9Fsmittybrook-pearlrobi": {
       "signature": "e9c7748c4424a6b2180294ca34b90b812f66e9b3",
       "status": "ignored",
       "processedAt": "2026-11-24T10:56:20.427Z"
+    },
+    "http://news.yxrb.net/2026/1118/7856.html": {
+      "signature": "3de6c2072e0567be8439d56ec7af949fa19352ec",
+      "status": "ignored",
+      "processedAt": "2026-11-25T09:52:27.044Z"
+    },
+    "https://www.bilibili.com/video/BV1dbs46eEEG": {
+      "signature": "cdec8c5a3effcff2532fc112cb539116f06a3684",
+      "status": "ignored",
+      "processedAt": "2026-11-25T09:52:27.044Z"
     }
   },
-  "pending": [
-    {
-      "url": "http://news.yxrb.net/2026/1118/7856.html",
-      "title": "从影院到咖啡馆，十周年的KPL为何成了品牌\"心头好\"",
-      "description": "9月起，KPL十周年系列特别联名密集上线，餐饮、家居、影院、零食、咖啡、快餐、手机等多个行业均有覆盖；截至目前，十周年期间的合作品牌达到18家。合作形式包括联名 ...",
-      "signature": "3de6c2072e0567be8439d56ec7af949fa19352ec",
-      "ipId": "honor-of-kings",
-      "ipName": "王者荣耀"
-    },
-    {
-      "url": "https://www.bilibili.com/video/BV1dbs46eEEG",
-      "title": "什么！国外的米哈游联动又有魔性联动小曲了？！全新麦当劳x原神 ...",
-      "description": "",
-      "signature": "cdec8c5a3effcff2532fc112cb539116f06a3684",
-      "ipId": "genshin",
-      "ipName": "原神"
-    }
-  ],
+  "pending": [],
   "history": [
     {
       "at": "2026-11-19T08:49:08.813Z",
@@ -196,7 +189,17 @@
       "errors": 0,
       "searchCredits": 6,
       "scrapeCredits": 5
+    },
+    {
+      "at": "2026-11-25T09:52:27.044Z",
+      "results": 30,
+      "candidates": 3,
+      "processed": 3,
+      "imported": 0,
+      "errors": 0,
+      "searchCredits": 6,
+      "scrapeCredits": 3
     }
   ],
-  "totalEstimatedCredits": 66
+  "totalEstimatedCredits": 75
 }
