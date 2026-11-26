@@ -2403,6 +2403,12 @@
       "contentHash": "db53b005abcc3408bea25d4229a6bc6bd4f743cc",
       "processedAt": "2026-11-25T22:32:59.606Z",
       "reason": "标题未命中候选词"
+    },
+    "167473": {
+      "status": "ignored",
+      "contentHash": "82dd7aeb87e5302c794848cc326a5103a9ac0a9a",
+      "processedAt": "2026-11-26T09:31:34.460Z",
+      "reason": "标题未命中候选词"
     }
   }
 }

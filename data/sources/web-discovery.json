@@ -1,6 +1,6 @@
 {
   "source": "web-discovery",
-  "lastSearchedAt": "2026-11-25T09:52:27.044Z",
+  "lastSearchedAt": "2026-11-26T09:32:05.098Z",
   "seen": {
     "https://zhuanlan.zhihu.com/p/2104578991680131880": {
       "signature": "e55162e5521241410ffaaa9f84e8f68cd228f13a",
@@ -126,6 +126,26 @@
       "signature": "cdec8c5a3effcff2532fc112cb539116f06a3684",
       "status": "ignored",
       "processedAt": "2026-11-25T09:52:27.044Z"
+    },
+    "https://bot.taobao.com/tool-today_discovery/detail/932fe5c09f0d7567691d32967a1765cd.html": {
+      "signature": "b7abbb5120e9e034a5bbb3e2d9e8b154f54e31be",
+      "status": "ignored",
+      "processedAt": "2026-11-26T09:32:05.098Z"
+    },
+    "http://www.investorscn.com/2026/11/23/138342": {
+      "signature": "32c1a5c2a14b6dd3a99d2299135686fa2c53aa60",
+      "status": "ignored",
+      "processedAt": "2026-11-26T09:32:05.098Z"
+    },
+    "https://post.m.smzdm.com/p/am9vke8z": {
+      "signature": "03b56508b8d79e673bf1ae5079a8254f3d1083f7",
+      "status": "ignored",
+      "processedAt": "2026-11-26T09:32:05.098Z"
+    },
+    "https://nikke.qq.com/news-detail.html?id=doe9h2k1hve0q0gqogtghotf&adtag=def": {
+      "signature": "945c3a927e81af6360035eb91968d2466412ea28",
+      "status": "ignored",
+      "processedAt": "2026-11-26T09:32:05.098Z"
     }
   },
   "pending": [],
@@ -199,7 +219,17 @@
       "errors": 0,
       "searchCredits": 6,
       "scrapeCredits": 3
+    },
+    {
+      "at": "2026-11-26T09:32:05.098Z",
+      "results": 26,
+      "candidates": 4,
+      "processed": 4,
+      "imported": 0,
+      "errors": 0,
+      "searchCredits": 6,
+      "scrapeCredits": 4
     }
   ],
-  "totalEstimatedCredits": 75
+  "totalEstimatedCredits": 85
 }
