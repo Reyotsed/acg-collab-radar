@@ -1279,5 +1279,41 @@
         "tier": "media"
       }
     ]
+  },
+  {
+    "id": "imported-8c6f1d9056dc",
+    "ipIds": [
+      "wuthering-waves"
+    ],
+    "title": "日本必胜客12月1日联动《鸣潮》推四拼披萨！",
+    "brand": "日本必胜客",
+    "brandShort": "日",
+    "category": "fastfood",
+    "region": "日本",
+    "location": "日本全国参与活动的门店；东京上池袋店、大阪难波店布置联动装饰",
+    "startDate": "2026-12-01",
+    "endDate": "2027-01-11",
+    "endRule": "while_supplies_last",
+    "announcedAt": "2026-11-27",
+    "updatedAt": "2026-11-27",
+    "summary": "日本必胜客与《鸣潮》联动，2026-12-01至2027-01-11推出四拼披萨套餐，附餐垫、明信片及游戏内兑换码；满额可领透明文件夹、明信片或参加亚克力立牌抽奖，并有联动包装、线上周边及社交平台抽奖。12月24、25日暂停销售联动套餐，相关文件夹优惠券停用。",
+    "tags": [
+      "鸣潮",
+      "必胜客",
+      "披萨",
+      "日本",
+      "游戏联动",
+      "周边",
+      "兑换码"
+    ],
+    "sources": [
+      {
+        "title": "日本必胜客12月1日联动《鸣潮》推四拼披萨！|立牌|优惠券|兑换码|比萨饼_网易订阅",
+        "source": "www.163.com",
+        "url": "https://www.163.com/dy/article/LCO7B9FI0526D8LR.html",
+        "publishedAt": "2026-11-27",
+        "tier": "media"
+      }
+    ]
   }
 ]
