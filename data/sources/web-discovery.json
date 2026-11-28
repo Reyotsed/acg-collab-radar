@@ -1,6 +1,6 @@
 {
   "source": "web-discovery",
-  "lastSearchedAt": "2026-11-27T09:41:33.352Z",
+  "lastSearchedAt": "2026-11-28T08:55:16.266Z",
   "seen": {
     "https://zhuanlan.zhihu.com/p/2104578991680131880": {
       "signature": "e55162e5521241410ffaaa9f84e8f68cd228f13a",
@@ -148,14 +148,34 @@
       "processedAt": "2026-11-26T09:32:05.098Z"
     },
     "https://www.163.com/dy/article/LCO7B9FI0526D8LR.html": {
-      "signature": "c40620e3b2bd6c16b97555938d5391ebd2b8b118",
+      "signature": "dd4c1bad78c0a2a7a6524fb51a8ab3f39df50943",
       "status": "imported",
-      "processedAt": "2026-11-27T09:41:33.352Z"
+      "processedAt": "2026-11-28T08:55:16.266Z"
     },
     "https://www.dealmoon.com/post/3276313": {
       "signature": "f08bece5abe3475ce5dc5a97a37d986f4a4fea67",
       "status": "ignored",
       "processedAt": "2026-11-27T09:41:33.352Z"
+    },
+    "https://www.youtube.com/watch?v=DbrVRCY41wY": {
+      "signature": "a8a61a6afebf3385efafcb4855f40ed575f2e0a5",
+      "status": "ignored",
+      "processedAt": "2026-11-28T08:55:16.266Z"
+    },
+    "https://www.taptap.cn/moment/871461594016514690?group_id=889517": {
+      "signature": "12e2b4ec425d03fa8c30a2eddec328238a4c7017",
+      "status": "ignored",
+      "processedAt": "2026-11-28T08:55:16.266Z"
+    },
+    "https://www.facebook.com/myeatkaki/posts/%E5%8A%A8%E6%BC%ABkakilang%E5%A4%A9%E5%AE%98%E8%B5%90%E7%A6%8F%E5%85%AD%E5%91%A8%E5%B9%B4%E5%B1%95%E9%A6%96%E6%AC%A1%E7%99%BB%E9%99%86%E5%A4%A7%E9%A9%AC%E4%B9%B0%E9%85%8D%E5%A5%97%E5%85%8D%E8%B4%B9%E7%9C%8B-ova-4-ova-5-%E5%AE%8C%E6%95%B4%E7%89%88%E8%B0%A2%E6%80%9C%E5%92%8C%E8%8A%B1%E5%9F%8E%E7%9A%84%E7%B2%89%E4%B8%9D%E6%B3%A8%E6%84%8F%E5%95%A6%EF%B8%8F%E5%A4%A9%E5%AE%98%E8%B5%90%E7%A6%8F%E5%85%AD%E5%91%A8%E5%B9%B4%E7%BA%AA%E5%BF%B5%E5%B1%95%E7%BB%88%E4%BA%8E%E6%9D%A5%E5%88%B0-kl-%E4%BA%86ova/1767692848048840": {
+      "signature": "4bfe7c62a45868edf45e8a3a590568735d0cbcb5",
+      "status": "ignored",
+      "processedAt": "2026-11-28T08:55:16.266Z"
+    },
+    "https://collabo-cafe.com/zh-hans/events/collabo/wutheringwaves-shop-tieup-pizza-hut-2026-2027": {
+      "signature": "2afd85613636018840a510612b58d8a1cb4e0f77",
+      "status": "ignored",
+      "processedAt": "2026-11-28T08:55:16.266Z"
     }
   },
   "pending": [],
@@ -249,7 +269,17 @@
       "errors": 1,
       "searchCredits": 6,
       "scrapeCredits": 3
+    },
+    {
+      "at": "2026-11-28T08:55:16.266Z",
+      "results": 30,
+      "candidates": 5,
+      "processed": 5,
+      "imported": 1,
+      "errors": 0,
+      "searchCredits": 6,
+      "scrapeCredits": 5
     }
   ],
-  "totalEstimatedCredits": 94
+  "totalEstimatedCredits": 105
 }
